@@ -63,14 +63,20 @@ async function run() {
 
     [
         'list/rtb/',
-        'profile/'
+        'movers/pct/winner/',
+        'movers/pct/loser/',
+        'movers/value/winner/',
+        'movers/value/loser/',
+        'profile/',
+        'stats/country/',
+        'stats/industry/'
     ].forEach( ( d ) => {
 
         fs.mkdirSync( dir + d, { recursive: true } );
 
     } );
 
-    bar.update(1);
+    bar.increment();
 
     /**
      * check update
@@ -82,11 +88,14 @@ async function run() {
     ) {
 
         bar.stop();
+
+        console.log( colors.red( 'real-time data already updated for ' + today ) );
+
         process.exit(1);
 
     }
 
-    bar.update(2);
+    bar.increment();
 
     /**
      * get profile list
@@ -96,7 +105,7 @@ async function run() {
         ? JSON.parse( fs.readFileSync( dir + '/profile/list' ) || '{}' )
         : {};
 
-    bar.update(3);
+    bar.increment();
     finishStep();
 
     /**
@@ -110,7 +119,7 @@ async function run() {
 
     const response = await axios.get( api );
 
-    bar.update(1);
+    bar.increment();
     finishStep();
 
     let stream;
@@ -120,9 +129,16 @@ async function run() {
     };
 
     let stats = {
+        industry: {},
+        country: {},
         count: 0,
         woman: 0,
         total: 0
+    };
+
+    let movers = {
+        value: {},
+        pct: {}
     };
 
     if(
@@ -365,6 +381,65 @@ async function run() {
 
             }
 
+            /**
+             * extended stats
+             */
+
+            let cng_pct = change != null ? change.pct : 0;
+
+            if( industries && industries.length ) {
+
+                industries.forEach( ( industry ) => {
+
+                    if( !( industry in stats.industry ) ) {
+
+                        stats.industry[ industry ] = {
+                            count: 0,
+                            total: 0,
+                            value: 0
+                        };
+
+                    }
+
+                    stats.industry[ industry ].count++;
+
+                    stats.industry[ industry ].total += networth;
+                    stats.industry[ industry ].value += cng_pct;
+
+                } );
+
+            }
+
+            if( country ) {
+
+                if( !( country in stats.country ) ) {
+
+                    stats.country[ country ] = {
+                        count: 0,
+                        total: 0,
+                        value: 0
+                    };
+
+                }
+
+                stats.country[ country ].count++;
+
+                stats.country[ country ].total += networth;
+                stats.country[ country ].value += cng_pct;
+
+            }
+
+            /**
+             * daily movers
+             */
+
+            if( change != null ) {
+
+                movers.value[ uri ] = change.value;
+                movers.pct[ uri ] = change.pct;
+
+            }
+
             bar.update( ++i );
 
         } );
@@ -395,14 +470,14 @@ async function run() {
         stream, { flag: 'w' }
     );
 
-    bar.update(1);
+    bar.increment();
 
     fs.writeFileSync(
         dir + 'list/rtb/latest',
         stream, { flag: 'w' }
     );
 
-    bar.update(2);
+    bar.increment();
 
     fs.appendFileSync(
         dir + 'availableDays',
@@ -410,7 +485,70 @@ async function run() {
         { flag: 'a' }
     );
 
-    bar.update(3);
+    bar.increment();
+    finishStep();
+
+    /**
+     * process stats
+     */
+
+    bar = nextStep(
+        '[5/5] process stats',
+        Object.keys( stats ).length,
+        'files'
+    );
+
+    fs.appendFileSync(
+        dir + 'stats/total',
+        today + ' ' + stats.total.toFixed( 3 ) + '\r\n',
+        { flag: 'a' }
+    );
+
+    bar.increment();
+
+    fs.appendFileSync(
+        dir + 'stats/count',
+        today + ' ' + stats.count + '\r\n',
+        { flag: 'a' }
+    );
+
+    bar.increment();
+
+    fs.appendFileSync(
+        dir + 'stats/woman',
+        today + ' ' + stats.woman + '\r\n',
+        { flag: 'a' }
+    );
+
+    bar.increment();
+
+    for( const [ key, value ] of Object.entries( stats ) ) {
+
+        if( typeof value == 'object' ) {
+
+            for( const [ k, v ] of Object.entries( value ) ) {
+
+                fs.appendFileSync(
+                    dir + 'stats/' + key + '/' + ( k
+                        .toLowerCase()
+                        .replace( /[^a-z0-9-]/g, '-' )
+                        .replace( /-{1,}/g, '-' )
+                        .trim()
+                    ),
+                    today + ' ' + v.count + ' ' + v.total.toFixed( 3 ) + ' ' + (
+                        v.value / v.count
+                    ).toFixed( 3 ) + '\r\n',
+                    { flag: 'a' }
+                );
+
+            }
+
+            bar.increment();
+
+        }
+
+    }
+
     finishStep();
 
     /**
@@ -422,6 +560,21 @@ async function run() {
         JSON.stringify( list, null, 2 ),
         { flag: 'w' }
     )
+
+    /**
+     * update timestamp
+     */
+
+    fs.writeFileSync(
+        dir + 'latest',
+        today, { flag: 'w' }
+    );
+
+    fs.writeFileSync(
+        dir + 'updated',
+        ( new Date() ).toISOString(),
+        { flag: 'w' }
+    );
 
 }
 
