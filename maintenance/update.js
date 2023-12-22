@@ -66,6 +66,7 @@ async function run() {
         fs.readFileSync( dir + 'latest' ).toString().split( 'T' )[0] == today
     ) {
 
+        bar.stop();
         process.exit(1);
 
     }
