@@ -42,6 +42,14 @@ async function run() {
     }
 
     /**
+     * get profile list
+     */
+
+    var list = fs.existsSync( dir + '/profile/list' )
+        ? JSON.parse( fs.readFileSync( dir + '/profile/list' ) || '{}' )
+        : {};
+
+    /**
      * fetch data
      */
 
@@ -58,7 +66,7 @@ async function run() {
 
         Array.from( response.data.personList.personsLists ).forEach( ( profile ) => {
 
-            let uri = profile.uri,
+            let uri = profile.uri.trim(),
                 path = dir + 'profile/' + uri + '/';
 
             /**
@@ -71,6 +79,8 @@ async function run() {
 
             }
 
+            let name = ( profile.person.name || profile.personName ).trim();
+
             let country = profile.countryOfCitizenship
                 ? countries.getAlpha2Code( profile.countryOfCitizenship, 'en' )
                 : null;
@@ -79,9 +89,29 @@ async function run() {
                 ? new Date( profile.birthDate )
                 : null;
 
+            /**
+             * add profile to list
+             */
+
+            list[ uri ] = {
+                name: name,
+                country: country,
+                update: today
+            };
+
         } );
 
     }
+
+    /**
+     * save profile list
+     */
+
+    fs.writeFileSync(
+        dir + 'profile/list',
+        JSON.stringify( list, null, 2 ),
+        { flag: 'w' }
+    )
 
 }
 
