@@ -113,6 +113,18 @@ async function run() {
     bar.update(1);
     finishStep();
 
+    let stream;
+
+    let lists = {
+        rtb: []
+    };
+
+    let stats = {
+        count: 0,
+        woman: 0,
+        total: 0
+    };
+
     if(
         response.data && response.data.personList &&
         response.data.personList.personsLists
@@ -166,6 +178,8 @@ async function run() {
                 ? new Date( profile.birthDate )
                 : null;
 
+            let image = profile.squareImage || null;
+
             let industries = [].concat( profile.industries || [] ).map( a => a.trim() );
 
             let sources = ( profile.source || '' ).trim().split( ', ' ).map( a => a.trim() );
@@ -189,7 +203,7 @@ async function run() {
                         city: profile.city || null,
                         state: profile.state || null
                     },
-                    image: profile.squareImage || null,
+                    image: image,
                     industry: industries,
                     source: sources
                 }, null, 2 ),
@@ -285,6 +299,72 @@ async function run() {
 
             }
 
+            /**
+             * basic stats
+             */
+
+            stats.count++;
+            stats.total += networth;
+
+            if( gender == 'f' ) {
+
+                stats.woman++;
+
+            }
+
+            /**
+             * ranking(s)
+             * requires net worth at least $1B
+             */
+
+            if( profile.rank && networth >= 1000 ) {
+
+                let ranking = {};
+
+                if( fs.existsSync( path + 'rank' ) ) {
+
+                    ranking = JSON.parse( fs.readFileSync( path + 'rank' ) );
+
+                }
+
+                /**
+                 * real-time list
+                 */
+
+                ranking.rtb = {
+                    rank: profile.rank,
+                    date: ts
+                };
+
+                lists.rtb.push( {
+                    rank: profile.rank,
+                    uri: uri,
+                    name: name,
+                    gender: gender,
+                    age: birthDate
+                        ? new Date(
+                              new Date() - new Date( birthDate )
+                          ).getFullYear() - 1970
+                        : null,
+                    networth: networth,
+                    citizenship: country,
+                    image: image,
+                    industry: industries,
+                    source: sources
+                } );
+
+                /**
+                 * save ranking data
+                 */
+
+                fs.writeFileSync(
+                    path + 'rank',
+                    JSON.stringify( ranking, null, 2 ),
+                    { flag: 'w' }
+                );
+
+            }
+
             bar.update( ++i );
 
         } );
@@ -292,6 +372,46 @@ async function run() {
         finishStep();
 
     }
+
+    /**
+     * process real-time list
+     */
+
+    bar = nextStep(
+        '[4/5] save lists',
+        3, 'steps'
+    );
+
+    stream = JSON.stringify( {
+        date: today,
+        count: stats.count,
+        woman: stats.woman,
+        total: Number( stats.total.toFixed( 3 ) ),
+        list: lists.rtb
+    }, null, 2 );
+
+    fs.writeFileSync(
+        dir + 'list/rtb/' + today,
+        stream, { flag: 'w' }
+    );
+
+    bar.update(1);
+
+    fs.writeFileSync(
+        dir + 'list/rtb/latest',
+        stream, { flag: 'w' }
+    );
+
+    bar.update(2);
+
+    fs.appendFileSync(
+        dir + 'availableDays',
+        today + '\r\n',
+        { flag: 'a' }
+    );
+
+    bar.update(3);
+    finishStep();
 
     /**
      * save profile list
