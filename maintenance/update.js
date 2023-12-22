@@ -9,7 +9,7 @@ const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
-var bar, _step = 0;
+var bar, _time, _step = 0;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -19,11 +19,13 @@ const fs = require( 'fs' );
 
 function nextStep( step, total, chunks = '', start = 0 ) {
 
-    console.time( ++_step );
+    _time = ( new Date() ).getTime();
+    _step++;
+
     console.log( step );
 
     const bar = new cliProgress.SingleBar( {
-        format: ' {bar} | ' + colors.green( 'ETA: {eta}s' ) + ' | {value} of {total} ' + chunks
+        format: '{bar} | ' + colors.yellow( 'ETA: {eta}s' ) + ' | {value} of {total} ' + chunks
     }, cliProgress.Presets.rect );
 
     bar.start( total, start );
@@ -36,8 +38,10 @@ function finishStep() {
 
     bar.stop();
 
-    console.log( colors.green( 'step ' + _step + ' finished' ) );
-    console.timeEnd( _step );
+    console.log( colors.green( 'step ' + _step + ' finished after ' + (
+        ( ( new Date() ).getTime() - _time ) / 1000
+    ).toFixed( 3 ) + 's' ) );
+
     console.log( '' );
 
 }
@@ -53,7 +57,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[1/5] Getting ready',
+        '[1/5] getting ready',
         3, 'steps'
     );
 
@@ -100,7 +104,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[2/5] Fetching real-time data',
+        '[2/5] fetching real-time data',
         1, 'files'
     );
 
@@ -121,7 +125,7 @@ async function run() {
         let i = 0;
 
         bar = nextStep(
-            '[3/5] Process profiles',
+            '[3/5] process profiles',
             response.data.personList.personsLists.length || 0,
             'profiles'
         );
@@ -129,6 +133,7 @@ async function run() {
         response.data.personList.personsLists.forEach( ( profile ) => {
 
             let uri = profile.uri.trim(),
+                ts = ( new Date( profile.timestamp ) ).toISOString().split( 'T' )[0],
                 path = dir + 'profile/' + uri + '/';
 
             /**
@@ -219,6 +224,66 @@ async function run() {
                 country: country,
                 update: today
             };
+
+            /**
+             * latest (net worth) data
+             */
+
+            let networth = Number( parseFloat( profile.finalWorth || 0 ).toFixed( 3 ) );
+
+            let latest = null,
+                change = null;
+
+            if( fs.existsSync( path + 'latest' ) ) {
+
+                latest = JSON.parse( fs.readFileSync( path + 'latest' ) );
+
+                if( latest.networth && networth != latest.networth ) {
+
+                    let diff = networth - latest.networth;
+
+                    change = {
+                        value: Number( diff.toFixed( 3 ) ),
+                        pct: Number( ( diff / networth * 100 ).toFixed( 3 ) ),
+                        date: ts
+                    };
+
+                }
+
+            }
+
+            fs.writeFileSync(
+                path + 'latest',
+                JSON.stringify( {
+                    date: ts,
+                    rank: profile.rank || null,
+                    networth: networth,
+                    change: change,
+                    private: parseFloat( profile.privateAssetsWorth || 0 ),
+                    archived: parseFloat( profile.archivedWorth || 0 )
+                }, null, 2 ),
+                { flag: 'w' }
+            );
+
+            /**
+             * append history
+             */
+
+            if( latest == null || latest.date != ts ) {
+
+                fs.appendFileSync(
+                    path + 'history',
+                    [
+                        ts,
+                        ( profile.rank || '' ),
+                        networth,
+                        change ? change.value : 0,
+                        change ? change.pct : 0
+                    ].join( ' ' ) + '\r\n',
+                    { flag: 'a' }
+                );
+
+            }
 
             bar.update( ++i );
 
