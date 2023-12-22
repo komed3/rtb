@@ -9,7 +9,7 @@ const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
-var bar;
+var bar, _step = 0;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -19,6 +19,7 @@ const fs = require( 'fs' );
 
 function nextStep( step, total, chunks = '', start = 0 ) {
 
+    console.time( ++_step );
     console.log( step );
 
     const bar = new cliProgress.SingleBar( {
@@ -28,6 +29,16 @@ function nextStep( step, total, chunks = '', start = 0 ) {
     bar.start( total, start );
 
     return bar;
+
+}
+
+function finishStep() {
+
+    bar.stop();
+
+    console.log( colors.green( 'step ' + _step + ' finished' ) );
+    console.timeEnd( _step );
+    console.log( '' );
 
 }
 
@@ -82,7 +93,7 @@ async function run() {
         : {};
 
     bar.update(3);
-    bar.stop();
+    finishStep();
 
     /**
      * fetch data
@@ -96,7 +107,7 @@ async function run() {
     const response = await axios.get( api );
 
     bar.update(1);
-    bar.stop();
+    finishStep();
 
     if(
         response.data && response.data.personList &&
@@ -213,7 +224,7 @@ async function run() {
 
         } );
 
-        bar.stop();
+        finishStep();
 
     }
 
