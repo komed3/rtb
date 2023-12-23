@@ -57,7 +57,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[1/5] getting ready',
+        '[1/7] getting ready',
         3, 'steps'
     );
 
@@ -113,7 +113,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[2/5] fetching real-time data',
+        '[2/7] fetching real-time data',
         1, 'files'
     );
 
@@ -153,7 +153,7 @@ async function run() {
         let i = 0;
 
         bar = nextStep(
-            '[3/5] process profiles',
+            '[3/7] process profiles',
             response.data.personList.personsLists.length || 0,
             'profiles'
         );
@@ -453,7 +453,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[4/5] save lists',
+        '[4/7] save lists',
         3, 'steps'
     );
 
@@ -493,7 +493,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[5/5] process stats',
+        '[5/7] process stats',
         Object.keys( stats ).length,
         'files'
     );
@@ -552,6 +552,88 @@ async function run() {
     finishStep();
 
     /**
+     * daily movers
+     */
+
+    bar = nextStep(
+        '[6/7] daily movers',
+        4, 'steps'
+    );
+
+    for( const [ type, entries ] of Object.entries( movers ) ) {
+
+        if( Object.keys( entries ).length ) {
+
+            /**
+             * winners
+             */
+
+            stream = JSON.stringify(
+                Object.entries( entries ).filter(
+                    ( [ ,a ] ) => a > 0
+                ).sort(
+                    ( [ ,a ], [ ,b ] ) => b - a
+                ).slice( 0, 10 ),
+                null, 2
+            );
+
+            fs.writeFileSync(
+                dir + 'movers/' + type + '/winner/' + today,
+                stream, { flag: 'w' }
+            );
+
+            bar.increment();
+
+            fs.writeFileSync(
+                dir + 'movers/' + type + '/winner/latest',
+                stream, { flag: 'w' }
+            );
+
+            bar.increment();
+
+            /**
+             * losers
+             */
+
+            stream = JSON.stringify(
+                Object.entries( entries ).filter(
+                    ( [ ,a ] ) => a < 0
+                ).sort(
+                    ( [ ,a ], [ ,b ] ) => a - b
+                ).slice( 0, 10 ),
+                null, 2
+            );
+
+            fs.writeFileSync(
+                dir + 'movers/' + type + '/loser/' + today,
+                stream, { flag: 'w' }
+            );
+
+            bar.increment();
+
+            fs.writeFileSync(
+                dir + 'movers/' + type + '/loser/latest',
+                stream, { flag: 'w' }
+            );
+
+            bar.increment();
+
+        }
+
+    }
+
+    finishStep();
+
+    /**
+     * finishing off
+     */
+
+    bar = nextStep(
+        '[7/7] finishing off',
+        3, 'steps'
+    );
+
+    /**
      * save profile list
      */
 
@@ -559,7 +641,9 @@ async function run() {
         dir + 'profile/list',
         JSON.stringify( list, null, 2 ),
         { flag: 'w' }
-    )
+    );
+
+    bar.increment();
 
     /**
      * update timestamp
@@ -570,11 +654,16 @@ async function run() {
         today, { flag: 'w' }
     );
 
+    bar.increment();
+
     fs.writeFileSync(
         dir + 'updated',
         ( new Date() ).toISOString(),
         { flag: 'w' }
     );
+
+    bar.increment();
+    finishStep();
 
 }
 
