@@ -753,9 +753,21 @@ async function run() {
 
         if( Array.isArray( value ) ) {
 
+            let path = dir + 'filter/' + key,
+                f = [];
+
+            if( fs.existsSync( path ) ) {
+
+                f = Array.from( JSON.parse( fs.readFileSync( path ) ) );
+
+            }
+
             fs.writeFileSync(
-                dir + 'filter/' + key,
-                JSON.stringify( value, null, 2 ),
+                path,
+                JSON.stringify(
+                    [ ...new Set( f.concat( value ) ) ].sort(),
+                    null, 2
+                ),
                 { flag: 'w' }
             );
 
@@ -772,16 +784,25 @@ async function run() {
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
-                let _k = k.toLowerCase()
+                let f = [], _k = k.toLowerCase()
                     .replace( /[^a-z0-9-]/g, '-' )
                     .replace( /-{1,}/g, '-' )
                     .trim();
 
                 l[ _k ] = key == 'country' ? countryName( k ) : k;
 
+                if( fs.existsSync( path + _k ) ) {
+
+                    f = Array.from( JSON.parse( fs.readFileSync( path + _k ) ) );
+
+                }
+
                 fs.writeFileSync(
                     path + _k,
-                    JSON.stringify( v, null, 2 ),
+                    JSON.stringify(
+                        [ ...new Set( f.concat( v ) ) ].sort(),
+                        null, 2
+                    ),
                     { flag: 'w' }
                 );
 
