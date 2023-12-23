@@ -90,12 +90,14 @@ async function run() {
      */
 
     bar = nextStep(
-        '[1/7] getting ready',
+        '[1/8] getting ready',
         3, 'steps'
     );
 
     [
         'list/rtb/',
+        'filter/country/',
+        'filter/industry/',
         'movers/pct/winner/',
         'movers/pct/loser/',
         'movers/value/winner/',
@@ -146,7 +148,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[2/7] fetching real-time data',
+        '[2/8] fetching real-time data',
         1, 'files'
     );
 
@@ -174,6 +176,14 @@ async function run() {
         pct: {}
     };
 
+    let filter = {
+        industry: {},
+        country: {},
+        young: [],
+        old: [],
+        woman: []
+    };
+
     if(
         response.data && response.data.personList &&
         response.data.personList.personsLists
@@ -186,7 +196,7 @@ async function run() {
         let i = 0;
 
         bar = nextStep(
-            '[3/7] process profiles',
+            '[3/8] process profiles',
             response.data.personList.personsLists.length || 0,
             'profiles'
         );
@@ -225,6 +235,12 @@ async function run() {
 
             let birthDate = profile.birthDate
                 ? new Date( profile.birthDate )
+                : null;
+
+            let age = birthDate
+                ? new Date(
+                    new Date() - new Date( birthDate )
+                ).getFullYear() - 1970
                 : null;
 
             let image = profile.squareImage || null;
@@ -363,6 +379,22 @@ async function run() {
 
                 stats.woman++;
 
+                filter.woman.push( uri );
+
+            }
+
+            /**
+             * filter
+             */
+
+            if( age > 80 ) {
+
+                filter.old.push( uri );
+
+            } else if( age < 50 ) {
+
+                filter.young.push( uri );
+
             }
 
             /**
@@ -394,11 +426,7 @@ async function run() {
                     uri: uri,
                     name: name,
                     gender: gender,
-                    age: birthDate
-                        ? new Date(
-                              new Date() - new Date( birthDate )
-                          ).getFullYear() - 1970
-                        : null,
+                    age: age,
                     networth: networth,
                     citizenship: country,
                     image: image,
@@ -444,6 +472,18 @@ async function run() {
                     stats.industry[ industry ].total += networth;
                     stats.industry[ industry ].value += cng_pct;
 
+                    /**
+                     * filter
+                     */
+
+                    if( !( industry in filter.industry ) ) {
+
+                        filter.industry[ industry ] = [];
+
+                    }
+
+                    filter.industry[ industry ].push( uri );
+
                 } );
 
             }
@@ -465,6 +505,18 @@ async function run() {
 
                 stats.country[ country ].total += networth;
                 stats.country[ country ].value += cng_pct;
+
+                /**
+                 * filter
+                 */
+
+                if( !( country in filter.country ) ) {
+
+                    filter.country[ country ] = [];
+
+                }
+
+                filter.country[ country ].push( uri );
 
             }
 
@@ -492,7 +544,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[4/7] save lists',
+        '[4/8] save lists',
         3, 'steps'
     );
 
@@ -532,7 +584,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[5/7] process stats',
+        '[5/8] process stats',
         Object.keys( stats ).length,
         'files'
     );
@@ -614,7 +666,7 @@ async function run() {
      */
 
     bar = nextStep(
-        '[6/7] daily movers',
+        '[6/8] daily movers',
         4, 'steps'
     );
 
@@ -683,11 +735,75 @@ async function run() {
     finishStep();
 
     /**
+     * process filter
+     */
+
+    bar = nextStep(
+        '[7/8] process filter',
+        Object.keys( filter ).length,
+        'filter'
+    );
+
+    for( const [ key, value ] of Object.entries( filter ) ) {
+
+        if( Array.isArray( value ) ) {
+
+            fs.writeFileSync(
+                dir + 'filter/' + key,
+                JSON.stringify( value, null, 2 ),
+                { flag: 'w' }
+            );
+
+        } else {
+
+            let path = dir + 'filter/' + key + '/',
+                l = {};
+
+            if( fs.existsSync( path + '_list' ) ) {
+
+                l = JSON.parse( fs.readFileSync( path + '_list' ) );
+
+            }
+
+            for( const [ k, v ] of Object.entries( value ) ) {
+
+                let _k = k.toLowerCase()
+                    .replace( /[^a-z0-9-]/g, '-' )
+                    .replace( /-{1,}/g, '-' )
+                    .trim();
+
+                l[ _k ] = key == 'country' ? countryName( k ) : k;
+
+                fs.writeFileSync(
+                    path + _k,
+                    JSON.stringify( v, null, 2 ),
+                    { flag: 'w' }
+                );
+
+            }
+
+            fs.writeFileSync(
+                path + '_list',
+                JSON.stringify( Object.keys( l ).sort().reduce( ( a, b ) => ( {
+                    ...a, [ b ]: l[ b ]
+                } ), {} ), null, 2 ),
+                { flag: 'w' }
+            );
+
+        }
+
+        bar.increment();
+
+    }
+
+    finishStep();
+
+    /**
      * finishing off
      */
 
     bar = nextStep(
-        '[7/7] finishing off',
+        '[8/8] finishing off',
         3, 'steps'
     );
 
