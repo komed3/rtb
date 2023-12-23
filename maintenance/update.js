@@ -14,10 +14,19 @@ var bar, _time, _step = 0;
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
 const cliProgress = require( 'cli-progress' );
-const countries = require( 'i18n-iso-countries' );
+const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
+const sanitize = require( 'string-sanitizer' );
 
-function nextStep( step, total, chunks = '', start = 0 ) {
+/**
+ * start new step (with progress bar)
+ * @param {String} step name of step
+ * @param {Int} total total number of steps
+ * @param {String} chunks
+ * @param {Int} start start position (bar)
+ * @returns bar instance
+ */
+var nextStep = ( step, total, chunks = '', start = 0 ) => {
 
     _time = ( new Date() ).getTime();
     _step++;
@@ -34,7 +43,10 @@ function nextStep( step, total, chunks = '', start = 0 ) {
 
 }
 
-function finishStep() {
+/**
+ * finish current step
+ */
+var finishStep = () => {
 
     bar.stop();
 
@@ -46,6 +58,28 @@ function finishStep() {
 
 }
 
+/**
+ * get (short) country name
+ * @param {String} country ISO code
+ * @returns country name
+ */
+var countryName = ( country ) => {
+
+    let name = isoCountries.getName( country, 'en', { select: 'alias' } );
+
+    if( name.length < 4 ) {
+
+        name = isoCountries.getName( country, 'en' );
+
+    }
+
+    return name;
+
+}
+
+/**
+ * run update
+ */
 async function run() {
 
     console.log( 'Real-time billionaires' );
@@ -183,7 +217,7 @@ async function run() {
             let name = ( profile.person.name || profile.personName ).trim();
 
             let country = profile.countryOfCitizenship
-                ? countries.getAlpha2Code( profile.countryOfCitizenship, 'en' )
+                ? isoCountries.getAlpha2Code( profile.countryOfCitizenship, 'en' )
                 : null;
 
             let gender = profile.gender
@@ -196,9 +230,13 @@ async function run() {
 
             let image = profile.squareImage || null;
 
-            let industries = [].concat( profile.industries || [] ).map( a => a.trim() );
+            let industries = [].concat( profile.industries || [] ).map(
+                a => a.replaceAll( ' and ', ' & ' ).trim()
+            );
 
-            let sources = ( profile.source || '' ).trim().split( ', ' ).map( a => a.trim() );
+            let sources = ( profile.source || '' ).trim().split( ', ' ).map(
+                a => a.trim()
+            );
 
             /**
              * save basic profile infos
@@ -526,15 +564,23 @@ async function run() {
 
         if( typeof value == 'object' ) {
 
+            let path = dir + 'stats/' + key + '/',
+                l = {};
+
+            if( fs.existsSync( dir + 'list' ) ) {
+
+                l = JSON.parse( fs.readFileSync( dir + 'list' ) );
+
+            }
+
             for( const [ k, v ] of Object.entries( value ) ) {
 
+                let _k = sanitize.sanitize( k );
+
+                l[ _k ] = key == 'country' ? countryName( k ) : k;
+
                 fs.appendFileSync(
-                    dir + 'stats/' + key + '/' + ( k
-                        .toLowerCase()
-                        .replace( /[^a-z0-9-]/g, '-' )
-                        .replace( /-{1,}/g, '-' )
-                        .trim()
-                    ),
+                    path + _k,
                     today + ' ' + v.count + ' ' + v.total.toFixed( 3 ) + ' ' + (
                         v.value / v.count
                     ).toFixed( 3 ) + '\r\n',
@@ -542,6 +588,12 @@ async function run() {
                 );
 
             }
+
+            fs.writeFileSync(
+                path + 'list',
+                JSON.stringify( l, null, 2 ),
+                { flag: 'w' }
+            );
 
             bar.increment();
 
@@ -666,5 +718,9 @@ async function run() {
     finishStep();
 
 }
+
+/**
+ * start updater
+ */
 
 run();
