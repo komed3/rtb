@@ -43,7 +43,7 @@ var nextStep = ( step, total, chunks = '', start = 0 ) => {
 
     bar.start( total, start );
 
-}
+};
 
 /**
  * update current step
@@ -69,7 +69,7 @@ var finishStep = () => {
 
     console.log( '' );
 
-}
+};
 
 /**
  * sanitize input
@@ -103,7 +103,7 @@ var countryName = ( country ) => {
 
     return name.split( ', ' )[0];
 
-}
+};
 
 /**
  * calculate age from birthdate
@@ -880,7 +880,7 @@ async function run() {
     updateStep();
     finishStep();
 
-}
+};
 
 /**
  * start updater
