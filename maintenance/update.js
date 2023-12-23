@@ -16,7 +16,6 @@ const axios = require( 'axios' );
 const cliProgress = require( 'cli-progress' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
-const sanitize = require( 'string-sanitizer' );
 
 /**
  * start new step (with progress bar)
@@ -567,15 +566,18 @@ async function run() {
             let path = dir + 'stats/' + key + '/',
                 l = {};
 
-            if( fs.existsSync( dir + 'list' ) ) {
+            if( fs.existsSync( path + 'list' ) ) {
 
-                l = JSON.parse( fs.readFileSync( dir + 'list' ) );
+                l = JSON.parse( fs.readFileSync( path + 'list' ) );
 
             }
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
-                let _k = sanitize.sanitize( k );
+                let _k = k.toLowerCase()
+                    .replace( /[^a-z0-9-]/g, '-' )
+                    .replace( /-{1,}/g, '-' )
+                    .trim();
 
                 l[ _k ] = key == 'country' ? countryName( k ) : k;
 
