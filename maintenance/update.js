@@ -72,6 +72,21 @@ var finishStep = () => {
 }
 
 /**
+ * sanitize input
+ * @param {String} str input
+ * @returns sanitized string
+ */
+var sanitize = ( str ) => {
+
+    return str
+        .toLowerCase()
+        .replace( /[^a-z0-9-]/g, '-' )
+        .replace( /-{1,}/g, '-' )
+        .trim();
+
+};
+
+/**
  * get (short) country name
  * @param {String} country ISO code
  * @returns country name
@@ -89,6 +104,19 @@ var countryName = ( country ) => {
     return name.split( ', ' )[0];
 
 }
+
+/**
+ * calculate age from birthdate
+ * @param {String|Null} date birthdate or null
+ * @returns age or null
+ */
+var getAge = ( date ) => {
+
+    return date ? new Date(
+        new Date() - new Date( date )
+    ).getFullYear() - 1970 : null;
+
+};
 
 /**
  * run update
@@ -188,14 +216,6 @@ async function run() {
         pct: {}
     };
 
-    let filter = {
-        industry: {},
-        country: {},
-        young: [],
-        old: [],
-        woman: []
-    };
-
     if(
         response.data && response.data.personList &&
         response.data.personList.personsLists
@@ -249,11 +269,7 @@ async function run() {
                 ? new Date( profile.birthDate )
                 : null;
 
-            let age = birthDate
-                ? new Date(
-                    new Date() - new Date( birthDate )
-                ).getFullYear() - 1970
-                : null;
+            let age = getAge( birthDate );
 
             let image = profile.squareImage || null;
 
@@ -316,7 +332,6 @@ async function run() {
 
             list[ uri ] = {
                 name: name,
-                country: country,
                 update: today
             };
 
@@ -390,22 +405,6 @@ async function run() {
             if( gender == 'f' ) {
 
                 stats.woman++;
-
-                filter.woman.push( uri );
-
-            }
-
-            /**
-             * filter
-             */
-
-            if( age > 80 ) {
-
-                filter.old.push( uri );
-
-            } else if( age < 50 ) {
-
-                filter.young.push( uri );
 
             }
 
@@ -484,18 +483,6 @@ async function run() {
                     stats.industry[ industry ].total += networth;
                     stats.industry[ industry ].value += cng_pct;
 
-                    /**
-                     * filter
-                     */
-
-                    if( !( industry in filter.industry ) ) {
-
-                        filter.industry[ industry ] = [];
-
-                    }
-
-                    filter.industry[ industry ].push( uri );
-
                 } );
 
             }
@@ -517,18 +504,6 @@ async function run() {
 
                 stats.country[ country ].total += networth;
                 stats.country[ country ].value += cng_pct;
-
-                /**
-                 * filter
-                 */
-
-                if( !( country in filter.country ) ) {
-
-                    filter.country[ country ] = [];
-
-                }
-
-                filter.country[ country ].push( uri );
 
             }
 
@@ -637,10 +612,7 @@ async function run() {
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
-                let _k = k.toLowerCase()
-                    .replace( /[^a-z0-9-]/g, '-' )
-                    .replace( /-{1,}/g, '-' )
-                    .trim();
+                let _k = sanitize( k );
 
                 l[ _k ] = key == 'country' ? countryName( k ) : k;
 
@@ -740,34 +712,89 @@ async function run() {
     }
 
     /**
-     * save filter
+     * create filter
      */
 
     nextStep(
-        '[7/8] save filter',
-        Object.keys( filter ).length,
-        'filter'
+        '[7/8] create filter',
+        Object.keys( list ).length + 5,
+        'steps'
     );
+
+    let filter = {
+        country: {},
+        industry: {},
+        young: [],
+        old: [],
+        woman: []
+    }
+
+    Object.keys( list ).forEach( ( uri ) => {
+
+        let path = dir + 'profile/' + uri + '/info';
+
+        if( fs.existsSync( path ) ) {
+
+            let info = JSON.parse( fs.readFileSync( path ) ),
+                age = getAge( info.birthDate );
+
+            if( info.gender == 'f' ) {
+
+                filter.woman.push( uri );
+
+            }
+
+            if( age < 50 ) {
+
+                filter.young.push( uri );
+
+            } else if( age > 80 ) {
+
+                filter.old.push( uri );
+
+            }
+
+            if( info.citizenship ) {
+
+                if( !( info.citizenship in filter.country ) ) {
+
+                    filter.country[ info.citizenship ] = [];
+
+                }
+
+                filter.country[ info.citizenship ].push( uri );
+
+            }
+
+            info.industry.forEach( ( industry ) => {
+
+                if( !( industry in filter.industry ) ) {
+
+                    filter.industry[ industry ] = [];
+
+                }
+
+                filter.industry[ industry ].push( uri );
+
+            } );
+
+        }
+
+        updateStep();
+
+    } );
+
+    /**
+     * process (and save) filter
+     */
 
     for( const [ key, value ] of Object.entries( filter ) ) {
 
         if( Array.isArray( value ) ) {
 
-            let path = dir + 'filter/' + key,
-                f = [];
-
-            if( fs.existsSync( path ) ) {
-
-                f = Array.from( JSON.parse( fs.readFileSync( path ) ) );
-
-            }
-
             fs.writeFileSync(
-                path,
-                JSON.stringify(
-                    [ ...new Set( f.concat( value ) ) ].sort(),
-                    null, 2
-                ),
+                dir + 'filter/' + key,
+                JSON.stringify( value.sort(), null, 2 ),
                 { flag: 'w' }
             );
 
@@ -784,25 +811,13 @@ async function run() {
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
-                let f = [], _k = k.toLowerCase()
-                    .replace( /[^a-z0-9-]/g, '-' )
-                    .replace( /-{1,}/g, '-' )
-                    .trim();
+                let _k = sanitize( k );
 
                 l[ _k ] = key == 'country' ? countryName( k ) : k;
 
-                if( fs.existsSync( path + _k ) ) {
-
-                    f = Array.from( JSON.parse( fs.readFileSync( path + _k ) ) );
-
-                }
-
                 fs.writeFileSync(
                     path + _k,
-                    JSON.stringify(
-                        [ ...new Set( f.concat( v ) ) ].sort(),
-                        null, 2
-                    ),
+                    JSON.stringify( v.sort(), null, 2 ),
                     { flag: 'w' }
                 );
 
