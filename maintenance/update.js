@@ -23,24 +23,36 @@ const fs = require( 'fs' );
  * @param {Int} total total number of steps
  * @param {String} chunks
  * @param {Int} start start position (bar)
- * @returns bar instance
  */
 var nextStep = ( step, total, chunks = '', start = 0 ) => {
+
+    if( bar != null ) {
+
+        finishStep();
+
+    }
 
     _time = ( new Date() ).getTime();
     _step++;
 
     console.log( step );
 
-    const bar = new cliProgress.SingleBar( {
+    bar = new cliProgress.SingleBar( {
         format: '{bar} | ' + colors.yellow( 'ETA: {eta}s' ) + ' | {value} of {total} ' + chunks
     }, cliProgress.Presets.rect );
 
     bar.start( total, start );
 
-    return bar;
-
 }
+
+/**
+ * update current step
+ */
+var updateStep = () => {
+
+    bar.increment();
+
+};
 
 /**
  * finish current step
@@ -48,6 +60,8 @@ var nextStep = ( step, total, chunks = '', start = 0 ) => {
 var finishStep = () => {
 
     bar.stop();
+
+    bar = null;
 
     console.log( colors.green( 'step ' + _step + ' finished after ' + (
         ( ( new Date() ).getTime() - _time ) / 1000
@@ -89,7 +103,7 @@ async function run() {
      * create folders (if not exists)
      */
 
-    bar = nextStep(
+    nextStep(
         '[1/8] getting ready',
         3, 'steps'
     );
@@ -111,7 +125,7 @@ async function run() {
 
     } );
 
-    bar.increment();
+    updateStep();
 
     /**
      * check update
@@ -130,7 +144,7 @@ async function run() {
 
     }
 
-    bar.increment();
+    updateStep();
 
     /**
      * get profile list
@@ -140,22 +154,20 @@ async function run() {
         ? JSON.parse( fs.readFileSync( dir + '/profile/_list' ) || '{}' )
         : {};
 
-    bar.increment();
-    finishStep();
+    updateStep();
 
     /**
      * fetch data
      */
 
-    bar = nextStep(
+    nextStep(
         '[2/8] fetching real-time data',
         1, 'files'
     );
 
     const response = await axios.get( api );
 
-    bar.increment();
-    finishStep();
+    updateStep();
 
     let stream;
 
@@ -195,7 +207,7 @@ async function run() {
 
         let i = 0;
 
-        bar = nextStep(
+        nextStep(
             '[3/8] process profiles',
             response.data.personList.personsLists.length || 0,
             'profiles'
@@ -531,11 +543,9 @@ async function run() {
 
             }
 
-            bar.update( ++i );
+            updateStep();
 
         } );
-
-        finishStep();
 
     }
 
@@ -543,7 +553,7 @@ async function run() {
      * process real-time list
      */
 
-    bar = nextStep(
+    nextStep(
         '[4/8] save lists',
         3, 'steps'
     );
@@ -561,14 +571,14 @@ async function run() {
         stream, { flag: 'w' }
     );
 
-    bar.increment();
+    updateStep();
 
     fs.writeFileSync(
         dir + 'list/rtb/latest',
         stream, { flag: 'w' }
     );
 
-    bar.increment();
+    updateStep();
 
     fs.appendFileSync(
         dir + 'availableDays',
@@ -576,14 +586,13 @@ async function run() {
         { flag: 'a' }
     );
 
-    bar.increment();
-    finishStep();
+    updateStep();
 
     /**
      * process stats
      */
 
-    bar = nextStep(
+    nextStep(
         '[5/8] process stats',
         Object.keys( stats ).length,
         'files'
@@ -595,7 +604,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    bar.increment();
+    updateStep();
 
     fs.appendFileSync(
         dir + 'stats/count',
@@ -603,7 +612,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    bar.increment();
+    updateStep();
 
     fs.appendFileSync(
         dir + 'stats/woman',
@@ -611,7 +620,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    bar.increment();
+    updateStep();
 
     for( const [ key, value ] of Object.entries( stats ) ) {
 
@@ -653,19 +662,17 @@ async function run() {
                 { flag: 'w' }
             );
 
-            bar.increment();
+            updateStep();
 
         }
 
     }
 
-    finishStep();
-
     /**
      * daily movers
      */
 
-    bar = nextStep(
+    nextStep(
         '[6/8] daily movers',
         4, 'steps'
     );
@@ -692,14 +699,14 @@ async function run() {
                 stream, { flag: 'w' }
             );
 
-            bar.increment();
+            updateStep();
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/winner/latest',
                 stream, { flag: 'w' }
             );
 
-            bar.increment();
+            updateStep();
 
             /**
              * losers
@@ -719,27 +726,25 @@ async function run() {
                 stream, { flag: 'w' }
             );
 
-            bar.increment();
+            updateStep();
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/loser/latest',
                 stream, { flag: 'w' }
             );
 
-            bar.increment();
+            updateStep();
 
         }
 
     }
 
-    finishStep();
-
     /**
-     * process filter
+     * save filter
      */
 
-    bar = nextStep(
-        '[7/8] process filter',
+    nextStep(
+        '[7/8] save filter',
         Object.keys( filter ).length,
         'filter'
     );
@@ -792,17 +797,15 @@ async function run() {
 
         }
 
-        bar.increment();
+        updateStep();
 
     }
-
-    finishStep();
 
     /**
      * finishing off
      */
 
-    bar = nextStep(
+    nextStep(
         '[8/8] finishing off',
         3, 'steps'
     );
@@ -819,7 +822,7 @@ async function run() {
         { flag: 'w' }
     );
 
-    bar.increment();
+    updateStep();
 
     /**
      * update timestamp
@@ -830,7 +833,7 @@ async function run() {
         today, { flag: 'w' }
     );
 
-    bar.increment();
+    updateStep();
 
     fs.writeFileSync(
         dir + 'updated',
@@ -838,7 +841,7 @@ async function run() {
         { flag: 'w' }
     );
 
-    bar.increment();
+    updateStep();
     finishStep();
 
 }
