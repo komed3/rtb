@@ -433,7 +433,8 @@ async function run() {
                         stats.industry[ industry ] = {
                             count: 0,
                             total: 0,
-                            value: 0
+                            value: 0,
+                            first: uri
                         };
 
                     }
@@ -454,7 +455,8 @@ async function run() {
                     stats.country[ country ] = {
                         count: 0,
                         total: 0,
-                        value: 0
+                        value: 0,
+                        first: uri
                     };
 
                 }
@@ -585,7 +587,7 @@ async function run() {
                     path + _k,
                     today + ' ' + v.count + ' ' + v.total.toFixed( 3 ) + ' ' + (
                         v.value / v.count
-                    ).toFixed( 3 ) + '\r\n',
+                    ).toFixed( 3 ) + ' ' + v.first + '\r\n',
                     { flag: 'a' }
                 );
 
