@@ -72,7 +72,7 @@ var countryName = ( country ) => {
 
     }
 
-    return name;
+    return name.split( ', ' )[0];
 
 }
 
