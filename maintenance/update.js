@@ -134,8 +134,8 @@ async function run() {
      * get profile list
      */
 
-    var list = fs.existsSync( dir + '/profile/list' )
-        ? JSON.parse( fs.readFileSync( dir + '/profile/list' ) || '{}' )
+    var list = fs.existsSync( dir + '/profile/_list' )
+        ? JSON.parse( fs.readFileSync( dir + '/profile/_list' ) || '{}' )
         : {};
 
     bar.increment();
@@ -566,9 +566,9 @@ async function run() {
             let path = dir + 'stats/' + key + '/',
                 l = {};
 
-            if( fs.existsSync( path + 'list' ) ) {
+            if( fs.existsSync( path + '_list' ) ) {
 
-                l = JSON.parse( fs.readFileSync( path + 'list' ) );
+                l = JSON.parse( fs.readFileSync( path + '_list' ) );
 
             }
 
@@ -592,8 +592,10 @@ async function run() {
             }
 
             fs.writeFileSync(
-                path + 'list',
-                JSON.stringify( l, null, 2 ),
+                path + '_list',
+                JSON.stringify( Object.keys( l ).sort().reduce( ( a, b ) => ( {
+                    ...a, [ b ]: l[ b ]
+                } ), {} ), null, 2 ),
                 { flag: 'w' }
             );
 
@@ -692,8 +694,10 @@ async function run() {
      */
 
     fs.writeFileSync(
-        dir + 'profile/list',
-        JSON.stringify( list, null, 2 ),
+        dir + 'profile/_list',
+        JSON.stringify( Object.keys( list ).sort().reduce( ( a, b ) => ( {
+            ...a, [ b ]: list[ b ]
+        } ), {} ), null, 2 ),
         { flag: 'w' }
     );
 
