@@ -262,6 +262,16 @@ async function run() {
                 ? isoCountries.getAlpha2Code( profile.countryOfCitizenship, 'en' )
                 : null;
 
+            if( !country || country == undefined ) {
+
+                country = null;
+
+            } else {
+
+                country = country.toLowerCase();
+
+            }
+
             let gender = profile.gender
                 ? profile.gender.toLowerCase()
                 : null;
@@ -286,27 +296,42 @@ async function run() {
              * save basic profile infos
              */
 
+            let info = {};
+
+            if( fs.existsSync( path + 'info' ) ) {
+
+                info = JSON.parse( fs.readFileSync( path + 'info' ) );
+
+            }
+
             fs.writeFileSync(
                 path + 'info',
                 JSON.stringify( {
-                    uri: uri,
-                    name: name,
-                    birthDate: birthDate
-                        ? birthDate.toISOString().split( 'T' )[0]
-                        : null,
-                    family: !!( profile.family || false ),
-                    gender: gender,
-                    citizenship: country,
-                    residence: {
-                        city: profile.city || null,
-                        state: profile.state || null
-                    },
-                    image: image,
-                    industry: industries,
-                    source: sources
+                    ...info,
+                    ...{
+                        uri: uri,
+                        name: name,
+                        birthDate: birthDate
+                            ? birthDate.toISOString().split( 'T' )[0]
+                            : null,
+                        family: !!( profile.family || false ),
+                        gender: gender,
+                        citizenship: country,
+                        residence: {
+                            city: profile.city || null,
+                            state: profile.state || null
+                        },
+                        image: image,
+                        industry: industries.map( a => sanitize( a ) ),
+                        source: sources
+                    }
                 }, null, 2 ),
                 { flag: 'w' }
             );
+
+            /**
+             * save bios
+             */
 
             fs.writeFileSync(
                 path + 'bio',
