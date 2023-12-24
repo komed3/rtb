@@ -175,11 +175,11 @@ async function run() {
     updateStep();
 
     /**
-     * get profile list
+     * get profile index
      */
 
-    var list = fs.existsSync( dir + '/profile/_list' )
-        ? JSON.parse( fs.readFileSync( dir + '/profile/_list' ) || '{}' )
+    var index = fs.existsSync( dir + '/profile/_index' )
+        ? JSON.parse( fs.readFileSync( dir + '/profile/_index' ) || '{}' )
         : {};
 
     updateStep();
@@ -328,10 +328,10 @@ async function run() {
             );
 
             /**
-             * add profile to list
+             * add profile to index
              */
 
-            list[ uri ] = {
+            index[ uri ] = {
                 name: name,
                 update: today
             };
@@ -605,9 +605,9 @@ async function run() {
             let path = dir + 'stats/' + key + '/',
                 l = {};
 
-            if( fs.existsSync( path + '_list' ) ) {
+            if( fs.existsSync( path + '_index' ) ) {
 
-                l = JSON.parse( fs.readFileSync( path + '_list' ) );
+                l = JSON.parse( fs.readFileSync( path + '_index' ) );
 
             }
 
@@ -628,7 +628,7 @@ async function run() {
             }
 
             fs.writeFileSync(
-                path + '_list',
+                path + '_index',
                 JSON.stringify( Object.keys( l ).sort().reduce( ( a, b ) => ( {
                     ...a, [ b ]: l[ b ]
                 } ), {} ), null, 2 ),
@@ -718,7 +718,7 @@ async function run() {
 
     nextStep(
         '[7/8] create filter',
-        Object.keys( list ).length + 5,
+        Object.keys( index ).length + 5,
         'steps'
     );
 
@@ -730,7 +730,7 @@ async function run() {
         woman: []
     }
 
-    Object.keys( list ).forEach( ( uri ) => {
+    Object.keys( index ).forEach( ( uri ) => {
 
         let path = dir + 'profile/' + uri + '/info';
 
@@ -804,9 +804,9 @@ async function run() {
             let path = dir + 'filter/' + key + '/',
                 l = {};
 
-            if( fs.existsSync( path + '_list' ) ) {
+            if( fs.existsSync( path + '_index' ) ) {
 
-                l = JSON.parse( fs.readFileSync( path + '_list' ) );
+                l = JSON.parse( fs.readFileSync( path + '_index' ) );
 
             }
 
@@ -825,7 +825,7 @@ async function run() {
             }
 
             fs.writeFileSync(
-                path + '_list',
+                path + '_index',
                 JSON.stringify( Object.keys( l ).sort().reduce( ( a, b ) => ( {
                     ...a, [ b ]: l[ b ]
                 } ), {} ), null, 2 ),
@@ -848,13 +848,13 @@ async function run() {
     );
 
     /**
-     * save profile list
+     * save profile index
      */
 
     fs.writeFileSync(
-        dir + 'profile/_list',
-        JSON.stringify( Object.keys( list ).sort().reduce( ( a, b ) => ( {
-            ...a, [ b ]: list[ b ]
+        dir + 'profile/_index',
+        JSON.stringify( Object.keys( index ).sort().reduce( ( a, b ) => ( {
+            ...a, [ b ]: index[ b ]
         } ), {} ), null, 2 ),
         { flag: 'w' }
     );
