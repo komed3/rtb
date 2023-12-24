@@ -13,7 +13,6 @@ var bar, _time, _step = 0;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
-const cliProgress = require( 'cli-progress' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
 const logging = require( './_logging' );
