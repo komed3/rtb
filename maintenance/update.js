@@ -16,60 +16,7 @@ const axios = require( 'axios' );
 const cliProgress = require( 'cli-progress' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
-
-/**
- * start new step (with progress bar)
- * @param {String} step name of step
- * @param {Int} total total number of steps
- * @param {String} chunks
- * @param {Int} start start position (bar)
- */
-var nextStep = ( step, total, chunks = '', start = 0 ) => {
-
-    if( bar != null ) {
-
-        finishStep();
-
-    }
-
-    _time = ( new Date() ).getTime();
-    _step++;
-
-    console.log( step );
-
-    bar = new cliProgress.SingleBar( {
-        format: '{bar} | ' + colors.yellow( 'ETA: {eta}s' ) + ' | {value} of {total} ' + chunks
-    }, cliProgress.Presets.rect );
-
-    bar.start( total, start );
-
-};
-
-/**
- * update current step
- */
-var updateStep = () => {
-
-    bar.increment();
-
-};
-
-/**
- * finish current step
- */
-var finishStep = () => {
-
-    bar.stop();
-
-    bar = null;
-
-    console.log( colors.green( 'step ' + _step + ' finished after ' + (
-        ( ( new Date() ).getTime() - _time ) / 1000
-    ).toFixed( 3 ) + 's' ) );
-
-    console.log( '' );
-
-};
+const logging = require( './_logging' );
 
 /**
  * sanitize input
@@ -131,7 +78,7 @@ async function run() {
      * create folders (if not exists)
      */
 
-    nextStep(
+    logging.nextStep(
         '[1/8] getting ready',
         3, 'steps'
     );
@@ -153,7 +100,7 @@ async function run() {
 
     } );
 
-    updateStep();
+    logging.updateStep();
 
     /**
      * check update
@@ -164,7 +111,7 @@ async function run() {
         fs.readFileSync( dir + 'latest' ).toString().split( 'T' )[0] == today
     ) {
 
-        bar.stop();
+        logging.bar.stop();
 
         console.log( colors.red( 'real-time data already updated for ' + today ) );
 
@@ -172,7 +119,7 @@ async function run() {
 
     }
 
-    updateStep();
+    logging.updateStep();
 
     /**
      * get profile index
@@ -182,20 +129,20 @@ async function run() {
         ? JSON.parse( fs.readFileSync( dir + '/profile/_index' ) || '{}' )
         : {};
 
-    updateStep();
+    logging.updateStep();
 
     /**
      * fetch data
      */
 
-    nextStep(
+    logging.nextStep(
         '[2/8] fetching real-time data',
         1, 'files'
     );
 
     const response = await axios.get( api );
 
-    updateStep();
+    logging.updateStep();
 
     let stream;
 
@@ -227,7 +174,7 @@ async function run() {
 
         let i = 0;
 
-        nextStep(
+        logging.nextStep(
             '[3/8] process profiles',
             response.data.personList.personsLists.length || 0,
             'profiles'
@@ -552,7 +499,7 @@ async function run() {
 
             }
 
-            updateStep();
+            logging.updateStep();
 
         } );
 
@@ -562,7 +509,7 @@ async function run() {
      * process real-time list
      */
 
-    nextStep(
+    logging.nextStep(
         '[4/8] save lists',
         3, 'steps'
     );
@@ -580,14 +527,14 @@ async function run() {
         stream, { flag: 'w' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     fs.writeFileSync(
         dir + 'list/rtb/latest',
         stream, { flag: 'w' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     fs.appendFileSync(
         dir + 'availableDays',
@@ -595,13 +542,13 @@ async function run() {
         { flag: 'a' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     /**
      * process stats
      */
 
-    nextStep(
+    logging.nextStep(
         '[5/8] process stats',
         Object.keys( stats ).length,
         'files'
@@ -613,7 +560,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     fs.appendFileSync(
         dir + 'stats/count',
@@ -621,7 +568,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     fs.appendFileSync(
         dir + 'stats/woman',
@@ -629,7 +576,7 @@ async function run() {
         { flag: 'a' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     for( const [ key, value ] of Object.entries( stats ) ) {
 
@@ -684,7 +631,7 @@ async function run() {
                 { flag: 'w' }
             );
 
-            updateStep();
+            logging.updateStep();
 
         }
 
@@ -694,7 +641,7 @@ async function run() {
      * daily movers
      */
 
-    nextStep(
+    logging.nextStep(
         '[6/8] daily movers',
         4, 'steps'
     );
@@ -721,14 +668,14 @@ async function run() {
                 stream, { flag: 'w' }
             );
 
-            updateStep();
+            logging.updateStep();
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/winner/latest',
                 stream, { flag: 'w' }
             );
 
-            updateStep();
+            logging.updateStep();
 
             /**
              * losers
@@ -748,14 +695,14 @@ async function run() {
                 stream, { flag: 'w' }
             );
 
-            updateStep();
+            logging.updateStep();
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/loser/latest',
                 stream, { flag: 'w' }
             );
 
-            updateStep();
+            logging.updateStep();
 
         }
 
@@ -765,7 +712,7 @@ async function run() {
      * create filter
      */
 
-    nextStep(
+    logging.nextStep(
         '[7/8] create filter',
         Object.keys( index ).length + 5,
         'steps'
@@ -830,7 +777,7 @@ async function run() {
 
         }
 
-        updateStep();
+        logging.updateStep();
 
     } );
 
@@ -883,7 +830,7 @@ async function run() {
 
         }
 
-        updateStep();
+        logging.updateStep();
 
     }
 
@@ -891,7 +838,7 @@ async function run() {
      * finishing off
      */
 
-    nextStep(
+    logging.nextStep(
         '[8/8] finishing off',
         3, 'steps'
     );
@@ -908,7 +855,7 @@ async function run() {
         { flag: 'w' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     /**
      * update timestamp
@@ -919,7 +866,7 @@ async function run() {
         today, { flag: 'w' }
     );
 
-    updateStep();
+    logging.updateStep();
 
     fs.writeFileSync(
         dir + 'updated',
@@ -927,8 +874,8 @@ async function run() {
         { flag: 'w' }
     );
 
-    updateStep();
-    finishStep();
+    logging.updateStep();
+    logging.finishStep();
 
 };
 
