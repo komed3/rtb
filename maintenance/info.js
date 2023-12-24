@@ -8,7 +8,8 @@
 const dir = __dirname + '/../api/';
 const api = 'https://www.forbes.com/forbesapi/person/';
 
-var maxRequest = 250;
+var incremental = process.argv.includes( '--incremental' );
+var maxRequest = 500;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -36,8 +37,8 @@ async function run() {
 
     if( fs.existsSync( dir + 'profile/_index' ) ) {
 
-        let profiles = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ),
-            count = Object.keys( profiles ).length, i = 0;
+        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) ),
+            count = profiles.length, i = 0;
 
         logging.updateStep();
 
@@ -50,7 +51,7 @@ async function run() {
          * update data
          */
 
-        Object.keys( profiles ).forEach( ( uri ) => {
+        profiles.forEach( ( uri ) => {
 
             let path = dir + 'profile/' + uri + '/info';
 
@@ -59,7 +60,7 @@ async function run() {
                 let info = JSON.parse( fs.readFileSync( path ) );
 
                 if(
-                    !( process.argv.includes( '--incremental' ) && info.children ) &&
+                    !( incremental && 'children' in info ) &&
                     --maxRequest > 0
                 ) {
 
@@ -114,7 +115,12 @@ async function run() {
                                 dir + 'profile/' + uri + '/related',
                                 JSON.stringify(
                                     [].concat( data.relatedEntities || [] )
-                                        .filter( r => r.type == 'person' )
+                                        .filter( ( r ) => {
+
+                                            return r.type == 'person' &&
+                                                profiles.includes( r.uri );
+
+                                        } )
                                         .map( ( r ) => {
 
                                             return {
