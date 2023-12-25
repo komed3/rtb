@@ -8,6 +8,7 @@
 const dir = __dirname + '/../api/';
 const api = 'https://www.forbes.com/forbesapi/person/';
 const threshold = ( new Date() ).getTime() - 15552000000;
+const today = ( new Date() ).toISOString();
 
 var maxRequest = 250;
 
@@ -16,6 +17,16 @@ const axios = require( 'axios' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
 const logging = require( './_logging' );
+
+/**
+ * update profile timestamp
+ * @param {String} path path to profile
+ */
+const updateTimestamp = ( path ) => {
+
+    fs.writeFileSync( path + 'updated', today, { flag: 'w' } );
+
+};
 
 /**
  * run info updater
@@ -95,6 +106,16 @@ async function run() {
                     ) &&
                     --maxRequest > 0
                 ) {
+
+                    /**
+                     * update profile timestamp
+                     */
+
+                    updateTimestamp( path );
+
+                    /**
+                     * try to fetch data for profile
+                     */
 
                     axios.get( api + uri ).then( ( response ) => {
 
@@ -179,16 +200,6 @@ async function run() {
                                         } ),
                                     null, 2
                                 ),
-                                { flag: 'w' }
-                            );
-
-                            /**
-                             * update timestamp
-                             */
-
-                            fs.writeFileSync(
-                                path + 'updated',
-                                ( new Date() ).toISOString(),
                                 { flag: 'w' }
                             );
 
