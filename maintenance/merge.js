@@ -5,17 +5,37 @@
 
 'use strict';
 
+const dir = __dirname + '/../api/';
+const threshold = 0.85;
+
 const cmpstr = require( 'cmpstr' );
 const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
-const logging = require( './_logging' );
 
 /**
- * check for mergeable profiles
+ * search for mergeable profiles
  */
-const check = () => {
+const search = () => {
 
-    //
+    console.log( 'Search for mergeable profiles using Sørensen-Dice coefficient:' );
+
+    let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) );
+
+    profiles.forEach( ( uri ) => {
+
+        let results = cmpstr.diceMatch( uri, profiles ).filter(
+            p => p.target != uri && p.match > threshold
+        );
+
+        if( results.length ) {
+
+            console.log( '' );
+            console.log( 'similar profile URIs found for ' + colors.yellow( uri ) + ':' );
+            console.log( results );
+
+        }
+
+    } );
 
 };
 
@@ -40,7 +60,7 @@ console.log( '' );
 
 if( process.argv.length == 2 ) {
 
-    check();
+    search();
 
 } else if( process.argv.length == 4 ) {
 
@@ -52,5 +72,7 @@ if( process.argv.length == 2 ) {
 } else {
 
     console.log( colors.red( 'wrong parameters given' ) );
+    console.log( '>> use ' + colors.yellow( 'node merge.js' ) + ' for searching' );
+    console.log( '>> use ' + colors.yellow( 'node merge.js [FROM] [TO]' ) + ' for merging [FROM] into [TO]' );
 
 }
