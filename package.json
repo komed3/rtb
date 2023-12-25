@@ -21,7 +21,7 @@
     "start": "nodemon server.js",
     "update": "node maintenance/update.js",
     "info": "node maintenance/info.js",
-    "info-incremental": "node maintenance/info.js --incremental"
+    "info-reset": "node maintenance/info.js --reset"
   },
   "dependencies": {
     "ansi-colors": "^4.1.3",

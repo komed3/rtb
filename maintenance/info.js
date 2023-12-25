@@ -7,9 +7,9 @@
 
 const dir = __dirname + '/../api/';
 const api = 'https://www.forbes.com/forbesapi/person/';
+const threshold = ( new Date() ).getTime() - 15552000000;
 
-var incremental = process.argv.includes( '--incremental' );
-var maxRequest = 500;
+var maxRequest = 250;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -30,7 +30,7 @@ async function run() {
      * load profile index
      */
 
-    logging.nextStep(
+    logging.next(
         '[1/2] getting ready',
         1, 'steps'
     );
@@ -40,9 +40,36 @@ async function run() {
         let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) ),
             count = profiles.length, i = 0;
 
-        logging.updateStep();
+        /**
+         * reset timestamps if flag is active
+         */
 
-        logging.nextStep(
+        if( process.argv.includes( '--reset' ) ) {
+
+            logging.addTotal( count );
+            logging.update();
+
+            profiles.forEach( ( uri ) => {
+
+                let path = dir + 'profile/' + uri + '/updated';
+
+                if( fs.existsSync( path ) ) {
+
+                    fs.unlinkSync( path );
+
+                }
+
+                logging.update();
+
+            } );
+
+        } else {
+
+            logging.update();
+
+        }
+
+        logging.next(
             '[2/2] update profile info',
             count, 'profiles'
         );
@@ -53,14 +80,19 @@ async function run() {
 
         profiles.forEach( ( uri ) => {
 
-            let path = dir + 'profile/' + uri + '/info';
+            let path = dir + 'profile/' + uri + '/';
 
-            if( fs.existsSync( path ) ) {
+            if( fs.existsSync( path + 'info' ) ) {
 
-                let info = JSON.parse( fs.readFileSync( path ) );
+                let info = JSON.parse( fs.readFileSync( path + 'info' ) );
 
                 if(
-                    !( incremental && 'children' in info ) &&
+                    (
+                        !fs.existsSync( path + 'updated' ) ||
+                        ( new Date(
+                            fs.readFileSync( path + 'updated' ).toString()
+                        ) ).getTime() < threshold
+                    ) &&
                     --maxRequest > 0
                 ) {
 
@@ -69,6 +101,10 @@ async function run() {
                         if( response.data && response.data.person ) {
 
                             let data = response.data.person;
+
+                            /**
+                             * get detailed residence info
+                             */
 
                             let country = data.countryOfResidence
                                 ? isoCountries.getAlpha2Code( data.countryOfResidence, 'en' )
@@ -86,22 +122,33 @@ async function run() {
 
                             info.residence.country = country;
 
+                            if( 'zip' in data ) {
+
+                                info.residence.zipCode = data.zip;
+
+                            }
+
                             /**
                              * save profile info
                              */
 
                             fs.writeFileSync(
-                                path,
+                                path + 'info',
                                 JSON.stringify( {
                                     ...info,
                                     ...{
                                         deceased: !!( data.deceased || false ),
                                         children: parseInt( data.numberOfChildren || 0 ),
+                                        maritalStatus: data.maritalStatus || null,
                                         educations: [].concat( data.educations || [] ),
                                         organization: data.organization ? {
                                             name: data.organization,
                                             title: data.title || null
-                                        } : null
+                                        } : null,
+                                        selfMade: {
+                                            type: data.selfMadeType || null,
+                                            rank: data.selfMadeRank || null
+                                        }
                                     }
                                 }, null, 2 ),
                                 { flag: 'w' }
@@ -112,7 +159,7 @@ async function run() {
                              */
 
                             fs.writeFileSync(
-                                dir + 'profile/' + uri + '/related',
+                                path + 'related',
                                 JSON.stringify(
                                     [].concat( data.relatedEntities || [] )
                                         .filter( ( r ) => {
@@ -135,13 +182,23 @@ async function run() {
                                 { flag: 'w' }
                             );
 
+                            /**
+                             * update timestamp
+                             */
+
+                            fs.writeFileSync(
+                                path + 'updated',
+                                ( new Date() ).toISOString(),
+                                { flag: 'w' }
+                            );
+
                         }
 
-                        logging.updateStep();
+                        logging.update();
 
                         if( ++i == count ) {
 
-                            logging.finishStep();
+                            logging.finish();
 
                         }
 
@@ -149,11 +206,11 @@ async function run() {
 
                 } else {
 
-                    logging.updateStep();
+                    logging.update();
 
                     if( ++i == count ) {
 
-                        logging.finishStep();
+                        logging.finish();
 
                     }
 
@@ -165,7 +222,7 @@ async function run() {
 
     } else {
 
-        logging.bar.stop();
+        logging.abort();
 
         console.log( colors.red( 'no profiles found' ) );
 
