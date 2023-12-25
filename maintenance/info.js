@@ -141,7 +141,11 @@ async function run() {
 
                             }
 
-                            info.residence.country = country;
+                            info.residence = {
+                                country: country,
+                                state: data.stateProvince || null,
+                                city: data.city || null
+                            };
 
                             if( 'zip' in data ) {
 
