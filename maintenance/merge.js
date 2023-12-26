@@ -16,11 +16,12 @@ const fs = require( 'fs' );
  * fetch profiles index
  */
 
-var profiles = [];
+var index = {}, profiles = [];
 
 if( fs.existsSync( dir + 'profile/_index' ) ) {
 
-    profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) );
+    index = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) );
+    profiles = Object.keys( index );
 
     console.log( 'Real-time billionaires' );
     console.log( colors.yellow( 'merge profiles' ) );
@@ -259,6 +260,14 @@ const merge = ( from, to ) => {
     console.log( 'Delete old profile [' + colors.yellow( from ) + ']' );
 
     fs.rmSync( path + from, { recursive: true, force: true } );
+
+    delete index[ from ];
+
+    fs.writeFileSync(
+        path + '_index',
+        JSON.stringify( index, null, 2 ),
+        { flag: 'w' }
+    );
 
     console.log( colors.green( 'OK' ) );
 
