@@ -187,8 +187,19 @@ async function run() {
 
         response.data.personList.personsLists.forEach( ( profile ) => {
 
-            let uri = profile.uri.trim(),
-                ts = ( new Date( profile.timestamp ) ).toISOString().split( 'T' )[0],
+            let uri = profile.uri.trim();
+
+            /**
+             * check if profile uri exists in aliases list
+             */
+
+            if( uri in alias ) {
+
+                uri = alias[ uri ];
+
+            }
+
+            let ts = ( new Date( profile.timestamp ) ).toISOString().split( 'T' )[0],
                 path = dir + 'profile/' + uri + '/';
 
             /**
