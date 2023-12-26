@@ -79,7 +79,7 @@ async function run() {
 
     logging.next(
         '[1/8] getting ready',
-        3, 'steps'
+        4, 'steps'
     );
 
     [
@@ -126,6 +126,16 @@ async function run() {
 
     var index = fs.existsSync( dir + '/profile/_index' )
         ? JSON.parse( fs.readFileSync( dir + '/profile/_index' ) || '{}' )
+        : {};
+
+    logging.update();
+
+    /**
+     * get aliases
+     */
+
+    var alias = fs.existsSync( dir + '/profile/_alias' )
+        ? JSON.parse( fs.readFileSync( dir + '/profile/_alias' ) || '{}' )
         : {};
 
     logging.update();
@@ -242,13 +252,9 @@ async function run() {
              * save basic profile infos
              */
 
-            let info = {};
-
-            if( fs.existsSync( path + 'info' ) ) {
-
-                info = JSON.parse( fs.readFileSync( path + 'info' ) );
-
-            }
+            let info = fs.existsSync( path + 'info' )
+                ? JSON.parse( fs.readFileSync( path + 'info' ) )
+                : {};
 
             fs.writeFileSync(
                 path + 'info',
@@ -387,13 +393,9 @@ async function run() {
 
             if( profile.rank && networth >= 1000 ) {
 
-                let ranking = {};
-
-                if( fs.existsSync( path + 'rank' ) ) {
-
-                    ranking = JSON.parse( fs.readFileSync( path + 'rank' ) );
-
-                }
+                let ranking = fs.existsSync( path + 'rank' )
+                    ? JSON.parse( fs.readFileSync( path + 'rank' ) )
+                    : {};
 
                 /**
                  * real-time list
@@ -582,13 +584,11 @@ async function run() {
         if( typeof value == 'object' ) {
 
             let path = dir + 'stats/' + key + '/',
-                idx = {}, list = [];
+                list = [];
 
-            if( fs.existsSync( path + '_index' ) ) {
-
-                idx = JSON.parse( fs.readFileSync( path + '_index' ) );
-
-            }
+            let idx = fs.existsSync( path + '_index' )
+                ? JSON.parse( fs.readFileSync( path + '_index' ) )
+                : {};
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
@@ -796,14 +796,11 @@ async function run() {
 
         } else {
 
-            let path = dir + 'filter/' + key + '/',
-                idx = {};
+            let path = dir + 'filter/' + key + '/';
 
-            if( fs.existsSync( path + '_index' ) ) {
-
-                idx = JSON.parse( fs.readFileSync( path + '_index' ) );
-
-            }
+            let idx = fs.existsSync( path + '_index' )
+                ? JSON.parse( fs.readFileSync( path + '_index' ) )
+                : {};
 
             for( const [ k, v ] of Object.entries( value ) ) {
 
