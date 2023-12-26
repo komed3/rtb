@@ -245,11 +245,11 @@ async function run() {
 
             let age = getAge( birthDate );
 
-            let image = profile.squareImage || null;
-
             let industries = [].concat( profile.industries || [] ).map(
                 a => a.replaceAll( ' and ', ' & ' ).trim()
             );
+
+            let _industries = industries.map( a => sanitize( a ) );
 
             let sources = ( profile.source || '' ).trim().split( ', ' ).map(
                 a => a.trim()
@@ -283,8 +283,7 @@ async function run() {
                                 city: profile.city || null,
                                 state: profile.state || null
                             },
-                            image: image,
-                            industry: industries.map( a => sanitize( a ) ),
+                            industry: _industries,
                             source: sources
                         }
                     }, null, 2 ),
@@ -428,8 +427,7 @@ async function run() {
                     age: age,
                     networth: networth,
                     citizenship: country,
-                    image: image,
-                    industry: industries,
+                    industry: _industries,
                     source: sources
                 } );
 
