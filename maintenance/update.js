@@ -319,6 +319,8 @@ async function run() {
 
             let networth = Number( parseFloat( profile.finalWorth || 0 ).toFixed( 3 ) );
 
+            let rank = networth < 1000 ? null : ( profile.rank || null );
+
             let latest = null,
                 change = null;
 
@@ -344,7 +346,7 @@ async function run() {
                 path + 'latest',
                 JSON.stringify( {
                     date: ts,
-                    rank: profile.rank || null,
+                    rank: rank,
                     networth: networth,
                     change: change,
                     private: parseFloat( profile.privateAssetsWorth || 0 ),
@@ -363,7 +365,7 @@ async function run() {
                     path + 'history',
                     [
                         ts,
-                        ( profile.rank || '' ),
+                        rank,
                         networth,
                         change ? change.value : 0,
                         change ? change.pct : 0
@@ -391,7 +393,7 @@ async function run() {
              * requires net worth at least $1B
              */
 
-            if( profile.rank && networth >= 1000 ) {
+            if( rank && networth >= 1000 ) {
 
                 let ranking = fs.existsSync( path + 'rank' )
                     ? JSON.parse( fs.readFileSync( path + 'rank' ) )
@@ -402,12 +404,12 @@ async function run() {
                  */
 
                 ranking.rtb = {
-                    rank: profile.rank,
+                    rank: rank,
                     date: ts
                 };
 
                 lists.rtb.push( {
-                    rank: profile.rank,
+                    rank: rank,
                     uri: uri,
                     name: name,
                     gender: gender,
@@ -449,7 +451,7 @@ async function run() {
                             value: 0,
                             first: {
                                 profile: uri,
-                                rank: profile.rank || '',
+                                rank: rank,
                                 networth: networth
                             }
                         };
@@ -475,7 +477,7 @@ async function run() {
                         value: 0,
                         first: {
                             profile: uri,
-                            rank: profile.rank || '',
+                            rank: rank,
                             networth: networth
                         }
                     };
