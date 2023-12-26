@@ -16,12 +16,10 @@ const fs = require( 'fs' );
  * fetch profiles index
  */
 
-var index = {}, profiles = [];
-
 if( fs.existsSync( dir + 'profile/_index' ) ) {
 
-    index = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) );
-    profiles = Object.keys( index );
+    var index = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) );
+        profiles = Object.keys( index );
 
     console.log( 'Real-time billionaires' );
     console.log( colors.yellow( 'merge profiles' ) );
