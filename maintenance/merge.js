@@ -195,7 +195,111 @@ const merge = ( from, to ) => {
 
     console.log( 'Merging [' + colors.yellow( from ) + '] into [' + colors.yellow( to ) + ']:' );
 
-    //
+    let path = dir + 'profile/';
+
+    /**
+     * merge history
+     */
+
+    console.log( '' );
+    console.log( 'Merge history' );
+
+    if(
+        fs.existsSync( path + from + '/history' ) &&
+        fs.existsSync( path + to + '/history' )
+    ) {
+
+        let history_from = fs.readFileSync( path + from + '/history' )
+                .toString().split( '\r\n' ).filter( a => a )
+                .map( a => a.split( ' ' ) );
+
+        let history_to = fs.readFileSync( path + to + '/history' )
+                .toString().split( '\r\n' ).filter( a => a )
+                .map( a => a.split( ' ' ) );
+
+        let history = {};
+
+        history_from.forEach( ( r ) => {
+
+            history[ r[0] ] = r.join( ' ' );
+
+        } );
+
+        history_to.forEach( ( r ) => {
+
+            if( r[0] in history ) {
+
+                console.log( colors.yellow( 'WARN: dublicate found for ' + r[0] ) );
+
+            }
+
+            history[ r[0] ] = r.join( ' ' );
+
+        } );
+
+        fs.writeFileSync(
+            path + to + '/history',
+            Object.values( history ).join( '\r\n' ) + '\r\n',
+            { flag: 'w' }
+        );
+
+        console.log( colors.green( 'OK' ) );
+
+    } else {
+
+        console.log( colors.red( 'ERR: files not found' ) )
+
+    }
+
+    /**
+     * delete old profile
+     */
+
+    console.log( '' );
+    console.log( 'Delete old profile [' + colors.yellow( from ) + ']' );
+
+    fs.rmSync( path + from, { recursive: true, force: true } );
+
+    console.log( colors.green( 'OK' ) );
+
+    /**
+     * save alias
+     */
+
+    console.log( '' );
+    console.log( 'Save alias: [' + colors.yellow( from ) + '] >> [' + colors.yellow( to ) + ']' );
+
+    let alias = {};
+
+    if( fs.existsSync( path + '_alias' ) ) {
+
+        alias = JSON.parse( fs.readFileSync( path + '_alias' ) );
+
+    }
+
+    alias[ from ] = to;
+
+    fs.writeFileSync(
+        path + '_alias',
+        JSON.stringify( alias, null, 2 ),
+        { flag: 'w' }
+    );
+
+    console.log( colors.green( 'OK' ) );
+
+    /**
+     * renew profile info
+     */
+
+    if( fs.existsSync( path + to + '/updated' ) ) {
+
+        fs.unlinkSync( path + to + '/updated' );
+
+    }
+
+    console.log( '' );
+    console.log( 'Recommended: run the following command' );
+    console.log( colors.yellow( 'npm run info' ) );
 
 };
 
