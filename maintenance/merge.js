@@ -68,7 +68,121 @@ const test = ( from, to ) => {
 
     console.log( 'Test merging [' + colors.yellow( from ) + '] into [' + colors.yellow( to ) + ']:' );
 
-    //
+    let path = dir + 'profile/',
+        files = {};
+
+    /**
+     * check for necessary files
+     */
+
+    console.log( '' );
+    console.log( 'Check for necessary files:' );
+
+    [
+        to + '/assets',
+        to + '/bio',
+        to + '/history',
+        from + '/history',
+        to + '/info',
+        to + '/latest',
+        to + '/rank',
+        to + '/related'
+    ].forEach( ( file ) => {
+
+        files[ file ] = fs.existsSync( path + file );
+
+        console.log(
+            '[' + file + '] >> ' + ( files[ file ]
+                ? colors.green( 'OK' )
+                : colors.red( 'ERR' ) )
+        );
+
+    } );
+
+    /**
+     * check mergable history
+     */
+
+    console.log( '' );
+    console.log( 'Check mergable history for dublicate entries:' );
+
+    if( files[ to + '/history' ] && files[ from + '/history' ] ) {
+
+        let history_from = fs.readFileSync( path + from + '/history' )
+                .toString().split( '\r\n' ).filter( a => a )
+                .map( a => a.split( ' ' )[0] );
+
+        let history_to = fs.readFileSync( path + to + '/history' )
+                .toString().split( '\r\n' ).filter( a => a )
+                .map( a => a.split( ' ' )[0] );
+
+        let dublicates = history_from.filter( a => history_to.includes( a ) );
+
+        if( dublicates.length ) {
+
+            console.log( colors.yellow( 'WARN: dublicates found' ) );
+            console.log( dublicates );
+
+        } else {
+
+            console.log( colors.green( 'OK' ) );
+
+        }
+
+    } else if ( files[ to + '/history' ] ) {
+
+        console.log( colors.green( 'OK' ) );
+
+    } else {
+
+        console.log( colors.red( 'ERR: files not found' ) );
+
+    }
+
+    /**
+     * check profiles similarity
+     */
+
+    console.log( '' );
+    console.log( 'Check profiles similarity:' );
+
+    if( files[ to + '/info' ] && fs.existsSync( path + from + '/info' ) ) {
+
+        let info_from = JSON.parse( fs.readFileSync( path + from + '/info' ) ),
+            info_to = JSON.parse( fs.readFileSync( path + to + '/info' ) );
+
+        let test = [ ...new Set( Object.keys( info_to ).concat( Object.keys( info_from ) ) ) ];
+
+        test.forEach( ( key ) => {
+
+            let similarity = cmpstr.diceCoefficient(
+                JSON.stringify( key in info_from ? info_from[ key ] : '' ),
+                JSON.stringify( key in info_to ? info_to[ key ] : '' )
+            );
+
+            console.log( key + ' >> ' + ( similarity == 1
+                ? colors.green( 'OK' )
+                : colors.yellow( 'WARN: ' + Math.round( similarity * 100 ) + '%' ) )
+            );
+
+            if( similarity < 1 ) {
+
+                console.log( ' [FROM]', info_from[ key ] || null );
+                console.log( ' [TO]', info_to[ key ] || null );
+
+            }
+
+        } );
+
+    } else if ( files[ to + '/info' ] ) {
+
+        console.log( colors.green( 'OK' ) );
+
+    } else {
+
+        console.log( colors.red( 'ERR: files not found' ) );
+
+    }
 
 };
 
