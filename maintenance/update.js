@@ -9,8 +9,6 @@ const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
-var bar, _time, _step = 0;
-
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
 const isoCountries = require( 'i18n-iso-countries' );
@@ -181,8 +179,6 @@ async function run() {
          * process profiles in list
          */
 
-        let i = 0;
-
         logging.next(
             '[3/8] process profiles',
             response.data.personList.personsLists.length || 0,
@@ -250,36 +246,41 @@ async function run() {
 
             /**
              * save basic profile infos
+             * only if not updated
              */
 
-            let info = fs.existsSync( path + 'info' )
-                ? JSON.parse( fs.readFileSync( path + 'info' ) )
-                : {};
+            if( !fs.existsSync( path + 'updated' ) ) {
 
-            fs.writeFileSync(
-                path + 'info',
-                JSON.stringify( {
-                    ...info,
-                    ...{
-                        uri: uri,
-                        name: name,
-                        birthDate: birthDate
-                            ? birthDate.toISOString().split( 'T' )[0]
-                            : null,
-                        family: !!( profile.family || false ),
-                        gender: gender,
-                        citizenship: country,
-                        residence: {
-                            city: profile.city || null,
-                            state: profile.state || null
-                        },
-                        image: image,
-                        industry: industries.map( a => sanitize( a ) ),
-                        source: sources
-                    }
-                }, null, 2 ),
-                { flag: 'w' }
-            );
+                let info = fs.existsSync( path + 'info' )
+                    ? JSON.parse( fs.readFileSync( path + 'info' ) )
+                    : {};
+
+                fs.writeFileSync(
+                    path + 'info',
+                    JSON.stringify( {
+                        ...info,
+                        ...{
+                            uri: uri,
+                            name: name,
+                            birthDate: birthDate
+                                ? birthDate.toISOString().split( 'T' )[0]
+                                : null,
+                            family: !!( profile.family || false ),
+                            gender: gender,
+                            citizenship: country,
+                            residence: {
+                                city: profile.city || null,
+                                state: profile.state || null
+                            },
+                            image: image,
+                            industry: industries.map( a => sanitize( a ) ),
+                            source: sources
+                        }
+                    }, null, 2 ),
+                    { flag: 'w' }
+                );
+
+            }
 
             /**
              * save bios
