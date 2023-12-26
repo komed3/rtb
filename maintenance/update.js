@@ -256,11 +256,15 @@ async function run() {
             );
 
             /**
-             * save basic profile infos
-             * only if not updated
+             * check if update is needed
              */
 
             if( !fs.existsSync( path + 'updated' ) ) {
+
+                /**
+                 * save basic profile infos
+                 * only if not updated
+                 */
 
                 let info = fs.existsSync( path + 'info' )
                     ? JSON.parse( fs.readFileSync( path + 'info' ) )
@@ -290,20 +294,20 @@ async function run() {
                     { flag: 'w' }
                 );
 
+                /**
+                 * save bios
+                 */
+
+                fs.writeFileSync(
+                    path + 'bio',
+                    JSON.stringify( {
+                        bio: [].concat( profile.bios || [] ).map( a => a.trim() ),
+                        about: [].concat( profile.abouts || [] ).map( a => a.trim() )
+                    }, null, 2 ),
+                    { flag: 'w' }
+                );
+
             }
-
-            /**
-             * save bios
-             */
-
-            fs.writeFileSync(
-                path + 'bio',
-                JSON.stringify( {
-                    bio: [].concat( profile.bios || [] ).map( a => a.trim() ),
-                    about: [].concat( profile.abouts || [] ).map( a => a.trim() )
-                }, null, 2 ),
-                { flag: 'w' }
-            );
 
             /**
              * financial assets
@@ -387,19 +391,6 @@ async function run() {
             }
 
             /**
-             * basic stats
-             */
-
-            stats.count++;
-            stats.total += networth;
-
-            if( gender == 'f' ) {
-
-                stats.woman++;
-
-            }
-
-            /**
              * ranking(s)
              * requires net worth at least $1B
              */
@@ -441,6 +432,19 @@ async function run() {
                     { flag: 'w' }
                 );
 
+                /**
+                 * basic stats
+                 */
+
+                stats.count++;
+                stats.total += networth;
+
+                if( gender == 'f' ) {
+
+                    stats.woman++;
+
+                }
+
             }
 
             /**
@@ -449,7 +453,7 @@ async function run() {
 
             let cng_pct = change != null ? change.pct : 0;
 
-            if( industries && industries.length ) {
+            if( rank && industries.length ) {
 
                 industries.forEach( ( industry ) => {
 
@@ -477,7 +481,7 @@ async function run() {
 
             }
 
-            if( country ) {
+            if( rank && country ) {
 
                 if( !( country in stats.country ) ) {
 
@@ -505,7 +509,7 @@ async function run() {
              * daily movers
              */
 
-            if( change != null ) {
+            if( rank && change != null ) {
 
                 movers.value[ uri ] = change.value;
                 movers.pct[ uri ] = change.pct;
