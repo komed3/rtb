@@ -238,7 +238,7 @@ const merge = ( from, to ) => {
 
         fs.writeFileSync(
             path + to + '/history',
-            Object.values( history ).join( '\r\n' ) + '\r\n',
+            Object.values( history ).filter( a => a ).join( '\r\n' ) + '\r\n',
             { flag: 'w' }
         );
 
