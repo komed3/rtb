@@ -11,8 +11,8 @@ const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
-const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
+const isoCountries = require( 'i18n-iso-countries' );
 const logging = require( './_logging' );
 
 /**
