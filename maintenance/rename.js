@@ -45,7 +45,7 @@ if( process.argv.length == 4 ) {
          * rename profile
          */
 
-        console.log( 'rename ' + colors.yellow( '[' + from + ']' ) + ' to ' + colors.yellow( '[' + to + ']' ) );
+        console.log( 'rename ' + colors.yellow( from ) + ' to ' + colors.yellow( to ) );
         console.log( '' );
 
         /**
@@ -56,6 +56,7 @@ if( process.argv.length == 4 ) {
 
             let info = JSON.parse( fs.readFileSync( dir + from + '/info' ) );
 
+            info.originalURI = info.uri;
             info.uri = to;
 
             fs.writeFileSync(
