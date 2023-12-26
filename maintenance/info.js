@@ -165,7 +165,7 @@ async function run() {
                                         deceased: !!( data.deceased || false ),
                                         children: parseInt( data.numberOfChildren || 0 ),
                                         maritalStatus: data.maritalStatus || null,
-                                        educations: [].concat( data.educations || [] ),
+                                        education: [].concat( data.educations || [] ),
                                         organization: data.organization ? {
                                             name: data.organization,
                                             title: data.title || null
