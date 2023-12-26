@@ -18,7 +18,7 @@ const fs = require( 'fs' );
 
 if( fs.existsSync( dir + 'profile/_index' ) ) {
 
-    var index = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) );
+    var index = JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ),
         profiles = Object.keys( index );
 
     console.log( 'Real-time billionaires' );
