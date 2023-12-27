@@ -11,6 +11,7 @@
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 
 const core = require( './src/core' );
+const formatter = require( './src/formatter' );
 const api = require( './api/endpoint' );
 
 /**
@@ -57,6 +58,7 @@ routes.forEach( ( route ) => {
             let file = route[1];
 
             res.locals.core = core;
+            res.locals.formatter = formatter;
 
             res.locals.global = {};
             res.locals.global.today = today;

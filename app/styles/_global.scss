@@ -67,6 +67,7 @@
 
 body {
     margin: 0;
+    line-height: 1.2;
     text-underline-offset: 10%;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
@@ -88,10 +89,6 @@ h2 {
 h3 {
     margin: 12px 0;
     font-size: 16px;
-}
-
-p {
-    line-height: 1.4;
 }
 
 a {

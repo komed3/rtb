@@ -21,4 +21,14 @@ block content
             a.list(
               href!= core.url( '/list/rtb' )
             ) Real-time billionaires
-          div.rtb-networth.rtb-profile-networth
+          div.rtb-profile-networth
+            div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
+            div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
+
+    //- profile bio
+    if profile.bio.bio.length
+      div.rtb-box.rtb-profile-bio
+        h3.rtb-profile-heading!= 'About ' + profile.info.name
+        ul
+          each statement of profile.bio.bio
+            li!= statement
