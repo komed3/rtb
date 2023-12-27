@@ -16,9 +16,10 @@ const date = ( ts ) => {
  * @param {Float} value networth
  * @param {Int} digits number of digits
  * @param {Float} base factor
+ * @param {Boolean} trimZero trim zero
  * @returns formatted net worth string
  */
-const networth = ( value, digits = 1, base = 1e6 ) => {
+const networth = ( value, digits = 1, base = 1e6, trimZero = true ) => {
 
     value = parseFloat( value ) * base;
 
@@ -28,9 +29,10 @@ const networth = ( value, digits = 1, base = 1e6 ) => {
 
     }
 
-    let unit = Math.max( 0, Math.min( 3, Math.floor( Math.log10( value ) / 3 ) ) );
+    let unit = Math.max( 0, Math.min( 3, Math.floor( Math.log10( value ) / 3 ) ) ),
+        number = ( value / Math.pow( 10, unit * 3 ) ).toFixed( digits );
 
-    return '$' + ( value / Math.pow( 10, unit * 3 ) ).toFixed( digits ) + [ '', 'K', 'M', 'B' ][ unit ];
+    return '$' + ( trimZero ? parseFloat( number ) : number ) + [ '', 'K', 'M', 'B' ][ unit ];
 
 };
 
@@ -39,18 +41,20 @@ const networth = ( value, digits = 1, base = 1e6 ) => {
  * @param {Object|Null} change change object
  * @param {Int} digits number of digits
  * @param {Float} base factor
+ * @param {Boolean} trimZero trim zero
  * @returns formatted net worth change string
  */
-const change = ( change, digits = 1, base = 1e6 ) => {
+const change = ( change, digits = 1, base = 1e6, trimZero = true ) => {
 
     if( typeof change == 'object' && change ) {
 
-        let dir = change.value > 0;
+        let dir = change.value > 0,
+            pct = change.pct.toFixed( digits );
 
         return '<span class="' + ( dir ? 'up' : 'down' ) + '">' +
             ( dir ? '▲' : '▼' ) + '&nbsp;' +
-            networth( change.value, digits, base ) + ' (' +
-            change.pct.toFixed( digits ) + '%)' +
+            networth( change.value, digits, base, trimZero ) + ' (' +
+            ( trimZero ? parseFloat( pct ) : pct ) + '%)' +
         '</span>';
 
     }
