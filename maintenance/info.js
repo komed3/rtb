@@ -5,14 +5,14 @@
 
 'use strict';
 
-const dir = __dirname + '/../api/';
+const dir = __dirname + '/../api/profile/';
 const api = 'https://www.forbes.com/forbesapi/person/';
 const threshold = ( new Date() ).getTime() - 31557600000;
 const today = ( new Date() ).toISOString();
 
 var requestLimit = process.argv.includes( '--limit' )
-    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 100 )
-    : 100;
+    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 50 )
+    : 50;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -27,13 +27,13 @@ async function run() {
     console.log( 'Real-time billionaires' );
     console.log( colors.yellow( 'update profile info' ) );
 
-    if( fs.existsSync( dir + 'profile/_index' ) ) {
+    if( fs.existsSync( dir + '_index' ) ) {
 
         /**
          * load profile index
          */
 
-        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) ),
+        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + '_index' ) ) ),
             count = profiles.length;
 
         /**
@@ -47,7 +47,7 @@ async function run() {
 
             profiles.forEach( ( uri ) => {
 
-                let path = dir + 'profile/' + uri + '/updated';
+                let path = dir + uri + '/updated';
 
                 if( fs.existsSync( path ) ) {
 
@@ -70,7 +70,7 @@ async function run() {
 
         profiles.forEach( ( uri ) => {
 
-            let path = dir + 'profile/' + uri + '/';
+            let path = dir + uri + '/';
 
             /**
              * check if update is needed
@@ -203,33 +203,17 @@ async function run() {
                             { flag: 'w' }
                         );
 
-                        /**
-                         * save image (if exists)
-                         */
-
-                        if( 'squareImage' in person ) {
-
-                            axios.get( person.squareImage, { responseType: 'arraybuffer' } ).then( ( image ) => {
-
-                                let fileType = person.squareImage.split( '?' )[0].split( '.' ).reverse()[0];
-
-                                fs.writeFile( path + 'image.' + fileType, image.data, () => {} );
-
-                            } ).catch( () => {} );
-
-                        }
-
-                        console.log( '... ' + colors.green( 'DONE' ) );
+                        console.log( '... ' + colors.green( 'DONE' ) + ' [' + uri + '] profile updated' );
 
                     } else {
 
-                        console.log( '... ' + colors.red( 'ERR: data not available' ) );
+                        console.log( '... ' + colors.red( 'ERR' ) + ' [' + uri + '] data not available' );
 
                     }
 
                 } ).catch( () => {
 
-                    console.log( '... ' + colors.red( 'ERR: request failed' ) );
+                    console.log( '... ' + colors.red( 'ERR' ) + ' [' + uri + '] request failed' );
 
                 } );
 
@@ -239,7 +223,7 @@ async function run() {
 
     } else {
 
-        console.log( colors.red( 'ERR: no profiles found' ) );
+        console.log( colors.red( 'ERR' ) + ' no profiles found' );
 
     }
 
