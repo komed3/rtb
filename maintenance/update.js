@@ -63,6 +63,30 @@ var getAge = ( date ) => {
 };
 
 /**
+ * get list item URI by index
+ * @param {Object} object real-time data
+ * @param {Int} index item ID
+ * @returns item URI
+ */
+var getItem = ( object, index ) => {
+
+    if( index in object ) {
+
+        let item = object[ index ];
+
+        if( item.rank && parseFloat( item.finalWorth ) >= 1000 ) {
+
+            return item.uri;
+
+        }
+
+    }
+
+    return null;
+
+};
+
+/**
  * run update
  */
 async function run() {
@@ -175,17 +199,19 @@ async function run() {
         response.data.personList.personsLists
     ) {
 
+        let rtb = response.data.personList.personsLists;
+
         /**
          * process profiles in list
          */
 
         logging.next(
             '[3/8] process profiles',
-            response.data.personList.personsLists.length || 0,
+            rtb.length || 0,
             'profiles'
         );
 
-        response.data.personList.personsLists.forEach( ( profile ) => {
+        rtb.forEach( ( profile, _i ) => {
 
             let uri = profile.uri.trim();
 
@@ -365,6 +391,8 @@ async function run() {
                 JSON.stringify( {
                     date: ts,
                     rank: rank,
+                    prev: getItem( personsList, _i - 1 ),
+                    next: getItem( personsList, _i + 1 ),
                     networth: networth,
                     change: change,
                     private: parseFloat( profile.privateAssetsWorth || 0 ),
