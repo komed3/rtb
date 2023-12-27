@@ -34,6 +34,5 @@ block content
     if profile.bio.bio.length
       div.rtb-box.rtb-profile-bio
         h3.rtb-profile-heading!= 'About ' + profile.info.name
-        ul
-          each statement of profile.bio.bio
-            li!= statement
+        each statement of profile.bio.bio
+          p!= statement
