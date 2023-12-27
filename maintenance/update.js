@@ -391,8 +391,6 @@ async function run() {
                 JSON.stringify( {
                     date: ts,
                     rank: rank,
-                    prev: getItem( personsList, _i - 1 ),
-                    next: getItem( personsList, _i + 1 ),
                     networth: networth,
                     change: change,
                     private: parseFloat( profile.privateAssetsWorth || 0 ),
@@ -437,8 +435,10 @@ async function run() {
                  */
 
                 ranking.rtb = {
+                    date: ts,
                     rank: rank,
-                    date: ts
+                    prev: getItem( rtb, _i - 1 ),
+                    next: getItem( rtb, _i + 1 )
                 };
 
                 lists.rtb.push( {
