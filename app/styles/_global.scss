@@ -1,0 +1,69 @@
+/* import fonts from google api */
+
+@import url( 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap' );
+@import url( 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined' );
+
+.icon {
+    display: inline-block;
+    text-transform: none;
+    line-height: 1;
+    white-space: nowrap;
+    word-wrap: normal;
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    direction: ltr;
+}
+
+/* global styling rules */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.noscrollbar,
+.noscrollbar * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.noscrollbar::-webkit-scrollbar,
+.noscrollbar *::-webkit-scrollbar {
+    display: none;
+}
+
+.noselect, .noselect * {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    text-underline-offset: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    margin: 0 0 32px 0;
+    font-size: 26px;
+    font-weight: 900;
+}
+
+h2 {
+    margin: 0 0 24px 0;
+    font-size: 20px;
+}
+
+h3 {
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+p {
+    line-height: 1.4;
+}

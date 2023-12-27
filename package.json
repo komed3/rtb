@@ -1,36 +1,38 @@
 {
-  "name": "rtb",
-  "version": "1.0.0",
-  "description": "real time billionaires tracker",
-  "author": {
-    "name": "komed3 (Paul Köhler)",
-    "email": "webmaster@komed3.de",
-    "url": "https://komed3.de"
-  },
-  "homepage": "https://github.com/komed3/rtb",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/komed3/rtb.git"
-  },
-  "bugs": {
-    "url": "https://github.com/komed3/rtb/issues"
-  },
-  "main": "server.js",
-  "scripts": {
-    "start": "nodemon server.js",
-    "update": "node maintenance/update.js",
-    "info": "node maintenance/info.js",
-    "info-reset": "node maintenance/info.js --reset"
-  },
-  "dependencies": {
-    "ansi-colors": "^4.1.3",
-    "axios": "^1.6.2",
-    "cli-progress": "^3.12.0",
-    "cmpstr": "^1.0.2",
-    "express": "^4.18.2",
-    "fs": "^0.0.1-security",
-    "i18n-iso-countries": "^7.7.0",
-    "pug": "^3.0.2"
-  }
+    "name": "rtb",
+    "version": "1.0.0",
+    "description": "real time billionaires tracker",
+    "author": {
+        "name": "komed3 (Paul Köhler)",
+        "email": "webmaster@komed3.de",
+        "url": "https://komed3.de"
+    },
+    "homepage": "https://github.com/komed3/rtb",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/komed3/rtb.git"
+    },
+    "bugs": {
+        "url": "https://github.com/komed3/rtb/issues"
+    },
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js",
+        "update": "node maintenance/update.js",
+        "info": "node maintenance/info.js",
+        "info-reset": "node maintenance/info.js --reset",
+        "compileSCSS": "node-sass app/styles/ -o public/styles/ --output-style compressed",
+        "compileJS": "uglifyjs-folder app/scripts/ -o public/scripts/ --each"
+    },
+    "dependencies": {
+        "ansi-colors": "^4.1.3",
+        "axios": "^1.6.2",
+        "cli-progress": "^3.12.0",
+        "cmpstr": "^1.0.2",
+        "express": "^4.18.2",
+        "fs": "^0.0.1-security",
+        "i18n-iso-countries": "^7.7.0",
+        "pug": "^3.0.2"
+    }
 }

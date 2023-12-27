@@ -1,0 +1,17 @@
+//- templates/layout.pug (default layout)
+doctype html
+html( lang= 'en' )
+
+  //- html header
+  head
+    meta( charset= 'UTF-8' )/
+    meta( name= 'viewport', content= 'width=device-width, initial-scale=1.0' )/
+    block styles
+      link( rel= 'stylesheet', href= '/css/page.css' )/
+
+  //- html content
+  body
+
+    //- main content
+    main#main.rtb-wrapper( role= 'main' )
+      block content

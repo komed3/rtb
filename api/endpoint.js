@@ -26,14 +26,16 @@ const getJSONFile = ( file ) => {
  */
 const getFullProfile = ( uri ) => {
 
-    let path = __dirname + '/profile/' + uri + '/';
+    let path = '/profile/' + uri + '/';
 
-    if( fs.existsSync( path ) ) {
+    if( fs.existsSync( __dirname + path ) ) {
 
         return {
             info: getJSONFile( path + 'info' ),
             bio: getJSONFile( path + 'bio' ),
-            assets: getJSONFile( path + 'assets' )
+            rank: getJSONFile( path + 'rank' ),
+            assets: getJSONFile( path + 'assets' ),
+            latest: getJSONFile( path + 'latest' )
         };
 
     }

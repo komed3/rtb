@@ -1,2 +1,23 @@
 //- profile page
 extends templates/layout.pug
+
+block styles
+  link( rel= 'stylesheet', href= '/css/profile.css' )/
+
+block content
+  div.rtb-page.rtb-profile
+
+    //- profile header
+    div.rtb-box.rtb-profile-header
+      img.rtb-image.rtb-profile-header-image(
+        src!= profile.info.image || 'res/empty-profile.jpg',
+        loading= 'lazy'
+      )
+      div.rtb-profile-header-info
+        h1.rtb-profile-header-name!= profile.info.name
+        if profile.latest && profile.latest.rank && profile.latest.date == global.today
+          div.rtb-profile-header-rank
+            b.rank!= '#' + profile.latest.rank
+            a.list(
+              href!= core.url( '/list/rtb' )
+            ) Real-time billionaires

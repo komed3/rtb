@@ -8,6 +8,8 @@
 
 'use strict';
 
+const today = ( new Date() ).toISOString().split( 'T' )[0];
+
 const core = require( './src/core' );
 const api = require( './api/endpoint' );
 
@@ -50,15 +52,18 @@ routes.forEach( ( route ) => {
 
     app.get( route[0], ( req, res ) => {
 
-        let file = route[1];
-
         try {
 
-            /**
-             * process pages + locals
-             */
+            let file = route[1];
 
-            res.locals.page = {};
+            res.locals.core = core;
+
+            res.locals.global = {};
+            res.locals.global.today = today;
+
+            /**
+             * process pages
+             */
 
             switch( route[1] ) {
 
@@ -72,7 +77,7 @@ routes.forEach( ( route ) => {
                          * get full profile by URI
                          */
 
-                        res.locals.page.profile = api.getFullProfile( uri );
+                        res.locals.profile = api.getFullProfile( uri );
 
                     } else if( uri in alias ) {
 
