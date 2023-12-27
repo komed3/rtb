@@ -76,6 +76,8 @@ const finish = () => {
 
     if( bar != null ) {
 
+        bar.update( _total );
+
         abort();
 
         console.log( colors.green( 'step ' + _step + ' finished after ' + (
@@ -104,6 +106,25 @@ const abort = () => {
 };
 
 /**
+ * test, if progress bar is finished
+ * @param {Boolean} stop stop progress bar if is finished
+ * @returns test value
+ */
+const test = ( stop = false ) => {
+
+    let isFinish = _progress == _total;
+
+    if( stop ) {
+
+        finish();
+
+    }
+
+    return isFinish;
+
+};
+
+/**
  * export module functions
  */
 module.exports = {
@@ -111,5 +132,6 @@ module.exports = {
     update,
     addTotal,
     finish,
-    abort
+    abort,
+    test
 };
