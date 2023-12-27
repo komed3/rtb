@@ -35,8 +35,33 @@ const networth = ( value, digits = 1, base = 1e6 ) => {
 };
 
 /**
+ * format net worth change
+ * @param {Object|Null} change change object
+ * @param {Int} digits number of digits
+ * @param {Float} base factor
+ * @returns formatted net worth change string
+ */
+const change = ( change, digits = 1, base = 1e6 ) => {
+
+    if( typeof change == 'object' && change ) {
+
+        let dir = change.value > 0;
+
+        return '<span class="' + ( dir ? 'up' : 'down' ) + '">' +
+            ( dir ? '▲' : '▼' ) + '&nbsp;' +
+            networth( change.value, digits, base ) + ' (' +
+            change.pct.toFixed( digits ) + '%)' +
+        '</span>';
+
+    }
+
+    return '$0';
+
+};
+
+/**
  * export public methods
  */
 module.exports = {
-    date, networth
+    date, networth, change
 };

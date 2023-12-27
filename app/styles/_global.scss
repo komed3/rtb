@@ -31,6 +31,9 @@
     --color-main: var( --gray-5 );
     --color-bg: var( --gray-1 );
 
+    --color-good: #00b67a;
+    --color-bad: #fa6464;
+
     --box-shadow: 2px 2px 4px rgba( 230 230 230 / 0.25 );
 
 }
@@ -77,12 +80,12 @@ body {
 
 h1 {
     margin: 0 0 32px 0;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 900;
 }
 
 h2 {
-    margin: 0 0 24px 0;
+    margin: 0 0 26px 0;
     font-size: 20px;
 }
 
@@ -94,6 +97,14 @@ h3 {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+.up {
+    color: var( --color-good );
+}
+
+.down {
+    color: var( --color-bad );
 }
 
 /* global elements */
@@ -113,5 +124,13 @@ a {
     background: var( --gray-0 );
     border-radius: 12px;
     box-shadow: var( --box-shadow );
+    overflow: hidden;
+}
+
+/* image */
+
+.rtb-image {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
     overflow: hidden;
 }

@@ -1,6 +1,9 @@
 //- profile page
 extends templates/layout.pug
 
+block title
+  title!= profile.info.name + ' — Profile'
+
 block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
 
@@ -23,6 +26,8 @@ block content
             ) Real-time billionaires
           div.rtb-profile-networth
             div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
+            if profile.latest.change
+              div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
             div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
 
     //- profile bio

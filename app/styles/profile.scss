@@ -1,1 +1,45 @@
 @import 'page';
+
+.rtb-profile-header {
+    display: grid;
+    grid-template-columns: 200px auto;
+    gap: 48px;
+}
+
+.rtb-profile-header-image {
+    width: 100%;
+}
+
+.rtb-profile-header-name {
+    margin-bottom: 0;
+}
+
+.rtb-profile-header-rank {
+    margin-top: 6px;
+    font-size: 20px;
+}
+
+.rtb-profile-header-rank b {
+    margin-right: 12px;
+    font-weight: 900;
+}
+
+.rtb-profile-networth {
+    margin-top: 24px;
+}
+
+.rtb-profile-networth-value {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.rtb-profile-networth-change {
+    margin: 4px 0 2px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.rtb-profile-networth-date {
+    font-size: 13px;
+    color: var( --gray-3 );
+}
