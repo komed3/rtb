@@ -149,6 +149,16 @@ async function run() {
                         }
 
                         /**
+                         * renew image (if available)
+                         */
+
+                        if( 'squareImage' in person && person.squareImage ) {
+
+                            info.image = person.squareImage.toString().replace( 'https:', '' );
+
+                        }
+
+                        /**
                          * save profile info
                          */
 
