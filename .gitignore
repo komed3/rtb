@@ -5,6 +5,7 @@ node_modules/
 api/*
 !api/endpoint.js
 
-# compiled files
+# public + compiled files
+public/images
 public/scripts
 public/styles
