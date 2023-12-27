@@ -1,2 +1,4 @@
 node_modules/
 api/
+public/scripts
+public/styles
