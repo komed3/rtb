@@ -8,7 +8,15 @@
 
 'use strict';
 
-const fs = require( 'fs' );
+const core = require( './src/core' );
+const api = require( './api/endpoint' );
+
+/**
+ * load profiles index + aliases
+ */
+
+const index = api.getJSONFile( 'profile/_index' );
+const alias = api.getJSONFile( 'profile/_alias' );
 
 /**
  * express framework
@@ -40,7 +48,82 @@ const routes = require( './config/routes' );
 
 routes.forEach( ( route ) => {
 
-    //
+    app.get( route[0], ( req, res ) => {
+
+        let file = route[1];
+
+        try {
+
+            /**
+             * process pages + locals
+             */
+
+            res.locals.page = {};
+
+            switch( route[1] ) {
+
+                case 'profile':
+
+                    let uri = ( req.params.uri || '' ).toLowerCase();
+
+                    if( uri in index ) {
+
+                        /**
+                         * get full profile by URI
+                         */
+
+                        res.locals.page.profile = api.getFullProfile( uri );
+
+                    } else if( uri in alias ) {
+
+                        /**
+                         * uri is alias of another profile
+                         * redirect to profile
+                         */
+
+                        res.redirect( core.url( '/profile/' + alias[ uri ] ) );
+                        return ;
+
+                    } else {
+
+                        /**
+                         * profile not given or exists
+                         * redirect to home
+                         */
+
+                        res.redirect( core.url( '/' ) );
+                        return ;
+
+                    }
+
+                    break;
+
+            }
+
+            /**
+             * render output + send to client
+             */
+
+            res.status( 200 ).send(
+                pug.renderFile(
+                    __dirname + '/app/' + file + '.pug',
+                    res.locals
+                )
+            );
+
+        } catch ( err ) {
+
+            /**
+             * catch server error
+             */
+
+            res.status( 500 ).send(
+                'ERROR: ' + err
+            );
+
+        };
+
+    } );
 
 } );
 

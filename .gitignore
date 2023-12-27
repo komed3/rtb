@@ -1,4 +1,10 @@
+# Node.js
 node_modules/
-api/
+
+# rtb api
+api/*
+!api/endpoint.js
+
+# compiled files
 public/scripts
 public/styles
