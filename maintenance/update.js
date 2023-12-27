@@ -77,7 +77,7 @@ async function run() {
 
     logging.next(
         '[1/8] getting ready',
-        5, 'steps'
+        4, 'steps'
     );
 
     [
@@ -134,16 +134,6 @@ async function run() {
 
     var alias = fs.existsSync( dir + '/profile/_alias' )
         ? JSON.parse( fs.readFileSync( dir + '/profile/_alias' ) || '{}' )
-        : {};
-
-    logging.update();
-
-    /**
-     * get images database
-     */
-
-    var images = fs.existsSync( dir + '/profile/_image' )
-        ? JSON.parse( fs.readFileSync( dir + '/profile/_image' ) || '{}' )
         : {};
 
     logging.update();
@@ -292,6 +282,9 @@ async function run() {
                                 : null,
                             family: !!( profile.family || false ),
                             gender: gender,
+                            image: profile.squareImage
+                                ? profile.squareImage.toString().replace( 'https:', '' )
+                                : null,
                             citizenship: country,
                             residence: {
                                 city: profile.city || null,
@@ -337,20 +330,6 @@ async function run() {
                 name: name,
                 update: today
             };
-
-            /**
-             * save available image
-             */
-
-            if( 'squareImage' in profile && profile.squareImage ) {
-
-                images[ uri ] = profile.squareImage.toString().replace( 'https:', '' );
-
-            } else {
-
-                delete images[ uri ];
-
-            }
 
             /**
              * latest (net worth) data
@@ -876,7 +855,7 @@ async function run() {
 
     logging.next(
         '[8/8] finishing off',
-        4, 'steps'
+        3, 'steps'
     );
 
     /**
@@ -887,20 +866,6 @@ async function run() {
         dir + 'profile/_index',
         JSON.stringify( Object.keys( index ).sort().reduce( ( a, b ) => ( {
             ...a, [ b ]: index[ b ]
-        } ), {} ), null, 2 ),
-        { flag: 'w' }
-    );
-
-    logging.update();
-
-    /**
-     * save images database
-     */
-
-    fs.writeFileSync(
-        dir + 'profile/_image',
-        JSON.stringify( Object.keys( images ).sort().reduce( ( a, b ) => ( {
-            ...a, [ b ]: images[ b ]
         } ), {} ), null, 2 ),
         { flag: 'w' }
     );
