@@ -18,7 +18,6 @@ const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
-const logging = require( './_logging' );
 
 /**
  * run info updater
@@ -27,18 +26,12 @@ async function run() {
 
     console.log( 'Real-time billionaires' );
     console.log( colors.yellow( 'update profile info' ) );
-    console.log( '' );
 
     if( fs.existsSync( dir + 'profile/_index' ) ) {
 
         /**
          * load profile index
          */
-
-        logging.next(
-            '[1/2] getting ready',
-            1, 'steps'
-        );
 
         let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) ),
             count = profiles.length;
@@ -49,8 +42,8 @@ async function run() {
 
         if( process.argv.includes( '--reset' ) ) {
 
-            logging.addTotal( count );
-            logging.update();
+            console.log( '' );
+            console.log( 'Reset timestamps [' + colors.yellow( '--reset' ) + '] ...' );
 
             profiles.forEach( ( uri ) => {
 
@@ -62,20 +55,14 @@ async function run() {
 
                 }
 
-                logging.update();
-
             } );
 
-        } else {
-
-            logging.update();
+            console.log( '... ' + colors.green( 'DONE' ) );
 
         }
 
-        logging.next(
-            '[2/2] update profile info',
-            count, 'profiles'
-        );
+        console.log( '' );
+        console.log( 'Update profiles ...' );
 
         /**
          * update data
@@ -98,6 +85,8 @@ async function run() {
                 ) &&
                 --requestLimit >= 0
             ) {
+
+                console.log( '>> updating ' + colors.yellow( uri ) + ' ...' );
 
                 let info = fs.existsSync( path + 'info' )
                     ? JSON.parse( fs.readFileSync( path + 'info' ) )
@@ -230,25 +219,19 @@ async function run() {
 
                         }
 
+                        console.log( '... ' + colors.green( 'DONE' ) );
+
+                    } else {
+
+                        console.log( '... ' + colors.red( 'ERR: data not available' ) );
+
                     }
-
-                    logging.update();
-
-                    logging.test( true );
 
                 } ).catch( () => {
 
-                    logging.update();
-
-                    logging.test( true );
+                    console.log( '... ' + colors.red( 'ERR: request failed' ) );
 
                 } );
-
-            } else {
-
-                logging.update();
-
-                logging.test( true );
 
             }
 
@@ -256,11 +239,7 @@ async function run() {
 
     } else {
 
-        logging.abort();
-
-        console.log( colors.red( 'no profiles found' ) );
-
-        process.exit(1);
+        console.log( colors.red( 'ERR: no profiles found' ) );
 
     }
 
