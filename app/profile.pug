@@ -10,7 +10,27 @@ block styles
 block content
   div.rtb-page.rtb-profile
 
-    //- profile header
+    //- navigation
+    if profile.rank && profile.rank.rtb
+      div.rtb-nav.rtb-profile-nav
+        -var prev = api.resolveURI( profile.rank.rtb.prev )
+        -var next = api.resolveURI( profile.rank.rtb.next )
+        if prev
+          a.rtb-nav-link.rtb-nav-prev(
+            href= core.url( 'profile/' + prev )
+          )
+            i.icon arrow_back
+            span!= api.index[ prev ].name
+        if prev && next
+          span.rtb-nav-divider /
+        if next
+          a.rtb-nav-link.rtb-nav-next(
+            href= core.url( 'profile/' + next )
+          )
+            span!= api.index[ next ].name
+            i.icon arrow_forward
+
+    //- header
     div.rtb-box.rtb-profile-header
       img.rtb-image.rtb-profile-header-image(
         src!= profile.info.image || 'res/empty-profile.jpg',
@@ -30,9 +50,13 @@ block content
               div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
             div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
 
-    //- profile bio
+    //- bio
     if profile.bio.bio.length
       div.rtb-box.rtb-profile-bio
         h3.rtb-profile-heading!= 'About ' + profile.info.name
         each statement of profile.bio.bio
           p!= statement
+
+    //- personal stats
+    div.rtb-box.rtb-profile-info
+      h3.rtb-profile-heading!= 'Personal stats'

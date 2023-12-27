@@ -1,9 +1,13 @@
 @import 'page';
 
+.rtb-profile-nav {
+    margin-bottom: 48px;
+}
+
 .rtb-profile-header {
     display: grid;
     grid-template-columns: 200px auto;
-    gap: 48px;
+    gap: 24px;
 }
 
 .rtb-profile-header-image {

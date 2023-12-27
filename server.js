@@ -15,13 +15,6 @@ const formatter = require( './src/formatter' );
 const api = require( './api/endpoint' );
 
 /**
- * load profiles index + aliases
- */
-
-const index = api.getJSONFile( 'profile/_index' );
-const alias = api.getJSONFile( 'profile/_alias' );
-
-/**
  * express framework
  */
 
@@ -59,6 +52,7 @@ routes.forEach( ( route ) => {
 
             res.locals.core = core;
             res.locals.formatter = formatter;
+            res.locals.api = api;
 
             res.locals.global = {};
             res.locals.global.today = today;
@@ -73,15 +67,17 @@ routes.forEach( ( route ) => {
 
                     let uri = ( req.params.uri || '' ).toLowerCase();
 
-                    if( uri in index ) {
+                    if( uri in api.index ) {
 
                         /**
                          * get full profile by URI
                          */
 
-                        res.locals.profile = api.getFullProfile( uri );
+                        let profile = api.getFullProfile( uri );
 
-                    } else if( uri in alias ) {
+                        res.locals.profile = profile;
+
+                    } else if( uri in api.alias ) {
 
                         /**
                          * uri is alias of another profile
