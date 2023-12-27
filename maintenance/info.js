@@ -7,26 +7,18 @@
 
 const dir = __dirname + '/../api/';
 const api = 'https://www.forbes.com/forbesapi/person/';
-const threshold = ( new Date() ).getTime() - 15552000000;
+const threshold = ( new Date() ).getTime() - 31557600000;
 const today = ( new Date() ).toISOString();
 
-var maxRequest = 250;
+var requestLimit = process.argv.includes( '--limit' )
+    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 100 )
+    : 100;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
 const isoCountries = require( 'i18n-iso-countries' );
 const fs = require( 'fs' );
 const logging = require( './_logging' );
-
-/**
- * update profile timestamp
- * @param {String} path path to profile
- */
-const updateTimestamp = ( path ) => {
-
-    fs.writeFileSync( path + 'updated', today, { flag: 'w' } );
-
-};
 
 /**
  * run info updater
@@ -37,22 +29,22 @@ async function run() {
     console.log( colors.yellow( 'update profile info' ) );
     console.log( '' );
 
-    /**
-     * load profile index
-     */
-
-    logging.next(
-        '[1/2] getting ready',
-        1, 'steps'
-    );
-
     if( fs.existsSync( dir + 'profile/_index' ) ) {
 
+        /**
+         * load profile index
+         */
+
+        logging.next(
+            '[1/2] getting ready',
+            1, 'steps'
+        );
+
         let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) ),
-            count = profiles.length, i = 0;
+            count = profiles.length;
 
         /**
-         * reset timestamps if flag is active
+         * reset timestamps if flag "--reset" is active
          */
 
         if( process.argv.includes( '--reset' ) ) {
@@ -93,143 +85,170 @@ async function run() {
 
             let path = dir + 'profile/' + uri + '/';
 
-            if( fs.existsSync( path + 'info' ) ) {
+            /**
+             * check if update is needed
+             */
 
-                let info = JSON.parse( fs.readFileSync( path + 'info' ) );
+            if(
+                (
+                    !fs.existsSync( path + 'updated' ) ||
+                    ( new Date(
+                        fs.readFileSync( path + 'updated' ).toString()
+                    ) ).getTime() < threshold
+                ) &&
+                --requestLimit >= 0
+            ) {
 
-                if(
-                    (
-                        !fs.existsSync( path + 'updated' ) ||
-                        ( new Date(
-                            fs.readFileSync( path + 'updated' ).toString()
-                        ) ).getTime() < threshold
-                    ) &&
-                    --maxRequest > 0
-                ) {
+                let info = fs.existsSync( path + 'info' )
+                    ? JSON.parse( fs.readFileSync( path + 'info' ) )
+                    : {};
 
-                    /**
-                     * update profile timestamp
-                     */
+                let request = 'originalURI' in info
+                    ? info.originalURI
+                    : uri;
 
-                    updateTimestamp( path );
+                /**
+                 * update profile timestamp
+                 */
 
-                    /**
-                     * try to fetch data for profile
-                     */
+                fs.writeFileSync( path + 'updated', today, { flag: 'w' } );
 
-                    axios.get( api + uri ).then( ( response ) => {
+                /**
+                 * try to fetch data for profile
+                 */
 
-                        if( response.data && response.data.person ) {
+                axios.get( api + request ).then( ( response ) => {
 
-                            let data = response.data.person;
+                    if( response.data && 'person' in response.data ) {
 
-                            /**
-                             * get detailed residence info
-                             */
+                        let person = response.data.person;
 
-                            let country = data.countryOfResidence
-                                ? isoCountries.getAlpha2Code( data.countryOfResidence, 'en' )
-                                : null;
+                        /**
+                         * get detailed residence info
+                         */
 
-                            if( !country || country == undefined ) {
+                        let country = person.countryOfResidence
+                            ? isoCountries.getAlpha2Code( person.countryOfResidence, 'en' )
+                            : null;
 
-                                country = null;
+                        if( !country || country == undefined ) {
 
-                            } else {
+                            country = null;
 
-                                country = country.toLowerCase();
+                        } else {
 
-                            }
+                            country = country.toLowerCase();
 
-                            info.residence = {
-                                country: country,
-                                state: data.stateProvince || null,
-                                city: data.city || null
-                            };
+                        }
 
-                            if( 'zip' in data ) {
+                        info.residence = {
+                            country: country,
+                            state: person.stateProvince || null,
+                            city: person.city || null
+                        };
 
-                                info.residence.zipCode = data.zip;
+                        if( 'zip' in person ) {
 
-                            }
+                            info.residence.zipCode = person.zip;
 
-                            /**
-                             * save profile info
-                             */
+                        }
 
-                            fs.writeFileSync(
-                                path + 'info',
-                                JSON.stringify( {
-                                    ...info,
-                                    ...{
-                                        deceased: !!( data.deceased || false ),
-                                        children: parseInt( data.numberOfChildren || 0 ),
-                                        maritalStatus: data.maritalStatus || null,
-                                        education: [].concat( data.educations || [] ),
-                                        organization: data.organization ? {
-                                            name: data.organization,
-                                            title: data.title || null
-                                        } : null,
-                                        selfMade: {
-                                            type: data.selfMadeType || null,
-                                            rank: data.selfMadeRank || null
-                                        }
+                        if( 'geoLocation' in person ) {
+
+                            info.residence._geo = person.geoLocation;
+
+                        }
+
+                        /**
+                         * save profile info
+                         */
+
+                        fs.writeFileSync(
+                            path + 'info',
+                            JSON.stringify( {
+                                ...info,
+                                ...{
+                                    deceased: !!( person.deceased || false ),
+                                    children: parseInt( person.numberOfChildren || 0 ),
+                                    maritalStatus: person.maritalStatus || null,
+                                    education: [].concat( person.educations || [] ),
+                                    organization: person.organization ? {
+                                        name: person.organization,
+                                        title: person.title || null
+                                    } : null,
+                                    selfMade: {
+                                        _is: !!( person.selfMade || false ),
+                                        type: person.selfMadeType || null,
+                                        rank: person.selfMadeRank || null
                                     }
-                                }, null, 2 ),
-                                { flag: 'w' }
-                            );
+                                }
+                            }, null, 2 ),
+                            { flag: 'w' }
+                        );
 
-                            /**
-                             * save related entities
-                             */
+                        /**
+                         * save related entities
+                         */
 
-                            fs.writeFileSync(
-                                path + 'related',
-                                JSON.stringify(
-                                    [].concat( data.relatedEntities || [] )
-                                        .filter( ( r ) => {
+                        fs.writeFileSync(
+                            path + 'related',
+                            JSON.stringify(
+                                [].concat( person.relatedEntities || [] )
+                                    .filter( ( r ) => {
 
-                                            return r.type == 'person' &&
-                                                profiles.includes( r.uri );
+                                        return r.type == 'person' &&
+                                            profiles.includes( r.uri );
 
-                                        } )
-                                        .map( ( r ) => {
+                                    } )
+                                    .map( ( r ) => {
 
-                                            return {
-                                                uri: r.uri,
-                                                name: r.name,
-                                                type: r.relationshipType
-                                            };
+                                        return {
+                                            uri: r.uri,
+                                            name: r.name,
+                                            type: r.relationshipType
+                                        };
 
-                                        } ),
-                                    null, 2
-                                ),
-                                { flag: 'w' }
-                            );
+                                    } ),
+                                null, 2
+                            ),
+                            { flag: 'w' }
+                        );
+
+                        /**
+                         * save image (if exists)
+                         */
+
+                        if( 'squareImage' in person ) {
+
+                            axios.get( person.squareImage, { responseType: 'arraybuffer' } ).then( ( image ) => {
+
+                                let fileType = person.squareImage.split( '?' )[0].split( '.' ).reverse()[0];
+
+                                fs.writeFile( path + 'image.' + fileType, image.data, () => {} );
+
+                            } ).catch( () => {} );
 
                         }
-
-                        logging.update();
-
-                        if( ++i == count ) {
-
-                            logging.finish();
-
-                        }
-
-                    } );
-
-                } else {
-
-                    logging.update();
-
-                    if( ++i == count ) {
-
-                        logging.finish();
 
                     }
 
-                }
+                    logging.update();
+
+                    logging.test( true );
+
+                } ).catch( () => {
+
+                    logging.update();
+
+                    logging.test( true );
+
+                } );
+
+            } else {
+
+                logging.update();
+
+                logging.test( true );
 
             }
 
