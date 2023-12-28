@@ -52,7 +52,6 @@ const change = ( change, digits = 1, base = 1e6, trimZero = true ) => {
             pct = change.pct.toFixed( digits );
 
         return '<span class="' + ( dir ? 'up' : 'down' ) + '">' +
-            ( dir ? '▲' : '▼' ) + '&nbsp;' +
             networth( change.value, digits, base, trimZero ) + ' (' +
             ( trimZero ? parseFloat( pct ) : pct ) + '%)' +
         '</span>';

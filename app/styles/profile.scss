@@ -1,7 +1,10 @@
 @import 'page';
 
-.rtb-profile-nav,
 .rtb-profile-tags {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    gap: 48px;
     margin-bottom: 24px;
 }
 
@@ -22,13 +25,8 @@
     margin-bottom: 0;
 }
 
-.rtb-profile-header-name b {
-    margin-right: 12px;
-    font-weight: 900;
-    color: var( --accent-1 );
-}
-
 .rtb-profile-header-label {
+    margin-top: 4px;
     font-size: 18px;
 }
 
@@ -37,8 +35,8 @@
 }
 
 .rtb-profile-networth-value {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 38px;
+    font-weight: 900;
 }
 
 .rtb-profile-networth-change {

@@ -15,27 +15,49 @@ block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
 
 block content
-  -var rank = profile.latest && profile.latest.rank && profile.latest.date == global.today ? profile.latest.rank : null
-
   div.rtb-page.rtb-profile
 
-    //- navigation
-    if profile.rank && profile.rank.rtb
-      div.rtb-nav.rtb-profile-nav
-        -var prev = api.resolveURI( profile.rank.rtb.prev )
-        -var next = api.resolveURI( profile.rank.rtb.next )
-        if prev
-          a.rtb-nav-link.rtb-nav-prev(
-            href= core.url( 'profile/' + prev )
+    //- tags + navigation
+    div.rtb-profile-tags
+
+      //- tags
+      div.rtb-tags
+        if profile.latest && profile.latest.rank && profile.latest.date == global.today
+          a.tag.tag-primary(
+            href!= core.url( '/list/rtb' )
           )
-            i.icon arrow_back
-            span!= api.index[ prev ].name
-        if next
-          a.rtb-nav-link.rtb-nav-next(
-            href= core.url( 'profile/' + next )
+            span!= '#' + profile.latest.rank
+        if profile.info.industry
+          each industry of profile.info.industry
+            a.tag.tag-primary(
+              href!= core.url( '/industry/' + industry )
+            )
+              i.icon factory
+              span!= api.indexes.industry[ industry ] || 'Unknown'
+        if profile.info.citizenship
+          a.tag.tag-secondary(
+            href!= core.url( '/country/' + profile.info.citizenship )
           )
-            span!= api.index[ next ].name
-            i.icon arrow_forward
+            i.icon language
+            span!= isoc.getName( profile.info.citizenship, 'en' ) 
+
+      //- navigation
+      if profile.rank && profile.rank.rtb
+        div.rtb-tags.rtb-profile-nav
+          -var prev = api.resolveURI( profile.rank.rtb.prev )
+          -var next = api.resolveURI( profile.rank.rtb.next )
+          if prev
+            a.tag(
+              href= core.url( 'profile/' + prev )
+            )
+              i.icon arrow_back
+              span!= api.index[ prev ].name
+          if next
+            a.tag(
+              href= core.url( 'profile/' + next )
+            )
+              span!= api.index[ next ].name
+              i.icon arrow_forward
 
     //- header
     div.rtb-box.rtb-profile-header
@@ -44,10 +66,7 @@ block content
         loading= 'lazy'
       )
       div.rtb-profile-header-info
-        h1.rtb-profile-header-name
-          if rank
-            b!= '#' + rank
-          span!= profile.info.name
+        h1.rtb-profile-header-name!= profile.info.name
         if profile.info.deceased
           div.rtb-profile-header-label Deceased
         else if profile.info.organization
@@ -57,27 +76,6 @@ block content
           if profile.latest.change
             div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
           div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
-
-    //- tags
-    div.rtb-tags.rtb-profile-tags
-      if rank
-        a.tag.tag-primary(
-          href!= core.url( '/list/rtb' )
-        )
-          span!= '#' + rank
-      if profile.info.industry
-        each industry of profile.info.industry
-          a.tag.tag-primary(
-            href!= core.url( '/industry/' + industry )
-          )
-            i.icon factory
-            span!= api.indexes.industry[ industry ] || 'Unknown'
-      if profile.info.citizenship
-        a.tag.tag-secondary(
-          href!= core.url( '/country/' + profile.info.citizenship )
-        )
-          i.icon language
-          span!= isoc.getName( profile.info.citizenship, 'en' )
 
     //- bio
     if profile.bio && profile.bio.bio.length
