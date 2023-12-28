@@ -6,12 +6,16 @@ block title
 
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
+  script.
+    const _history = !{JSON.stringify( profile.history )};
   script( src= '/js/ntw-chart.min.js' )
 
 block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
 
 block content
+  -var rank = profile.latest && profile.latest.rank && profile.latest.date == global.today ? profile.latest.rank : null
+
   div.rtb-page.rtb-profile
 
     //- navigation
@@ -40,8 +44,8 @@ block content
       )
       div.rtb-profile-header-info
         h1.rtb-profile-header-name
-          if profile.latest && profile.latest.rank && profile.latest.date == global.today
-            b!= '#' + profile.latest.rank
+          if rank
+            b!= '#' + rank
           span!= profile.info.name
         if profile.info.deceased
           div.rtb-profile-header-label Deceased
@@ -52,6 +56,27 @@ block content
           if profile.latest.change
             div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
           div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
+
+    //- tags
+    div.rtb-tags.rtb-profile-tags
+      if rank
+        a.tag.tag-primary(
+          href!= core.url( '/list/rtb' )
+        )
+          span!= '#' + rank
+      if profile.info.industry
+        each industry of profile.info.industry
+          a.tag.tag-primary(
+            href!= core.url( '/industry/' + industry )
+          )
+            i.icon factory
+            span!= api.indexes.industry[ industry ] || 'Unknown'
+      if profile.info.citizenship
+        a.tag.tag-secondary(
+          href!= core.url( '/country/' + profile.info.citizenship )
+        )
+          i.icon language
+          span!= isoc.getName( profile.info.citizenship, 'en' )
 
     //- bio
     if profile.bio && profile.bio.bio
@@ -107,9 +132,6 @@ block content
             span!= profile.info.selfMade.type
 
     //- net worth history
-    if profile.history && profile.history.length
-      div.rtb-box.rtb-profile-history
-        h3.rtb-profile-heading Net worth history
-        canvas#__chart_ntw_history.rtb-chart.rtb-ntw-chart(
-          chart-data!= Buffer.from( JSON.stringify( profile.history ) ).toString( 'base64' )
-        )
+    div.rtb-box.rtb-profile-history
+      h3.rtb-profile-heading Net worth history
+      canvas#__chart_ntw_history.rtb-chart.rtb-ntw-chart

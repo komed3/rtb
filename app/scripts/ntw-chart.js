@@ -14,18 +14,17 @@ document.onreadystatechange = () => {
              * process chart data
              */
 
-            let source = Array.from( JSON.parse( window.atob( chart.getAttribute( 'chart-data' ) || '' ) ) ),
-                data = [];
+            let data = [];
 
-            data.push( source[0] );
+            data.push( _history[0] );
 
-            for( let i = 1; i < source.length - 1; i += Math.round( source.length / 400 ) ) {
+            for( let i = 1; i < _history.length - 1; i += Math.round( _history.length / 400 ) ) {
 
-                data.push( source[ i ] );
+                data.push( _history[ i ] );
 
             }
 
-            data.push( source[ source.length - 1 ] );
+            data.push( _history[ _history.length - 1 ] );
 
             /**
              * create new chart

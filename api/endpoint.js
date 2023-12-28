@@ -104,11 +104,17 @@ const getFullProfile = ( uri ) => {
 const index = getJSONFile( 'profile/_index' );
 const alias = getJSONFile( 'profile/_alias' );
 
+const indexes = {
+    industry: getJSONFile( 'stats/industry/_index' ),
+    country: getJSONFile( 'stats/country/_index' )
+};
+
 /**
  * export public methods
  */
 module.exports = {
     index, alias,
+    indexes,
     resolveURI,
     getJSONFile,
     getCSVFile,

@@ -180,6 +180,40 @@ a:hover {
     font-size: 20px;
 }
 
+/* tags */
+
+.rtb-tags {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 24px;
+}
+
+.rtb-tags .tag {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 4px;
+    box-shadow: var( --box-shadow );
+}
+
+.rtb-tags .tag.tag-primary {
+    color: var( --gray-0 );
+    background: var( --accent-1 );
+}
+
+.rtb-tags .tag.tag-secondary {
+    color: var( --gray-0 );
+    background: var( --accent-2 );
+}
+
+.rtb-tags .tag i {
+    font-size: 24px;
+}
+
 /* grid */
 
 .rtb-grid {
