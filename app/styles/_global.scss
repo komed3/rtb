@@ -31,6 +31,8 @@
     --color-main: var( --gray-5 );
     --color-bg: var( --gray-1 );
 
+    --accent-1: #e30b5c;
+
     --color-good: #00b67a;
     --color-bad: #fa6464;
 
@@ -104,6 +106,10 @@ a {
     color: inherit;
 }
 
+a:hover {
+    color: var( --accent-1 );
+}
+
 .up {
     color: var( --color-good );
 }
@@ -143,6 +149,7 @@ a {
 
 .rtb-image {
     aspect-ratio: 1/1;
+    background-color: var( --color-bg );
     border-radius: 10px;
     overflow: hidden;
 }
@@ -153,7 +160,7 @@ a {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    gap: 16px;
+    gap: 24px;
 }
 
 .rtb-nav-link {
@@ -161,9 +168,9 @@ a {
     flex-flow: row nowrap;
     align-items: center;
     gap: 6px;
+    padding: 6px 10px;
     font-weight: 700;
-}
-
-.rtb-nav-divider {
-    color: var( --gray-3 );
+    background: var( --gray-0 );
+    border-radius: 4px;
+    box-shadow: var( --box-shadow );
 }

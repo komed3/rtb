@@ -21,8 +21,6 @@ block content
           )
             i.icon arrow_back
             span!= api.index[ prev ].name
-        if prev && next
-          span.rtb-nav-divider /
         if next
           a.rtb-nav-link.rtb-nav-next(
             href= core.url( 'profile/' + next )
@@ -37,20 +35,17 @@ block content
         loading= 'lazy'
       )
       div.rtb-profile-header-info
-        h1.rtb-profile-header-name!= profile.info.name
+        h1.rtb-profile-header-name
+          if profile.latest && profile.latest.rank && profile.latest.date == global.today
+            b!= '#' + profile.latest.rank
+          span!= profile.info.name
         if profile.info.organization
           div.rtb-profile-header-organization!= [ profile.info.organization.title, profile.info.organization.name ].join( ', ' )
-        if profile.latest && profile.latest.rank && profile.latest.date == global.today
-          div.rtb-profile-header-rank
-            b.rank!= '#' + profile.latest.rank
-            a.list(
-              href!= core.url( '/list/rtb' )
-            ) Real-time billionaires
-          div.rtb-profile-networth
-            div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
-            if profile.latest.change
-              div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
-            div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
+        div.rtb-profile-networth
+          div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
+          if profile.latest.change
+            div.rtb-profile-networth-change!= formatter.change( profile.latest.change )
+          div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
 
     //- bio
     if profile.bio.bio.length

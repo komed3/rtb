@@ -11,21 +11,24 @@
 }
 
 .rtb-profile-header-image {
-    width: 100%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .rtb-profile-header-name {
     margin-bottom: 0;
 }
 
-.rtb-profile-header-rank {
-    margin-top: 6px;
-    font-size: 20px;
-}
-
-.rtb-profile-header-rank b {
+.rtb-profile-header-name b {
     margin-right: 12px;
     font-weight: 900;
+    color: var( --accent-1 );
+}
+
+.rtb-profile-header-organization {
+    font-size: 18px;
 }
 
 .rtb-profile-networth {
