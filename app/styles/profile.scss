@@ -77,3 +77,14 @@
     width: 100%;
     height: 180px;
 }
+
+.rtb-profile-related-grid b {
+    display: block;
+    font-size: 18px;
+}
+
+.rtb-profile-related-grid span {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var( --gray-3 );
+}
