@@ -4,42 +4,48 @@ document.addEventListener( 'DOMContentLoaded', function () {
      * get chart context
      */
 
-    let __chart_ntw = document.getElementById( '__chart_ntw' );
+    let chart = document.getElementById( '__chart_ntw' );
 
-    if( __chart_ntw ) {
+    if( chart ) {
+
+        let ctx = chart.getContext( '2d' ),
+            gradient = ctx.createLinearGradient( 0, 0, 0, 400 );
+
+        gradient.addColorStop( 0, 'rgba( 0 182 122 / 0.5 )' );   
+        gradient.addColorStop( 1, 'rgba( 0 182 122 / 0 )' );
 
         /**
          * process chart data
          */
 
-        let __chart_ntw__data = [];
+        let data = [];
 
-        __chart_ntw__data.push( _history[0] );
+        data.push( _history[0] );
 
         for( let i = 1; i < _history.length - 1; i += Math.round( _history.length / 400 ) ) {
 
-            __chart_ntw__data.push( _history[ i ] );
+            data.push( _history[ i ] );
 
         }
 
-        __chart_ntw__data.push( _history[ _history.length - 1 ] );
+        data.push( _history[ _history.length - 1 ] );
 
         /**
          * create new chart
          */
 
-        new Chart( __chart_ntw.getContext( '2d' ), {
+        new Chart( ctx, {
             type: 'line',
             data: {
-                labels: __chart_ntw__data.map( r => r[0].replaceAll( '-', '/' ) ),
+                labels: data.map( r => r[0].replaceAll( '-', '/' ) ),
                 datasets: [ {
-                    data: __chart_ntw__data.map( r => r[2] ),
+                    data: data.map( r => r[2] ),
                     pointHitRadius: 50,
                     pointStyle: false,
                     lineTension: 0.1,
                     borderWidth: 3,
                     borderColor: 'rgba( 0 182 122 / 1 )',
-                    backgroundColor: 'rgba( 0 182 122 / 0.2 )',
+                    backgroundColor: gradient,
                     fill: true
                 } ]
             },

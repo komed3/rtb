@@ -4,36 +4,38 @@ document.addEventListener( 'DOMContentLoaded', function () {
      * get chart context
      */
 
-    let __chart_rank = document.getElementById( '__chart_rank' );
+    let chart = document.getElementById( '__chart_rank' );
 
-    if( __chart_rank ) {
+    if( chart ) {
+
+        let ctx = chart.getContext( '2d' );
 
         /**
          * process chart data
          */
 
-        let __chart_rank_data = [];
+        let data = [];
 
-        __chart_rank_data.push( _history[0] );
+        data.push( _history[0] );
 
         for( let i = 1; i < _history.length - 1; i += Math.round( _history.length / 400 ) ) {
 
-            __chart_rank_data.push( _history[ i ] );
+            data.push( _history[ i ] );
 
         }
 
-        __chart_rank_data.push( _history[ _history.length - 1 ] );
+        data.push( _history[ _history.length - 1 ] );
 
         /**
          * create new chart
          */
 
-        new Chart( __chart_rank.getContext( '2d' ), {
+        new Chart( ctx, {
             type: 'line',
             data: {
-                labels: __chart_rank_data.map( r => r[0].replaceAll( '-', '/' ) ),
+                labels: data.map( r => r[0].replaceAll( '-', '/' ) ),
                 datasets: [ {
-                    data: __chart_rank_data.map( r => r[1] ),
+                    data: data.map( r => r[1] ),
                     pointHitRadius: 50,
                     pointStyle: false,
                     lineTension: 0.1,
