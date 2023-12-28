@@ -108,7 +108,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
                                 size: 14,
                                 weight: 700
                             },
-                            maxTicksLimit: 6,
+                            maxTicksLimit: 4,
                             beginAtZero: false,
                             callback: ( value ) => {
 
