@@ -38,6 +38,8 @@ block content
       )
       div.rtb-profile-header-info
         h1.rtb-profile-header-name!= profile.info.name
+        if profile.info.organization
+          div.rtb-profile-header-organization!= [ profile.info.organization.title, profile.info.organization.name ].join( ', ' )
         if profile.latest && profile.latest.rank && profile.latest.date == global.today
           div.rtb-profile-header-rank
             b.rank!= '#' + profile.latest.rank
