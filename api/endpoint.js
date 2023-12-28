@@ -13,8 +13,8 @@ const fs = require( 'fs' );
  */
 const getJSONFile = ( file ) => {
 
-    return fs.existsSync( __dirname + '/' + file )
-        ? JSON.parse( fs.readFileSync( __dirname + '/' + file ) )
+    return fs.existsSync( __dirname + file )
+        ? JSON.parse( fs.readFileSync( __dirname + file ) )
         : {};
 
 };
@@ -28,8 +28,8 @@ const getJSONFile = ( file ) => {
  */
 const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
 
-    return fs.existsSync( __dirname + '/' + file )
-        ? fs.readFileSync( __dirname + '/' + file )
+    return fs.existsSync( __dirname + file )
+        ? fs.readFileSync( __dirname + file )
             .toString()
             .split( newLine )
             .filter( r => r )
@@ -72,6 +72,29 @@ const resolveURI = ( uri ) => {
 };
 
 /**
+ * get profile image
+ * @param {String} uri profile URI
+ * @returns image
+ */
+const getProfileImage = ( uri ) => {
+
+    uri = resolveURI( uri );
+
+    let info = getJSONFile( '/profile/' + uri + '/info' );
+
+    if( info ) {
+
+        return info.image || '/res/blank-' + ( info.gender || 'm' ) + '.jpg';
+
+    } else {
+
+        return null;
+
+    }
+
+};
+
+/**
  * get profile by URI
  * @param {String} uri profile URI
  * @returns profile object
@@ -102,12 +125,12 @@ const getFullProfile = ( uri ) => {
  * load profiles index + aliases
  */
 
-const index = getJSONFile( 'profile/_index' );
-const alias = getJSONFile( 'profile/_alias' );
+const index = getJSONFile( '/profile/_index' );
+const alias = getJSONFile( '/profile/_alias' );
 
 const indexes = {
-    industry: getJSONFile( 'stats/industry/_index' ),
-    country: getJSONFile( 'stats/country/_index' )
+    industry: getJSONFile( '/stats/industry/_index' ),
+    country: getJSONFile( '/stats/country/_index' )
 };
 
 /**
@@ -119,5 +142,6 @@ module.exports = {
     resolveURI,
     getJSONFile,
     getCSVFile,
+    getProfileImage,
     getFullProfile
 };
