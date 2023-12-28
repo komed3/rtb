@@ -93,10 +93,7 @@ block content
         if profile.info.citizenship
           div.rtb-grid-item
             h4 Citizenship
-            span
-              a(
-                href!= core.url( '/country/' + profile.info.citizenship )
-              )!= isoc.getName( profile.info.citizenship, 'en' )
+            span!= isoc.getName( profile.info.citizenship, 'en' )
         if profile.info.source
           div.rtb-grid-item
             h4 Source of wealth
@@ -159,4 +156,4 @@ block content
               href!= core.url( '/profile/' + related.uri )
             )
               b!= related.name
-              span!= related.type
+              span!= related.type || 'Related profile'
