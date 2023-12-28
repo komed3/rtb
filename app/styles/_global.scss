@@ -208,3 +208,14 @@ a:hover {
 .rtb-grid.col4 {
     grid-template-columns: repeat( 4, 1fr );
 }
+
+.rtb-grid-item-flex {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.rtb-grid-item-img {
+    width: 56px;
+}

@@ -64,7 +64,7 @@ block content
       img.rtb-image.rtb-profile-header-image(
         src!= profile.info.image || ( '/res/blank-' + ( profile.info.gender || 'm' ) + '.jpg' ),
         loading= 'lazy'
-      )
+      )/
       div.rtb-profile-header-info
         h1.rtb-profile-header-name!= profile.info.name
         if profile.info.deceased
@@ -87,7 +87,7 @@ block content
     //- personal stats
     div.rtb-box.rtb-profile-info
       h3.rtb-profile-heading Personal stats
-      div.rtb-grid.col3.rtb-profile-info-grid
+      div.rtb-grid.col3.rtb-profile-grid
         if profile.info.citizenship
           div.rtb-grid-item
             h4 Citizenship
@@ -127,11 +127,28 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
+    //- related people
+    if profile.related && profile.related.length
+      div.rtb-box.rtb-related
+        h3.rtb-profile-heading Related people
+        div.rtb-grid.col3.rtb-profile-grid
+          each related of profile.related
+            a.rtb-grid-item.rtb-grid-item-flex(
+              href!= core.url( '/profile/' + related.uri )
+            )
+              img.rtb-image.rtb-grid-item-img(
+                src!= api.getProfileImage( related.uri ),
+                laading= 'lazy'
+              )/
+              div.rtb-grid-item-inner
+                span!= related.name
+                h4!= related.type || 'related profile'
+
     //- financial assets
     if profile.assets && profile.assets.length
       div.rtb-box.rtb-profile-assets
         h3.rtb-profile-heading Financial assets
-        div.rtb-grid.col3.rtb-profile-info-grid
+        div.rtb-grid.col3.rtb-profile-grid
           each asset of profile.assets
             div.rtb-grid-item
               h4!= asset.exchange + ' | ' + asset.ticker
