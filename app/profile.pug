@@ -143,15 +143,3 @@ block content
       h3.rtb-profile-heading Real-time ranking
       div.rtb-chart.rtb-rank-chart
         canvas#__chart_rank
-
-    //- related profiles
-    if profile.related && profile.related.length
-      div.rtb-box.rtb-profile-related
-        h3.rtb-profile-heading Related people
-        div.rtb-grid.col3.rtb-profile-related-grid
-          each related of profile.related
-            a.rtb-grid-item(
-              href!= core.url( '/profile/' + related.uri )
-            )
-              b!= related.name
-              span!= related.type || 'Related profile'
