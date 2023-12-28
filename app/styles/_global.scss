@@ -31,10 +31,11 @@
     --color-main: var( --gray-5 );
     --color-bg: var( --gray-1 );
 
-    --accent-1: #e30b5c;
-
     --color-good: #00b67a;
-    --color-bad: #fa6464;
+    --color-bad: #e30b5c;
+
+    --accent-1: var( --color-bad );
+    --accent-2: var( --color-good );
 
     --box-shadow: 2px 2px 4px rgba( 230 230 230 / 0.25 );
 
