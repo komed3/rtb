@@ -166,4 +166,4 @@ block content
               h4!= asset.exchange + ' | ' + asset.ticker
               span!= asset.companyName
               if asset.numberOfShares && asset.currentPrice
-                b!= formatter.networth( asset.numberOfShares * asset.currentPrice * asset.exchangeRate, 1, 1 )
+                b!= formatter.networth( asset.numberOfShares * asset.currentPrice * ( 1 / asset.exchangeRate ), 1, 1 )
