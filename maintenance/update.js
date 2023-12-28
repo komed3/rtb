@@ -445,6 +445,7 @@ async function run() {
                     gender: gender,
                     age: age,
                     networth: networth,
+                    change: change,
                     citizenship: country,
                     industry: _industries,
                     source: sources
