@@ -20,6 +20,25 @@ const getJSONFile = ( file ) => {
 };
 
 /**
+ * get CSV content from file
+ * @param {String} file path to file
+ * @param {String} delimiter value delimiter
+ * @param {String} newLine new line delimiter
+ * @returns CSV content
+ */
+const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
+
+    return fs.existsSync( __dirname + '/' + file )
+        ? fs.readFileSync( __dirname + '/' + file )
+            .toString()
+            .split( newLine )
+            .filter( r => r )
+            .map( r => r.split( delimiter ) )
+        : [];
+
+};
+
+/**
  * resolve URI
  * @param {String|Null} uri request URI
  * @returns resolved URI
@@ -67,6 +86,7 @@ const getFullProfile = ( uri ) => {
             info: getJSONFile( path + 'info' ),
             bio: getJSONFile( path + 'bio' ),
             rank: getJSONFile( path + 'rank' ),
+            history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
             latest: getJSONFile( path + 'latest' )
         };
@@ -91,5 +111,6 @@ module.exports = {
     index, alias,
     resolveURI,
     getJSONFile,
+    getCSVFile,
     getFullProfile
 };

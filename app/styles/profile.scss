@@ -1,7 +1,7 @@
 @import 'page';
 
 .rtb-profile-nav {
-    margin-bottom: 48px;
+    margin-bottom: 24px;
 }
 
 .rtb-profile-header {
@@ -27,7 +27,7 @@
     color: var( --accent-1 );
 }
 
-.rtb-profile-header-organization {
+.rtb-profile-header-label {
     font-size: 18px;
 }
 
@@ -59,5 +59,10 @@
 }
 
 .rtb-profile-info-grid span {
+    display: block;
     font-size: 18px;
+}
+
+.rtb-profile-info-grid span::first-letter {
+    text-transform: uppercase;
 }

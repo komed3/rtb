@@ -4,6 +4,10 @@ extends templates/layout.pug
 block title
   title!= profile.info.name + ' — Profile'
 
+block scripts
+  script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
+  script( src= '/js/ntw-chart.min.js' )
+
 block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
 
@@ -39,8 +43,10 @@ block content
           if profile.latest && profile.latest.rank && profile.latest.date == global.today
             b!= '#' + profile.latest.rank
           span!= profile.info.name
-        if profile.info.organization
-          div.rtb-profile-header-organization!= [ profile.info.organization.title, profile.info.organization.name ].join( ', ' )
+        if profile.info.deceased
+          div.rtb-profile-header-label Deceased
+        else if profile.info.organization
+          div.rtb-profile-header-label!= [ profile.info.organization.title, profile.info.organization.name ].join( ', ' )
         div.rtb-profile-networth
           div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
           if profile.latest.change
@@ -65,6 +71,10 @@ block content
               a(
                 href!= core.url( '/country/' + profile.info.citizenship )
               )!= isoc.getName( profile.info.citizenship, 'en' )
+        if profile.info.source
+          div.rtb-grid-item
+            h4 Source of wealth
+            span!= profile.info.source.join( ', ' )
         if profile.info.residence
           - 
             var residence = [
@@ -79,11 +89,27 @@ block content
           div.rtb-grid-item
             h4 Marital status
             span!= profile.info.maritalStatus
-        if profile.info.children
-          div.rtb-grid-item
-            h4 Number of children
-            span!= profile.info.children
         if profile.info.birthDate
           div.rtb-grid-item
             h4 Birth date
             span!= formatter.date( profile.info.birthDate )
+        if profile.info.children
+          div.rtb-grid-item
+            h4 Number of children
+            span!= profile.info.children
+        if profile.info.education
+          div.rtb-grid-item
+            h4 Education
+            span!= profile.info.education.map( e => Object.values( e ).reverse().join( ', ' ) ).join( '; ' )
+        if profile.info.selfMade.type
+          div.rtb-grid-item
+            h4 Self-made
+            span!= profile.info.selfMade.type
+
+    //- net worth history
+    if profile.history && profile.history.length
+      div.rtb-box.rtb-profile-history
+        h3.rtb-profile-heading Net worth history
+        canvas#__chart_ntw_history.rtb-chart.rtb-ntw-chart(
+          chart-data!= Buffer.from( JSON.stringify( profile.history ) ).toString( 'base64' )
+        )
