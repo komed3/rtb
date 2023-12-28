@@ -48,7 +48,7 @@ block content
           div.rtb-profile-networth-date!= 'as of ' + formatter.date( profile.latest.date )
 
     //- bio
-    if profile.bio.bio.length
+    if profile.bio && profile.bio.bio
       div.rtb-box.rtb-profile-bio
         h3.rtb-profile-heading!= 'About ' + profile.info.name
         each statement of profile.bio.bio
@@ -56,4 +56,28 @@ block content
 
     //- personal stats
     div.rtb-box.rtb-profile-info
-      h3.rtb-profile-heading!= 'Personal stats'
+      h3.rtb-profile-heading Personal stats
+      div.rtb-grid.col3.rtb-profile-info-grid
+        if profile.info.citizenship
+          div.rtb-grid-item
+            h4 Citizenship
+            span
+              a(
+                href!= core.url( '/country/' + profile.info.citizenship )
+              )!= isoc.getName( profile.info.citizenship, 'en' )
+        if profile.info.residence
+          div.rtb-grid-item
+            h4 Residence
+            span
+        if profile.info.maritalStatus
+          div.rtb-grid-item
+            h4 Marital status
+            span!= profile.info.maritalStatus
+        if profile.info.children
+          div.rtb-grid-item
+            h4 Number of children
+            span!= profile.info.children
+        if profile.info.birthDate
+          div.rtb-grid-item
+            h4 Birth date
+            span!= formatter.date( profile.info.birthDate )

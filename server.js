@@ -10,6 +10,8 @@
 
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 
+const isoCountries = require( 'i18n-iso-countries' );
+
 const core = require( './src/core' );
 const formatter = require( './src/formatter' );
 const api = require( './api/endpoint' );
@@ -50,6 +52,7 @@ routes.forEach( ( route ) => {
 
             let file = route[1];
 
+            res.locals.isoc = isoCountries;
             res.locals.core = core;
             res.locals.formatter = formatter;
             res.locals.api = api;

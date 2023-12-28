@@ -174,3 +174,26 @@ a:hover {
     border-radius: 4px;
     box-shadow: var( --box-shadow );
 }
+
+.rtb-nav-link i {
+    font-size: 20px;
+}
+
+/* grid */
+
+.rtb-grid {
+    display: grid;
+    gap: 16px 32px;
+}
+
+.rtb-grid.col2 {
+    grid-template-columns: repeat( 2, 1fr );
+}
+
+.rtb-grid.col3 {
+    grid-template-columns: repeat( 3, 1fr );
+}
+
+.rtb-grid.col4 {
+    grid-template-columns: repeat( 4, 1fr );
+}
