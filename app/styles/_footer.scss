@@ -1,0 +1,37 @@
+.rtb-footer {
+    margin-top: var( --padding );
+    padding: 32px 0 var( --padding ) 0;
+    background: var( --gray-0 );
+}
+
+.rtb-footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin: 0 auto;
+    max-width: var( --content );
+}
+
+.rtb-footer-logo {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    color: var( --accent-1 );
+}
+
+.rtb-footer-logo img {
+    flex: 0 0 auto;
+    width: 48px;
+}
+
+.rtb-footer-credits {
+    grid-column: span 3;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    gap: 12px;
+    text-transform: uppercase;
+    font-size: 11px;
+}

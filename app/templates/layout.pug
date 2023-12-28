@@ -6,6 +6,9 @@ html( lang= 'en' )
   head
     meta( charset= 'UTF-8' )/
     meta( name= 'viewport', content= 'width=device-width, initial-scale=1.0' )/
+    meta( name= 'msapplication-TileColor', content= '#ffffff' )/
+    meta( name= 'theme-color', content= '#e30b5c' )/
+    link( rel= 'icon', sizes= '16x16 32x32 48x48 64x64', href= '/res/favicon.ico' )/
     block title
       title Tracking real-time billionaires
     block scripts
@@ -18,3 +21,17 @@ html( lang= 'en' )
     //- main content
     main#main.rtb-wrapper( role= 'main' )
       block content
+
+  //- footer
+  footer#footer.rtb-footer
+    div.rtb-footer-inner
+      div.rtb-footer-column
+        a.rtb-footer-logo( href!= '/' )
+          img( src= '/res/favicon.png' )/
+          b Real-time billionaires
+      div.rtb-footer-credits
+        span!= 'Copyright &copy; ' + ( new Date() ).getFullYear() + ' by komed3'
+        span.divider |
+        a( href= 'https://github.com/komed3/rtb', target= '_blank' ) GitHub
+        a( href= '/privacy' ) Privacy Statement
+        a( href= 'https://github.com/komed3/rtb-api', target= '_blank' ) Data &amp; API
