@@ -21,7 +21,7 @@ const date = ( ts ) => {
  */
 const networth = ( value, digits = 1, base = 1e6, trimZero = true ) => {
 
-    value = parseFloat( value ) * base;
+    value = Math.abs( parseFloat( value ) * base );
 
     if( value == 0 ) {
 
