@@ -27,8 +27,6 @@ document.onreadystatechange = () => {
 
             data.push( source[ source.length - 1 ] );
 
-            chart.removeAttribute( 'chart-data' );
-
             /**
              * create new chart
              */
