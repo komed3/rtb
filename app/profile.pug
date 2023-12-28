@@ -131,6 +131,13 @@ block content
     if profile.assets && profile.assets.length
       div.rtb-box.rtb-profile-assets
         h3.rtb-profile-heading Financial assets
+        div.rtb-grid.col3.rtb-profile-info-grid
+          each asset of profile.assets
+            div.rtb-grid-item
+              h4!= asset.exchange + ' | ' + asset.ticker
+              span!= asset.companyName
+              if asset.numberOfShares && asset.currentPrice
+                b!= formatter.networth( asset.numberOfShares * asset.currentPrice * asset.exchangeRate, 1, 1 )
 
     //- net worth history
     div.rtb-box.rtb-profile-history
