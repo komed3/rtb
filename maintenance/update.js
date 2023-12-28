@@ -308,9 +308,6 @@ async function run() {
                                 : null,
                             family: !!( profile.family || false ),
                             gender: gender,
-                            image: profile.squareImage
-                                ? profile.squareImage.toString().replace( 'https:', '' )
-                                : null,
                             citizenship: country,
                             residence: {
                                 city: profile.city || null,
@@ -323,20 +320,20 @@ async function run() {
                     { flag: 'w' }
                 );
 
-                /**
-                 * save bios
-                 */
-
-                fs.writeFileSync(
-                    path + 'bio',
-                    JSON.stringify( {
-                        bio: [].concat( profile.bios || [] ).map( a => a.trim() ),
-                        about: [].concat( profile.abouts || [] ).map( a => a.trim() )
-                    }, null, 2 ),
-                    { flag: 'w' }
-                );
-
             }
+
+            /**
+             * save bios
+             */
+
+            fs.writeFileSync(
+                path + 'bio',
+                JSON.stringify( {
+                    bio: [].concat( profile.bios || [] ).map( a => a.trim() ),
+                    about: [].concat( profile.abouts || [] ).map( a => a.trim() )
+                }, null, 2 ),
+                { flag: 'w' }
+            );
 
             /**
              * financial assets

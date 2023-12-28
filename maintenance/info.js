@@ -11,8 +11,8 @@ const threshold = ( new Date() ).getTime() - 31557600000;
 const today = ( new Date() ).toISOString();
 
 var requestLimit = process.argv.includes( '--limit' )
-    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 100 )
-    : 100;
+    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 50 )
+    : 50;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
@@ -33,8 +33,7 @@ async function run() {
          * load profile index
          */
 
-        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + '_index' ) ) ),
-            count = profiles.length;
+        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + '_index' ) ) );
 
         /**
          * reset timestamps if flag "--reset" is active
@@ -92,9 +91,7 @@ async function run() {
                     ? JSON.parse( fs.readFileSync( path + 'info' ) )
                     : {};
 
-                let request = 'originalURI' in info
-                    ? info.originalURI
-                    : uri;
+                let request = info.originalURI || uri;
 
                 /**
                  * update profile timestamp
@@ -152,9 +149,13 @@ async function run() {
                          * renew image (if available)
                          */
 
-                        if( 'squareImage' in person && person.squareImage ) {
+                        if( person.imageExists && person.squareImage ) {
 
-                            info.image = person.squareImage.toString().replace( 'https:', '' );
+                            info.image = 'https://' + person.squareImage.replace( 'https://', '' ).replace( 'http://', '' );
+
+                        } else {
+
+                            delete info.image;
 
                         }
 

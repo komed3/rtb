@@ -33,7 +33,7 @@ block content
     //- header
     div.rtb-box.rtb-profile-header
       img.rtb-image.rtb-profile-header-image(
-        src!= '/img/' + ( profile.info.image || 'empty-profile.jpg' ),
+        src!= profile.info.image || ( '/res/blank-' + ( profile.info.gender || 'm' ) + '.jpg' ),
         loading= 'lazy'
       )
       div.rtb-profile-header-info
