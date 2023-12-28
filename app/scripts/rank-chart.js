@@ -4,43 +4,41 @@ document.addEventListener( 'DOMContentLoaded', function () {
      * get chart context
      */
 
-    let __chart_ntw = document.getElementById( '__chart_ntw' );
+    let __chart_rank = document.getElementById( '__chart_rank' );
 
-    if( __chart_ntw ) {
+    if( __chart_rank ) {
 
         /**
          * process chart data
          */
 
-        let __chart_ntw__data = [];
+        let __chart_rank_data = [];
 
-        __chart_ntw__data.push( _history[0] );
+        __chart_rank_data.push( _history[0] );
 
         for( let i = 1; i < _history.length - 1; i += Math.round( _history.length / 400 ) ) {
 
-            __chart_ntw__data.push( _history[ i ] );
+            __chart_rank_data.push( _history[ i ] );
 
         }
 
-        __chart_ntw__data.push( _history[ _history.length - 1 ] );
+        __chart_rank_data.push( _history[ _history.length - 1 ] );
 
         /**
          * create new chart
          */
 
-        new Chart( __chart_ntw.getContext( '2d' ), {
+        new Chart( __chart_rank.getContext( '2d' ), {
             type: 'line',
             data: {
-                labels: __chart_ntw__data.map( r => r[0].replaceAll( '-', '/' ) ),
+                labels: __chart_rank_data.map( r => r[0].replaceAll( '-', '/' ) ),
                 datasets: [ {
-                    data: __chart_ntw__data.map( r => r[2] ),
+                    data: __chart_rank_data.map( r => r[1] ),
                     pointHitRadius: 50,
                     pointStyle: false,
                     lineTension: 0.1,
                     borderWidth: 3,
-                    borderColor: 'rgba( 0 182 122 / 1 )',
-                    backgroundColor: 'rgba( 0 182 122 / 0.2 )',
-                    fill: true
+                    borderColor: 'rgba( 227 11 92 / 1 )'
                 } ]
             },
             options: {
@@ -60,14 +58,14 @@ document.addEventListener( 'DOMContentLoaded', function () {
                         },
                         backgroundColor: 'rgba( 255 255 255 / 0.9 )',
                         borderWidth: 1,
-                        borderColor: 'rgba( 0 182 122 / 1 )',
+                        borderColor: 'rgba( 227 11 92 / 1 )',
                         cornerRadius: 4,
                         titleColor: 'rgba( 0 0 0 / 1 )',
                         titleFont: {
                             family: 'Poppins, sans-serif',
                             size: 13
                         },
-                        bodyColor: 'rgba( 0 182 122 / 1 )',
+                        bodyColor: 'rgba( 227 11 92 / 1 )',
                         bodyFont: {
                             family: 'Poppins, sans-serif',
                             size: 24,
@@ -75,7 +73,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
                         },
                         callbacks: {
                             label: ( item ) => {
-                                return '$' + parseFloat( ( item.parsed.y / 1000 ).toFixed( 2 ) ) + 'B';
+                                return '#' + item.parsed.y;
                             }
                         }
                     }
@@ -93,6 +91,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
                         }
                     },
                     y: {
+                        reverse: true,
                         border: {
                             display: false
                         },
@@ -113,9 +112,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
                             beginAtZero: false,
                             callback: ( value ) => {
 
-                                if( value > 0 ) {
+                                if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
 
-                                    return '$' + parseFloat( ( value / 1000 ).toFixed( 1 ) ) + 'B';
+                                    return '#' + parseInt( value );
 
                                 }
 

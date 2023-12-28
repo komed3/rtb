@@ -7,8 +7,9 @@ block title
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
   script.
-    const _history = !{JSON.stringify( profile.history )};
+    const _history = !{ JSON.stringify( profile.history ) };
   script( src= '/js/ntw-chart.min.js' )
+  script( src= '/js/rank-chart.min.js' )
 
 block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
@@ -79,7 +80,7 @@ block content
           span!= isoc.getName( profile.info.citizenship, 'en' )
 
     //- bio
-    if profile.bio && profile.bio.bio
+    if profile.bio && profile.bio.bio.length
       div.rtb-box.rtb-profile-bio
         h3.rtb-profile-heading!= 'About ' + profile.info.name
         each statement of profile.bio.bio
@@ -122,7 +123,7 @@ block content
           div.rtb-grid-item
             h4 Number of children
             span!= profile.info.children
-        if profile.info.education
+        if profile.info.education && profile.info.education.length
           div.rtb-grid-item
             h4 Education
             span!= profile.info.education.map( e => Object.values( e ).reverse().join( ', ' ) ).join( '; ' )
@@ -131,7 +132,24 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
+    //- financial assets
+    if profile.assets && profile.assets.length
+      div.rtb-box.rtb-profile-assets
+        h3.rtb-profile-heading Financial assets
+
     //- net worth history
     div.rtb-box.rtb-profile-history
-      h3.rtb-profile-heading Net worth history
-      canvas#__chart_ntw_history.rtb-chart.rtb-ntw-chart
+      h3.rtb-profile-heading Net worth over time
+      div.rtb-chart.rtb-ntw-chart
+        canvas#__chart_ntw
+
+    //- ranking history
+    div.rtb-box.rtb-ranking-history
+      h3.rtb-profile-heading Real-time ranking
+      div.rtb-chart.rtb-rank-chart
+        canvas#__chart_rank
+
+    //- related profiles
+    if profile.related && profile.related.length
+      div.rtb-box.rtb-profile-related
+        h3.rtb-profile-heading Related people

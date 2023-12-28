@@ -86,6 +86,7 @@ const getFullProfile = ( uri ) => {
             info: getJSONFile( path + 'info' ),
             bio: getJSONFile( path + 'bio' ),
             rank: getJSONFile( path + 'rank' ),
+            related: getJSONFile( path + 'related' ),
             history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
             latest: getJSONFile( path + 'latest' )
