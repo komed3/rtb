@@ -39,6 +39,12 @@
     color: var( --gray-0 );
     padding: 6px 10px;
     font-weight: 700;
+    border-radius: 4px;
+}
+
+.rtb-header-links a.active {
+    color: var( --accent-1 );
+    background: var( --gray-0 );
 }
 
 .rtb-header-search {
