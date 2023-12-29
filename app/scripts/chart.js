@@ -56,12 +56,14 @@ function chart_color( rgb, alpha = 1 ) {
  * create chart color gradient
  * @param {Node} container chart container
  * @param {Array} stops gradient stops
+ * @param {Number} x horizontal stop
+ * @param {Number} y vertical stop
  * @returns color gradient
  */
-function chart_gradient( container, stops ) {
+function chart_gradient( container, stops, x = 0, y = 400 ) {
 
     let ctx = container.querySelector( 'canvas' ).getContext( '2d' ),
-        gradient = ctx.createLinearGradient( 0, 0, 0, 400 );
+        gradient = ctx.createLinearGradient( 0, 0, x, y );
 
     stops.forEach( ( s, i ) => {
 
