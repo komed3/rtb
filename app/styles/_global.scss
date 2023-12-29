@@ -109,6 +109,33 @@ a {
     color: inherit;
 }
 
+input, textarea, select, button {
+    font-family: 'Poppins', sans-serif;
+    outline: 0 none;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+input, textarea, select {
+    background: var( --gray-0 );
+    border: 2px solid var( --accent-1 );
+}
+
+button {
+    display: flex;
+    align-items: center;
+    color: var( --gray-0 );
+    background: var( --accent-1 );
+    border: 0;
+    cursor: pointer;
+}
+
+button .icon {
+    font-size: 22px;
+}
+
 a:hover {
     color: var( --accent-1 );
 }

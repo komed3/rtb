@@ -1,6 +1,6 @@
 .rtb-footer {
-    margin-top: var( --padding );
-    padding: 32px 0 var( --padding ) 0;
+    margin-top: 64px;
+    padding: 32px 0 64px 0;
     background: var( --gray-0 );
 }
 
@@ -14,7 +14,7 @@
 .rtb-footer-inner {
     display: grid;
     grid-template-columns: 2fr 3fr;
-    gap: 48px;
+    gap: 64px 48px;
     margin: 0 auto;
     max-width: var( --content );
 }

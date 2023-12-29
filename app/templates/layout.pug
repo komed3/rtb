@@ -18,6 +18,27 @@ html( lang= 'en' )
   //- html content
   body
 
+    //- header
+    header#header.rtb-header( role= 'banner' )
+      a.rtb-header-logo( href!= '/' )
+        img( src= '/res/logo.png' )/
+      div.rtb-header-links
+        a( href= '/list/rtb' ) Real-time list
+        a( href= '/stats' ) Statistics
+        a( href= '/country' ) Countries
+        a( href= '/industry' ) Industries
+      form.rtb-header-search(
+        action= '/search/',
+        method= 'get'
+      )
+        input(
+          type= 'text',
+          name= 'q',
+          placeholder= 'Search …'
+        )/
+        button( type= 'submit' )
+          i.icon search
+
     //- main content
     main#main.rtb-wrapper( role= 'main' )
       block content
@@ -27,7 +48,7 @@ html( lang= 'en' )
     div.rtb-footer-inner
       div.rtb-footer-column
         a.rtb-footer-logo( href!= '/' )
-          img( src= '/res/favicon.png' )/
+          img( src= '/res/logo.png' )/
           b Real-time billionaires
       div.rtb-footer-column
         h3 Quick links
