@@ -1,13 +1,17 @@
 'use strict';
 
 /**
- * format date to YYYY/MM/DD
+ * format date to MM/DD/YY
  * @param {String|Date} ts timestamp or date
  * @returns formatted date string
  */
 const date = ( ts ) => {
 
-    return ( new Date( ts ) ).toISOString().split( 'T' )[0].replaceAll( '-', '/' );
+    let date = new Date( ts );
+
+    return ( date.getMonth() + 1 ).toString().padStart( 2, '0' ) + '/' +
+           date.getDate().toString().padStart( 2, '0' ) + '/' +
+           date.getFullYear().toString().substring( 2 );
 
 };
 

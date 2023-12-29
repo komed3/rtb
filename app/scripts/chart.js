@@ -30,8 +30,6 @@ function chart_add( container, options, data ) {
         return '<button chart-range="' + r.toLowerCase() + '">' + r + '</button>';
     } ).join( '' );
 
-    controls.querySelector( '[chart-range="all"]' ).classList.add( 'active' );
-
     container.insertBefore( controls, chart );
 
     /**
@@ -43,6 +41,12 @@ function chart_add( container, options, data ) {
         chart: new Chart( ctx, options ),
         data: data
     };
+
+    /**
+     * load data
+     */
+
+    chart_range( uuid, 'year' );
 
     return uuid;
 
@@ -57,7 +61,7 @@ function chart_update( uuid, data ) {
 
     if( uuid in charts ) {
 
-        charts[ uuid ].chart.data.labels = data.map( r => r[0].replaceAll( '-', '/' ) );
+        charts[ uuid ].chart.data.labels = data.map( r => formatDate( r[0] ) );
         charts[ uuid ].chart.data.datasets[0].data = data.map( r => r[1] );
 
         charts[ uuid ].chart.update();
@@ -229,9 +233,9 @@ function chart_networth( container, data ) {
     chart_add( container, {
         type: 'line',
         data: {
-            labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
+            labels: [],
             datasets: [ {
-                data: d.map( r => r[1] ),
+                data: [],
                 lineTension: 0.1,
                 pointHitRadius: 50,
                 borderWidth: 3,
@@ -348,9 +352,9 @@ function chart_rank( container, data ) {
     chart_add( container, {
         type: 'line',
         data: {
-            labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
+            labels: [],
             datasets: [ {
-                data: d.map( r => r[1] ),
+                data: [],
                 lineTension: 0.1,
                 pointHitRadius: 50,
                 borderWidth: 3,
