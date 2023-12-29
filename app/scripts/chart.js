@@ -287,6 +287,11 @@ function chart_rank( container, data ) {
 
 };
 
+/**
+ * search for charts after DOM content has loaded
+ * process chart data
+ */
+
 document.addEventListener( 'DOMContentLoaded', () => {
 
     document.querySelectorAll( '.rtb-chart' ).forEach( ( container ) => {
