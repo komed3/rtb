@@ -16,6 +16,31 @@ function chart_add( container, data ) {
 };
 
 /**
+ * extract data for chart
+ * @param {Array} data chart data
+ * @param {Int} limit data point limit
+ * @param {Array} range date range
+ * @returns extracted data
+ */
+function chart_data( data, limit = 500, range = [] ) {
+
+    let d = [], l = data.length;
+
+    d.push( data[0] );
+
+    for( let i = 1; i < l - 1; i += Math.ceil( l / limit ) ) {
+
+        d.push( data[ i ] );
+
+    }
+
+    d.push( data[ l - 1 ] );
+
+    return d;
+
+};
+
+/**
  * create chart color
  * @param {String} rgb rgb color
  * @param {Float} alpha alpha
@@ -55,14 +80,15 @@ function chart_gradient( container, stops ) {
  */
 function chart_networth( container, data ) {
 
-    let rgb = '0 182 122';
+    let rgb = '0 182 122',
+        d = chart_data( data );
 
     chart_add( container, {
         type: 'line',
         data: {
-            labels: data.map( r => r[0].replaceAll( '-', '/' ) ),
+            labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
             datasets: [ {
-                data: data.map( r => r[1] ),
+                data: d.map( r => r[1] ),
                 pointHitRadius: 50,
                 pointStyle: false,
                 lineTension: 0.1,
@@ -163,14 +189,15 @@ function chart_networth( container, data ) {
  */
 function chart_rank( container, data ) {
 
-    let rgb = '227 11 92';
+    let rgb = '227 11 92',
+        d = chart_data( data );
 
     chart_add( container, {
         type: 'line',
         data: {
-            labels: data.map( r => r[0].replaceAll( '-', '/' ) ),
+            labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
             datasets: [ {
-                data: data.map( r => r[1] ),
+                data: d.map( r => r[1] ),
                 pointHitRadius: 50,
                 pointStyle: false,
                 lineTension: 0.1,
