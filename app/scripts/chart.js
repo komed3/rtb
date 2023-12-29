@@ -13,7 +13,30 @@ function chart_add( container, options, data ) {
         chart = container.querySelector( 'canvas' ),
         ctx = chart.getContext( '2d' );
 
+    /**
+     * set ID
+     */
+
     container.id = uuid;
+
+    /**
+     * add range selector
+     */
+
+    let controls = document.createElement( 'div' );
+
+    controls.classList.add( 'rtb-chart-controls' );
+    controls.innerHTML = [ 'All', 'Year', 'Quarter', 'Month' ].map( ( r ) => {
+        return '<button chart-range="' + r.toLowerCase() + '">' + r + '</button>';
+    } ).join( '' );
+
+    controls.querySelector( '[chart-range="all"]' ).classList.add( 'active' );
+
+    container.insertBefore( controls, chart );
+
+    /**
+     * create chart
+     */
 
     charts[ uuid ] = {
         container: container,
@@ -26,13 +49,98 @@ function chart_add( container, options, data ) {
 };
 
 /**
+ * update chart data
+ * @param {String} uuid chart ID
+ * @param {Array} data chart data
+ */
+function chart_update( uuid, data ) {
+
+    if( uuid in charts ) {
+
+        charts[ uuid ].chart.data.labels = data.map( r => r[0].replaceAll( '-', '/' ) );
+        charts[ uuid ].chart.data.datasets[0].data = data.map( r => r[1] );
+
+        charts[ uuid ].chart.update();
+
+    }
+
+};
+
+/**
+ * calculate range and update data
+ * @param {String} uuid chart ID
+ * @param {String} range data range
+ */
+function chart_range( uuid, range ) {
+
+    if( uuid in charts ) {
+
+        /**
+         * calculate range
+         */
+
+        let s = new Date();
+
+        switch( range ) {
+
+            case 'all':
+                s = '1970-01-01';
+                break;
+
+            case 'year':
+                s = s.setFullYear( s.getFullYear() - 1 );
+                break;
+
+            case 'quarter':
+                s = s.setMonth( s.getMonth() - 3 );
+                break;
+
+            case 'month':
+                s = s.setMonth( s.getMonth() - 1 );
+                break;
+
+        }
+
+        /**
+         * active button
+         */
+
+        charts[ uuid ].container.querySelectorAll(
+            '.rtb-chart-controls button'
+        ).forEach( ( button ) => {
+
+            button.classList.remove( 'active' );
+
+        } );
+
+        charts[ uuid ].container.querySelector(
+            '.rtb-chart-controls button[chart-range="' + range + '"]'
+        ).classList.add( 'active' );
+
+        /**
+         * update chart data
+         */
+
+        chart_update( uuid, chart_data(
+            charts[ uuid ].data,
+            [
+                ( new Date( s ) ),
+                ( new Date() )
+            ]
+        ) );
+
+    }
+
+};
+
+/**
  * extract data for chart
  * @param {Array} data chart data
- * @param {Int} limit data point limit
  * @param {Array} range date range
+ * @param {Int} limit data point limit
  * @returns extracted data
  */
-function chart_data( data, limit = 500, range = [] ) {
+function chart_data( data, range = [], limit = 500 ) {
 
     if( range.length == 2 ) {
 
@@ -321,6 +429,27 @@ function chart_rank( container, data ) {
     }, data );
 
 };
+
+/**
+ * chart controls
+ */
+
+document.addEventListener( 'click', ( e ) => {
+
+    if(
+        e.target.tagName.toLowerCase() == 'button' &&
+        !e.target.classList.contains( 'active' ) &&
+        e.target.parentNode.classList.contains( 'rtb-chart-controls' )
+    ) {
+
+        let range = e.target.getAttribute( 'chart-range' ),
+            uuid = e.target.closest( '.rtb-chart' ).id;
+
+        chart_range( uuid, range );
+
+    }
+
+} );
 
 /**
  * search for charts after DOM content has loaded

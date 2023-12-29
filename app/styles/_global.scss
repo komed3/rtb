@@ -249,3 +249,40 @@ a:hover {
     flex: 0 0 auto;
     width: 56px;
 }
+
+/* charts */
+
+.rtb-chart {
+    position: relative;
+}
+
+.rtb-chart.rtb-ntw-chart {
+    width: 100%;
+    height: 480px;
+}
+
+.rtb-chart.rtb-rank-chart {
+    width: 100%;
+    height: 180px;
+}
+
+.rtb-chart-controls {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 4px;
+}
+
+.rtb-chart-controls button {
+    height: auto;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.rtb-chart-controls button:not(.active) {
+    background: var( --gray-3 );
+}
