@@ -70,7 +70,7 @@ block content
         if profile.info.deceased
           div.rtb-profile-header-label Deceased
         else if profile.info.organization
-          div.rtb-profile-header-label!= [ profile.info.organization.title, profile.info.organization.name ].join( ', ' )
+          div.rtb-profile-header-label!= [ profile.info.organization.title, profile.info.organization.name ].filter( a => a ).join( ', ' )
         div.rtb-profile-networth
           div.rtb-profile-networth-value!= formatter.networth( profile.latest.networth, 2 )
           if profile.latest.change
@@ -121,7 +121,7 @@ block content
         if profile.info.education && profile.info.education.length
           div.rtb-grid-item
             h4 Education
-            span!= profile.info.education.map( e => Object.values( e ).reverse().join( ', ' ) ).join( '; ' )
+            span!= profile.info.education.map( a => Object.values( a ).reverse().join( ', ' ) ).join( '; ' )
         if profile.info.selfMade.type
           div.rtb-grid-item
             h4 Self-made
