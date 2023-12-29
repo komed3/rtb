@@ -58,7 +58,6 @@ routes.forEach( ( route ) => {
             res.locals.api = api;
 
             res.locals.global = {};
-            res.locals.global.today = today;
 
             /**
              * process pages

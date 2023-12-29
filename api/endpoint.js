@@ -125,6 +125,10 @@ const getFullProfile = ( uri ) => {
  * load profiles index + aliases
  */
 
+const latest = fs.existsSync( __dirname + '/latest' )
+    ? fs.readFileSync( __dirname + '/latest' ).toString()
+    : ( new Date() ).toISOString().split( 'T' )[0];
+
 const index = getJSONFile( '/profile/_index' );
 const alias = getJSONFile( '/profile/_alias' );
 
@@ -137,6 +141,7 @@ const indexes = {
  * export public methods
  */
 module.exports = {
+    latest,
     index, alias,
     indexes,
     resolveURI,

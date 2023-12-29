@@ -22,7 +22,7 @@ block content
 
       //- tags
       div.rtb-tags
-        if profile.latest && profile.latest.rank && profile.latest.date == global.today
+        if profile.latest && profile.latest.rank && profile.latest.date == api.latest
           a.tag.tag-primary(
             href!= core.url( '/list/rtb' )
           )
