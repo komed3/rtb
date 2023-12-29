@@ -148,7 +148,7 @@ block content
         chart-type= 'networth'
         chart-data!= core.chartData( charts.networth )
       )
-        canvas#__chart_ntw
+        canvas.rtb-chart-inner
 
     //- ranking history
     div.rtb-box.rtb-ranking-history
@@ -157,7 +157,7 @@ block content
         chart-type= 'rank'
         chart-data!= core.chartData( charts.rank )
       )
-        canvas#__chart_rank
+        canvas.rtb-chart-inner
 
     //- financial assets
     if profile.assets && profile.assets.length

@@ -1,17 +1,27 @@
+var charts = {};
+
 /**
  * create new chart
  * @param {Node} container chart container
+ * @param {Object} options chart options
  * @param {Object} data chart data
- * @returns chart and ctx
+ * @returns uuid
  */
-function chart_add( container, data ) {
+function chart_add( container, options, data ) {
 
-    let chart = container.querySelector( 'canvas' ),
+    let uuid = getID(),
+        chart = container.querySelector( 'canvas' ),
         ctx = chart.getContext( '2d' );
 
-    new Chart( ctx, data );
+    container.id = uuid;
 
-    return [ chart, ctx ];
+    charts[ uuid ] = {
+        container: container,
+        chart: new Chart( ctx, options ),
+        data: data
+    };
+
+    return uuid;
 
 };
 
@@ -23,6 +33,29 @@ function chart_add( container, data ) {
  * @returns extracted data
  */
 function chart_data( data, limit = 500, range = [] ) {
+
+    if( range.length == 2 ) {
+
+        /**
+         * check date range
+         */
+
+        let s = new Date( range[0] );
+        let e = new Date( range[1] );
+
+        data = data.filter( r => {
+
+            let t = new Date( r[0] );
+
+            return t >= s && t <= e;
+
+        } );
+
+    }
+
+    /**
+     * shrink data to fixed limit
+     */
 
     let d = [], l = data.length;
 
@@ -180,7 +213,7 @@ function chart_networth( container, data ) {
                 }
             }
         }
-    } );
+    }, data );
 
 };
 
@@ -285,7 +318,7 @@ function chart_rank( container, data ) {
                 }
             }
         }
-    } );
+    }, data );
 
 };
 
