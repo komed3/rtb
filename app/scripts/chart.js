@@ -232,21 +232,30 @@ function chart_networth( container, data ) {
             labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
             datasets: [ {
                 data: d.map( r => r[1] ),
-                pointHitRadius: 50,
-                pointStyle: false,
                 lineTension: 0.1,
+                pointHitRadius: 50,
                 borderWidth: 3,
                 borderColor: chart_color( rgb ),
                 backgroundColor: chart_gradient( container, [
                     chart_color( rgb, 0.5 ),
                     chart_color( rgb, 0 )
                 ] ),
-                fill: true
+                fill: true,
+                pointRadius: 0,
+                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
+                pointHoverBorderColor: chart_color( rgb ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
             } ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
             plugins: {
                 legend: {
                     display: false
@@ -259,8 +268,9 @@ function chart_networth( container, data ) {
                         right: 14,
                         bottom: 4
                     },
+                    caretPadding: 10,
                     backgroundColor: 'rgba( 255 255 255 / 0.9 )',
-                    borderWidth: 1,
+                    borderWidth: 2,
                     borderColor: chart_color( rgb ),
                     cornerRadius: 4,
                     titleColor: 'rgba( 0 0 0 / 1 )',
@@ -341,16 +351,25 @@ function chart_rank( container, data ) {
             labels: d.map( r => r[0].replaceAll( '-', '/' ) ),
             datasets: [ {
                 data: d.map( r => r[1] ),
-                pointHitRadius: 50,
-                pointStyle: false,
                 lineTension: 0.1,
+                pointHitRadius: 50,
                 borderWidth: 3,
-                borderColor: chart_color( rgb )
+                borderColor: chart_color( rgb ),
+                pointRadius: 0,
+                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
+                pointHoverBorderColor: chart_color( rgb ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
             } ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
             plugins: {
                 legend: {
                     display: false
@@ -363,8 +382,9 @@ function chart_rank( container, data ) {
                         right: 14,
                         bottom: 4
                     },
+                    caretPadding: 10,
                     backgroundColor: 'rgba( 255 255 255 / 0.9 )',
-                    borderWidth: 1,
+                    borderWidth: 2,
                     borderColor: chart_color( rgb ),
                     cornerRadius: 4,
                     titleColor: 'rgba( 0 0 0 / 1 )',
