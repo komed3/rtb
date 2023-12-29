@@ -6,10 +6,7 @@ block title
 
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
-  script.
-    const _history = !{ JSON.stringify( profile.history ) };
-  script( src= '/js/ntw-chart.min.js' )
-  script( src= '/js/rank-chart.min.js' )
+  script( src= '/js/chart.min.js' )
 
 block styles
   link( rel= 'stylesheet', href= '/css/profile.css' )/
@@ -147,13 +144,19 @@ block content
     //- net worth history
     div.rtb-box.rtb-profile-history
       h3.rtb-profile-heading Net worth over time
-      div.rtb-chart.rtb-ntw-chart
+      div.rtb-chart.rtb-ntw-chart(
+        chart-type= 'networth'
+        chart-data!= core.chartData( charts.networth )
+      )
         canvas#__chart_ntw
 
     //- ranking history
     div.rtb-box.rtb-ranking-history
       h3.rtb-profile-heading Real-time ranking
-      div.rtb-chart.rtb-rank-chart
+      div.rtb-chart.rtb-rank-chart(
+        chart-type= 'rank'
+        chart-data!= core.chartData( charts.rank )
+      )
         canvas#__chart_rank
 
     //- financial assets

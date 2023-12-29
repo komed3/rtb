@@ -45,10 +45,22 @@ const url = ( url ) => {
 };
 
 /**
+ * format chart data for html output
+ * @param {Object|Array} data chart data
+ * @returns base64 stringified data
+ */
+const chartData = ( data ) => {
+
+    return Buffer.from( JSON.stringify( data ) ).toString( 'base64' );
+
+}
+
+/**
  * export public methods
  */
 module.exports = {
     parseURL,
     getCanonical,
-    url
+    url,
+    chartData
 };
