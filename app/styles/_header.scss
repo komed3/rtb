@@ -5,7 +5,7 @@
     flex-flow: row nowrap;
     align-items: center;
     height: 56px;
-    background: var( --gray-0 );
+    background: var( --accent-1 );
     box-shadow: var( --box-shadow );
     overflow: hidden;
     z-index: 99;
@@ -36,12 +36,9 @@
 }
 
 .rtb-header-links a {
+    color: var( --gray-0 );
     padding: 6px 10px;
     font-weight: 700;
-}
-
-.rtb-header-links a.active {
-    color: var( --accent-1 );
 }
 
 .rtb-header-search {
@@ -54,9 +51,12 @@
 
 .rtb-header-search input {
     width: 320px;
+    border-color: var( --gray-0 );
     border-radius: 4px 0 0 4px;
 }
 
 .rtb-header-search button {
     border-radius: 0 4px 4px 0;
+    color: var( --accent-1 );
+    background: var( --gray-0 );
 }
