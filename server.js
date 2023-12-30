@@ -68,6 +68,9 @@ routes.forEach( ( route ) => {
 
             switch( route[1] ) {
 
+                /**
+                 * single profile page
+                 */
                 case 'profile':
 
                     let uri = ( req.params.uri || '' ).toLowerCase();
@@ -107,6 +110,25 @@ routes.forEach( ( route ) => {
                         return ;
 
                     }
+
+                    break;
+
+                /**
+                 * general statistics
+                 */
+                case 'stats-general':
+
+                    res.locals.charts = {
+                        count: api.getCSVFile( '/stats/count' ),
+                        total: api.getCSVFile( '/stats/total' ),
+                        woman: api.getCSVFile( '/stats/woman' )
+                    };
+
+                    res.locals.stats = {
+                        count: res.locals.charts.count.slice(-1)[1],
+                        total: res.locals.charts.total.slice(-1)[1],
+                        woman: res.locals.charts.woman.slice(-1)[1]
+                    };
 
                     break;
 

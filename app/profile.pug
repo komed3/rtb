@@ -77,13 +77,13 @@ block content
     //- bio
     if profile.bio && profile.bio.bio.length
       div.rtb-box.rtb-profile-bio
-        h3.rtb-profile-heading!= 'About ' + profile.info.name
+        h3.rtb-box-heading!= 'About ' + profile.info.name
         each statement of profile.bio.bio
           p!= statement
 
     //- personal stats
     div.rtb-box.rtb-profile-info
-      h3.rtb-profile-heading Personal stats
+      h3.rtb-box-heading Personal stats
       div.rtb-grid.col3.rtb-profile-grid
         if profile.info.citizenship
           div.rtb-grid-item
@@ -127,7 +127,7 @@ block content
     //- related people
     if profile.related && profile.related.length
       div.rtb-box.rtb-related
-        h3.rtb-profile-heading Related people
+        h3.rtb-box-heading Related people
         div.rtb-grid.col3.rtb-profile-grid
           each related of profile.related
             a.rtb-grid-item.rtb-grid-item-flex(
@@ -143,7 +143,7 @@ block content
 
     //- net worth history
     div.rtb-box.rtb-profile-history
-      h3.rtb-profile-heading Net worth over time
+      h3.rtb-box-heading Net worth over time
       div.rtb-chart.rtb-ntw-chart(
         chart-type= 'networth'
         chart-data!= core.chartData( charts.networth )
@@ -152,7 +152,7 @@ block content
 
     //- ranking history
     div.rtb-box.rtb-ranking-history
-      h3.rtb-profile-heading Real-time ranking
+      h3.rtb-box-heading Real-time ranking
       div.rtb-chart.rtb-rank-chart(
         chart-type= 'rank'
         chart-data!= core.chartData( charts.rank )
@@ -162,7 +162,7 @@ block content
     //- financial assets
     if profile.assets && profile.assets.length
       div.rtb-box.rtb-profile-assets
-        h3.rtb-profile-heading Financial assets
+        h3.rtb-box-heading Financial assets
         div.rtb-grid.col3.rtb-profile-grid
           each asset of profile.assets
             div.rtb-grid-item
