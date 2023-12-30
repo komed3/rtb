@@ -15,11 +15,29 @@ block content
     div.rtb-box.rtb-stats-header
       h1 Statistics
 
+    //- billionaire count
+    div.rtb-box.rtb-stats-count
+      h3.rtb-box-heading Number of billionaires
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'number'
+        chart-data!= core.chartData( charts.count )
+      )
+        canvas.rtb-chart-inner
+
     //- total net worth
     div.rtb-box.rtb-stats-total
       h3.rtb-box-heading Total net worth
-      div.rtb-chart.rtb-ntw-chart(
+      div.rtb-chart.rtb-big-chart(
         chart-type= 'networth'
         chart-data!= core.chartData( charts.total )
+      )
+        canvas.rtb-chart-inner
+
+    //- woman count
+    div.rtb-box.rtb-stats-count
+      h3.rtb-box-heading Number of womans
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'number'
+        chart-data!= core.chartData( charts.woman )
       )
         canvas.rtb-chart-inner
