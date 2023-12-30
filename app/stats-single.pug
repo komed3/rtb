@@ -49,13 +49,28 @@ block content
             b!= formatter.networth( latest[2], 2 )
 
     //- changes (percentage)
-    div.rtb-box.rtb-stats-total
+    div.rtb-box.rtb-stats-change
       h3.rtb-box-heading Changes by percentage
       div.rtb-chart.rtb-medium-chart(
         chart-type= 'change'
         chart-data!= core.chartData( charts.change )
       )
         canvas.rtb-chart-inner
+
+    //- billionaires (selection)
+    div.rtb-box.rtb-stats-profiles
+      h3.rtb-box-heading!= 'Some billionaires from ' + single
+      div.rtb-grid.col3.rtb-profile-grid
+        each item in profiles
+            a.rtb-grid-item.rtb-grid-item-flex(
+              href!= core.url( '/profile/' + item )
+            )
+              img.rtb-image.rtb-grid-item-img(
+                src!= api.getProfileImage( item ),
+                loading= 'lazy'
+              )/
+              div.rtb-grid-item-inner
+                span!= api.getProfileName( item )
 
     //- total net worth
     div.rtb-box.rtb-stats-total

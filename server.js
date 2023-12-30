@@ -170,6 +170,10 @@ routes.forEach( ( route ) => {
 
                     res.locals.latest = history.splice( -1 )[0];
 
+                    res.locals.profiles = api.getJSONFile( '/filter/' + route[2] + '/' + req.params.single ).sort(
+                        ( a, b ) => 0.5 - Math.random()
+                    ).slice( 0, 12 );
+
                     break;
 
             }
