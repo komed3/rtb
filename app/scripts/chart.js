@@ -324,6 +324,11 @@ const chart_type__number = ( container, data ) => {
                             family: 'Poppins, sans-serif',
                             size: 14,
                             weight: 700
+                        },
+                        callback: ( value ) => {
+                            if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
+                                return parseInt( value );
+                            }
                         }
                     }
                 }
