@@ -8,12 +8,34 @@ block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
   script( src= '/js/chart.min.js' )
 
+block styles
+  link( rel='stylesheet', href= '/css/stats.css' )/
+
 block content
   div.rtb-page.rtb-stats.rtb-general-stats
 
     //- header
     div.rtb-box.rtb-stats-header
       h1 Statistics
+      div.rtb-stats-grid
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Total count of billionaires
+            span!= 'as of ' + formatter.date( stats.count[0] )
+          div.rtb-stats-grid-value
+            b!= stats.count[1]
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Combined net worth
+            span!= 'as of ' + formatter.date( stats.total[0] )
+          div.rtb-stats-grid-value
+            b!= formatter.networth( stats.total[1], 2 )
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Number of womans
+            span!= 'as of ' + formatter.date( stats.woman[0] )
+          div.rtb-stats-grid-value
+            b!= stats.woman[1]
 
     //- billionaire count
     div.rtb-box.rtb-stats-count

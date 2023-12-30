@@ -1,0 +1,30 @@
+@import 'page';
+
+.rtb-stats-grid {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 24px;
+}
+
+.rtb-stats-grid-line {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 48px;
+}
+
+.rtb-stats-grid-label h4 {
+    margin: 0;
+}
+
+.rtb-stats-grid-label span {
+    font-size: 13px;
+    color: var( --gray-3 );
+}
+
+.rtb-stats-grid-value {
+    font-size: 38px;
+    font-weight: 900;
+    color: var( --accent-1 );
+}

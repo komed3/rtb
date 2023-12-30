@@ -125,9 +125,9 @@ routes.forEach( ( route ) => {
                     };
 
                     res.locals.stats = {
-                        count: res.locals.charts.count.slice(-1)[1],
-                        total: res.locals.charts.total.slice(-1)[1],
-                        woman: res.locals.charts.woman.slice(-1)[1]
+                        count: res.locals.charts.count.slice(-1)[0],
+                        total: res.locals.charts.total.slice(-1)[0],
+                        woman: res.locals.charts.woman.slice(-1)[0]
                     };
 
                     break;
