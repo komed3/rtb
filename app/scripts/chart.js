@@ -1,3 +1,7 @@
+/**
+ * global charts object
+ * contains all registered charts
+ */
 var charts = {};
 
 /**
@@ -7,7 +11,7 @@ var charts = {};
  * @param {Object} data chart data
  * @returns uuid
  */
-function chart_add( container, options, data ) {
+const chart_add = ( container, options, data ) => {
 
     let uuid = getID(),
         chart = container.querySelector( 'canvas' ),
@@ -57,7 +61,7 @@ function chart_add( container, options, data ) {
  * @param {String} uuid chart ID
  * @param {Array} data chart data
  */
-function chart_update( uuid, data ) {
+const chart_update = ( uuid, data ) => {
 
     if( uuid in charts ) {
 
@@ -75,7 +79,7 @@ function chart_update( uuid, data ) {
  * @param {String} uuid chart ID
  * @param {String} range data range
  */
-function chart_range( uuid, range ) {
+const chart_range = ( uuid, range ) => {
 
     if( uuid in charts ) {
 
@@ -144,7 +148,7 @@ function chart_range( uuid, range ) {
  * @param {Int} limit data point limit
  * @returns extracted data
  */
-function chart_data( data, range = [], limit = 500 ) {
+const chart_data = ( data, range = [], limit = 500 ) => {
 
     if( range.length == 2 ) {
 
@@ -191,7 +195,7 @@ function chart_data( data, range = [], limit = 500 ) {
  * @param {Float} alpha alpha
  * @returns rgba color
  */
-function chart_color( rgb, alpha = 1 ) {
+const chart_color = ( rgb, alpha = 1 ) => {
 
     return 'rgba( ' + rgb + ' / ' + alpha + ' )';
 
@@ -205,7 +209,7 @@ function chart_color( rgb, alpha = 1 ) {
  * @param {Number} y vertical stop
  * @returns color gradient
  */
-function chart_gradient( container, stops, x = 0, y = 400 ) {
+const chart_gradient = ( container, stops, x = 0, y = 400 ) => {
 
     let ctx = container.querySelector( 'canvas' ).getContext( '2d' ),
         gradient = ctx.createLinearGradient( 0, 0, x, y );
@@ -221,11 +225,120 @@ function chart_gradient( container, stops, x = 0, y = 400 ) {
 };
 
 /**
+ * create (general) number chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__number = ( container, data ) => {
+
+    let rgb = '227 11 92',
+        d = chart_data( data );
+
+    chart_add( container, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [ {
+                data: [],
+                lineTension: 0.05,
+                pointHitRadius: 100,
+                borderWidth: 3,
+                borderColor: chart_color( rgb ),
+                backgroundColor: chart_gradient( container, [
+                    chart_color( rgb, 0.5 ),
+                    chart_color( rgb, 0 )
+                ] ),
+                fill: true,
+                pointRadius: 0,
+                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
+                pointHoverBorderColor: chart_color( rgb ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    displayColors: false,
+                    padding: {
+                        top: 11,
+                        left: 12,
+                        right: 14,
+                        bottom: 4
+                    },
+                    caretPadding: 10,
+                    backgroundColor: 'rgba( 255 255 255 / 0.9 )',
+                    borderWidth: 2,
+                    borderColor: chart_color( rgb ),
+                    cornerRadius: 4,
+                    titleColor: 'rgba( 0 0 0 / 1 )',
+                    titleFont: {
+                        family: 'Poppins, sans-serif',
+                        size: 13
+                    },
+                    bodyColor: chart_color( rgb ),
+                    bodyFont: {
+                        family: 'Poppins, sans-serif',
+                        size: 24,
+                        weight: 700
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        display: false
+                    }
+                },
+                y: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: 'rgba( 245 246 247 / 1 )',
+                        lineWidth: 2,
+                        tickLength: 0
+                    },
+                    ticks: {
+                        beginAtZero: false,
+                        maxTicksLimit: 4,
+                        padding: 12,
+                        color: 'rgba( 0 0 0 / 1 )',
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                }
+            }
+        }
+    }, data );
+
+};
+
+/**
  * create net worth chart
  * @param {Node} container chart container
  * @param {Array} data chart data
  */
-function chart_networth( container, data ) {
+const chart_type__networth = ( container, data ) => {
 
     let rgb = '0 182 122',
         d = chart_data( data );
@@ -344,7 +457,7 @@ function chart_networth( container, data ) {
  * @param {Node} container chart container
  * @param {Array} data chart data
  */
-function chart_rank( container, data ) {
+const chart_type__rank = ( container, data ) => {
 
     let rgb = '227 11 92',
         d = chart_data( data );
@@ -455,9 +568,29 @@ function chart_rank( container, data ) {
 };
 
 /**
+ * create percentage chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__percent = ( container, data ) => {
+
+    //
+
+};
+
+/**
+ * register chart types
+ */
+const chart_types = {
+    'number': chart_type__number,
+    'networth': chart_type__networth,
+    'rank': chart_type__rank,
+    'percent': chart_type__percent
+};
+
+/**
  * chart controls
  */
-
 document.addEventListener( 'click', ( e ) => {
 
     if(
@@ -479,18 +612,16 @@ document.addEventListener( 'click', ( e ) => {
  * search for charts after DOM content has loaded
  * process chart data
  */
-
 document.addEventListener( 'DOMContentLoaded', () => {
 
     document.querySelectorAll( '.rtb-chart' ).forEach( ( container ) => {
 
         let type = container.getAttribute( 'chart-type' ) || '',
-            data = JSON.parse( window.atob( container.getAttribute( 'chart-data' ) ) ),
-            fn = 'chart_' + type;
+            data = JSON.parse( window.atob( container.getAttribute( 'chart-data' ) ) );
 
-        if( typeof window[ fn ] === 'function' ) {
+        if( type in chart_types ) {
 
-            window[ fn ]( container, data );
+            chart_types[ type ]( container, data );
 
         }
 
