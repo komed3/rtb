@@ -236,8 +236,8 @@ function chart_networth( container, data ) {
             labels: [],
             datasets: [ {
                 data: [],
-                lineTension: 0.1,
-                pointHitRadius: 50,
+                lineTension: 0.05,
+                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( rgb ),
                 backgroundColor: chart_gradient( container, [
@@ -355,8 +355,8 @@ function chart_rank( container, data ) {
             labels: [],
             datasets: [ {
                 data: [],
-                lineTension: 0.1,
-                pointHitRadius: 50,
+                lineTension: 0.05,
+                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( rgb ),
                 pointRadius: 0,
