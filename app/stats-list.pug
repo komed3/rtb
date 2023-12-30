@@ -14,20 +14,19 @@ block styles
 block content
   div.rtb-page.rtb-box.rtb-stats.rtb-stats-list
     h1!= name
-    div.rtb-grid.col2.rtb-stats-list-grid
+    div.rtb-stats-list-grid
       each item in list
-        div.rtb-grid-item.rtb-stats-list-grid-item
+        div.rtb-stats-list-grid-item
           h2.rtb-stats-list-grid-label
             a(
               href= core.url( '/' + base + '/' + item[0] )
             )!= api.indexes[ base ][ item[0] ]
-          div.rtb-grid.col2.rtb-stats-list-grid-value
-            div.rtb-grid-item
-              span Count
-              b!= item[1]
-            div.rtb-grid-item
-              span Net worth
-              b!= formatter.networth( item[2], 2 )
+          div.rtb-stats-list-grid-value
+            span Net worth
+            b!= formatter.networth( item[2], 2 )
+          div.rtb-stats-list-grid-value
+            span Count
+            b!= item[1]
           div.rtb-grid.rtb-profile-grid.rtb-stats-list-grid-profile
             a.rtb-grid-item.rtb-grid-item-flex(
               href!= core.url( '/profile/' + item[3] )
