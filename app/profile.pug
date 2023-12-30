@@ -145,7 +145,7 @@ block content
     div.rtb-box.rtb-profile-history
       h3.rtb-box-heading Net worth over time
       div.rtb-chart.rtb-big-chart(
-        chart-type= 'networth'
+        chart-type= 'networth',
         chart-data!= core.chartData( charts.networth )
       )
         canvas.rtb-chart-inner
@@ -154,7 +154,7 @@ block content
     div.rtb-box.rtb-ranking-history
       h3.rtb-box-heading Real-time ranking
       div.rtb-chart.rtb-small-chart(
-        chart-type= 'rank'
+        chart-type= 'rank',
         chart-data!= core.chartData( charts.rank )
       )
         canvas.rtb-chart-inner

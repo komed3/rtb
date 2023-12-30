@@ -43,7 +43,8 @@ const chart_add = ( container, options, data ) => {
     charts[ uuid ] = {
         container: container,
         chart: new Chart( ctx, options ),
-        data: data
+        data: data,
+        normalized: !!( container.getAttribute( 'chart-normalized' ) || 0 )
     };
 
     /**
@@ -134,13 +135,10 @@ const chart_range = ( uuid, range ) => {
          * update chart data
          */
 
-        chart_update( uuid, chart_data(
-            charts[ uuid ].data,
-            [
-                ( new Date( s ) ),
-                ( new Date() )
-            ]
-        ) );
+        chart_update( uuid, chart_data( uuid, [
+            ( new Date( s ) ),
+            ( new Date() )
+        ] ) );
 
     }
 
@@ -148,49 +146,57 @@ const chart_range = ( uuid, range ) => {
 
 /**
  * extract data for chart
- * @param {Array} data chart data
+ * @param {String} uuid chart ID
  * @param {Array} range date range
  * @param {Int} limit data point limit
  * @returns extracted data
  */
-const chart_data = ( data, range = [], limit = 500 ) => {
+const chart_data = ( uuid, range = [], limit = 500 ) => {
 
-    if( range.length == 2 ) {
+    if( uuid in charts ) {
+
+        let data = charts[ uuid ].data;
+
+        if( range.length == 2 ) {
+
+            /**
+             * check date range
+             */
+
+            let s = new Date( range[0] );
+            let e = new Date( range[1] );
+
+            data = data.filter( r => {
+
+                let t = new Date( r[0] );
+
+                return t >= s && t <= e;
+
+            } );
+
+        }
 
         /**
-         * check date range
+         * shrink data to fixed limit
          */
 
-        let s = new Date( range[0] );
-        let e = new Date( range[1] );
+        let d = [], l = data.length;
 
-        data = data.filter( r => {
+        d.push( data[0] );
 
-            let t = new Date( r[0] );
+        for( let i = 1; i < l - 1; i += Math.ceil( l / limit ) ) {
 
-            return t >= s && t <= e;
+            d.push( data[ i ] );
 
-        } );
+        }
 
-    }
+        d.push( data[ l - 1 ] );
 
-    /**
-     * shrink data to fixed limit
-     */
-
-    let d = [], l = data.length;
-
-    d.push( data[0] );
-
-    for( let i = 1; i < l - 1; i += Math.ceil( l / limit ) ) {
-
-        d.push( data[ i ] );
+        return d;
 
     }
 
-    d.push( data[ l - 1 ] );
-
-    return d;
+    return [];
 
 };
 
@@ -201,7 +207,7 @@ const chart_data = ( data, range = [], limit = 500 ) => {
  * @param {Float|Null} fill split fill
  * @returns splitted data
  */
-const chart_split_data = ( data, by = 0, fill = 0 ) => {
+const chart_split_data = ( data, by = 0, fill = null ) => {
 
     return data.map( ( r ) => {
 
@@ -611,20 +617,30 @@ const chart_type__percent = ( container, data ) => {
             labels: [],
             datasets: [ {
                 data: [],
-                stepped: true,
+                lineTension: 0.05,
                 pointHitRadius: 100,
-                borderWidth: 0,
-                backgroundColor: chart_color( rgb_pos ),
+                borderWidth: 3,
+                borderColor: chart_color( rgb_pos ),
+                backgroundColor: chart_color( rgb_pos, 0.5 ),
                 fill: true,
-                pointStyle: false
+                pointRadius: 0,
+                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
+                pointHoverBorderColor: chart_color( rgb_pos ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
             }, {
                 data: [],
-                stepped: true,
+                lineTension: 0.05,
                 pointHitRadius: 100,
-                borderWidth: 0,
-                backgroundColor: chart_color( rgb_neg ),
+                borderWidth: 3,
+                borderColor: chart_color( rgb_neg ),
+                backgroundColor: chart_color( rgb_neg, 0.5 ),
                 fill: true,
-                pointStyle: false
+                pointRadius: 0,
+                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
+                pointHoverBorderColor: chart_color( rgb_neg ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
             } ]
         },
         options: {

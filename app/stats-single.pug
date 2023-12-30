@@ -52,7 +52,8 @@ block content
     div.rtb-box.rtb-stats-percent
       h3.rtb-box-heading Changes by percentage
       div.rtb-chart.rtb-medium-chart(
-        chart-type= 'percent'
+        chart-type= 'percent',
+        chart-normalized= 1,
         chart-data!= core.chartData( charts.change )
       )
         canvas.rtb-chart-inner
@@ -76,7 +77,7 @@ block content
     div.rtb-box.rtb-stats-total
       h3.rtb-box-heading Total net worth
       div.rtb-chart.rtb-big-chart(
-        chart-type= 'networth'
+        chart-type= 'networth',
         chart-data!= core.chartData( charts.networth )
       )
         canvas.rtb-chart-inner
@@ -85,7 +86,7 @@ block content
     div.rtb-box.rtb-stats-count
       h3.rtb-box-heading Number of billionaires
       div.rtb-chart.rtb-medium-chart(
-        chart-type= 'number'
+        chart-type= 'number',
         chart-data!= core.chartData( charts.count )
       )
         canvas.rtb-chart-inner
