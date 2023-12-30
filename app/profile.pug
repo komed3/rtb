@@ -36,7 +36,7 @@ block content
             href!= core.url( '/country/' + profile.info.citizenship )
           )
             i.icon language
-            span!= isoc.getName( profile.info.citizenship, 'en' ) 
+            span!= api.indexes.country[ profile.info.citizenship ] 
 
       //- navigation
       if profile.rank && profile.rank.rtb
