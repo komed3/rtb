@@ -161,22 +161,12 @@ routes.forEach( ( route ) => {
                     res.locals.single = api.indexes[ route[2] ][ req.params.single ];
 
                     let history = api.getCSVFile( '/stats/' + route[2] + '/' + req.params.single ),
-                        latest = parseFloat( history[0][2] ), pct = 0;
+                        pct = 0;
 
                     res.locals.charts = {
                         count: history.map( r => [ r[0], r[1] ] ),
                         networth: history.map( r => [ r[0], r[2] ] ),
-                        change: history.map( ( r ) => {
-
-                            let x = parseFloat( r[2] ),
-                                y = Number( ( ( x - latest ) / x * 100 ).toFixed(3) );
-
-                            pct += y;
-                            latest = x;
-
-                            return [ r[0], pct ];
-
-                        } )
+                        change: history.map( r => [ r[0], ( pct += parseFloat( r[3] ) ) ] )
                     };
 
                     res.locals.latest = history.splice( -1 )[0];
