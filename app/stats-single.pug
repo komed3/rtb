@@ -25,6 +25,28 @@ block content
     //- header
     div.rtb-box.rtb-stats-header
       h1!= single
+      div.rtb-stats-grid
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Richest billionaire
+            span!= 'as of ' + formatter.date( latest[0] )
+          div.rtb-stats-grid-value
+            b
+              a(
+                href= core.url( '/profile/' + latest[4] )
+              )!= api.getProfileName( latest[4] )
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Total count of billionaires
+            span!= 'as of ' + formatter.date( latest[0] )
+          div.rtb-stats-grid-value
+            b!= latest[1]
+        div.rtb-stats-grid-line
+          div.rtb-stats-grid-label
+            h4 Combined net worth
+            span!= 'as of ' + formatter.date( latest[0] )
+          div.rtb-stats-grid-value
+            b!= formatter.networth( latest[2], 2 )
 
     //- total net worth
     div.rtb-box.rtb-stats-total
