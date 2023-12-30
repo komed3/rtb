@@ -49,10 +49,10 @@ block content
             b!= formatter.networth( latest[2], 2 )
 
     //- changes (percentage)
-    div.rtb-box.rtb-stats-change
+    div.rtb-box.rtb-stats-percent
       h3.rtb-box-heading Changes by percentage
       div.rtb-chart.rtb-medium-chart(
-        chart-type= 'change'
+        chart-type= 'percent'
         chart-data!= core.chartData( charts.change )
       )
         canvas.rtb-chart-inner
