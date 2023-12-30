@@ -1,3 +1,4 @@
 module.exports = [
-    [ '/profile/:uri/?', 'profile' ]
+    [ '/profile/:uri/?', 'profile' ],
+    [ '/stats/?', 'stats-general', 'stats-general' ]
 ];

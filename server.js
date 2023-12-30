@@ -57,7 +57,10 @@ routes.forEach( ( route ) => {
             res.locals.formatter = formatter;
             res.locals.api = api;
 
-            res.locals.global = {};
+            res.locals.global = {
+                file: route[1],
+                nav: route[2] || route[1]
+            };
 
             /**
              * process pages

@@ -1,0 +1,18 @@
+//- templates/nav.pug
+-
+  var links = [
+    [ '/list/rtb', 'list-rtb', 'Real-time List' ],
+    [ '/stats', 'stats-general', 'Statistics' ],
+    [ '/country', 'country', 'Countries' ],
+    [ '/industry', 'industry', 'Industries' ]
+  ];
+
+each link in links
+  a(
+    href= link[0],
+    class= (
+      link[1] == global.nav
+        ? 'current'
+        : ''
+    )
+  )!= link[2]
