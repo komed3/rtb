@@ -48,6 +48,15 @@ block content
           div.rtb-stats-grid-value
             b!= formatter.networth( latest[2], 2 )
 
+    //- changes (percentage)
+    div.rtb-box.rtb-stats-total
+      h3.rtb-box-heading Changes by percentage
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'change'
+        chart-data!= core.chartData( charts.change )
+      )
+        canvas.rtb-chart-inner
+
     //- total net worth
     div.rtb-box.rtb-stats-total
       h3.rtb-box-heading Total net worth
