@@ -147,6 +147,31 @@ routes.forEach( ( route ) => {
 
                     break;
 
+                /**
+                 * stats list page
+                 */
+                case 'stats-single':
+
+                    res.locals.base = route[2];
+                    res.locals.name = {
+                        country: 'Countries',
+                        industry: 'Industries'
+                    }[ route[2] ];
+
+                    res.locals.single = api.indexes[ route[2] ][ req.params.single ];
+
+                    let history = api.getCSVFile( '/stats/' + route[2] + '/' + req.params.single );
+
+                    res.locals.charts = {
+                        count: history.map( r => [ r[0], r[1] ] ),
+                        networth: history.map( r => [ r[0], r[2] ] ),
+                        change: history.map( r => [ r[0], r[3] ] )
+                    };
+
+                    res.locals.latest = history.splice( -1 )[0];
+
+                    break;
+
             }
 
             /**

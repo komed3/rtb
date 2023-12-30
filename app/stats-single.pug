@@ -1,9 +1,45 @@
 //- (general) stats page
 extends templates/layout.pug
 
+block title
+  title!= single + ' — Real-time billionaires'
+
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
   script( src= '/js/chart.min.js' )
 
 block styles
   link( rel='stylesheet', href= '/css/stats.css' )/
+
+block content
+  div.rtb-page.rtb-stats.rtb-stats-single
+
+    //- back to list
+    div.rtb-tags.rtb-stats-tags
+      a.tag(
+        href!= core.url( '/' + base )
+      )
+        i.icon arrow_back
+        span!= name
+
+    //- header
+    div.rtb-box.rtb-stats-header
+      h1!= single
+
+    //- total net worth
+    div.rtb-box.rtb-stats-total
+      h3.rtb-box-heading Total net worth
+      div.rtb-chart.rtb-big-chart(
+        chart-type= 'networth'
+        chart-data!= core.chartData( charts.networth )
+      )
+        canvas.rtb-chart-inner
+
+    //- billionaire count
+    div.rtb-box.rtb-stats-count
+      h3.rtb-box-heading Number of billionaires
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'number'
+        chart-data!= core.chartData( charts.count )
+      )
+        canvas.rtb-chart-inner
