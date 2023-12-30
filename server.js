@@ -132,6 +132,21 @@ routes.forEach( ( route ) => {
 
                     break;
 
+                /**
+                 * stats list page
+                 */
+                case 'stats-list':
+
+                    res.locals.base = route[2];
+                    res.locals.name = {
+                        country: 'Countries',
+                        industry: 'Industries'
+                    }[ route[2] ];
+
+                    res.locals.list = api.getCSVFile( '/stats/' + route[2] + '/_list' );
+
+                    break;
+
             }
 
             /**

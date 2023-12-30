@@ -250,6 +250,31 @@ a:hover {
     width: 56px;
 }
 
+/* profile grid */
+
+.rtb-profile-grid h4 {
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var( --gray-3 );
+}
+
+.rtb-profile-grid span {
+    display: block;
+    font-size: 18px;
+}
+
+.rtb-profile-grid span::first-letter {
+    text-transform: uppercase;
+}
+
+.rtb-profile-grid b {
+    display: block;
+    margin-top: 2px;
+    font-size: 18px;
+    color: var( --accent-1 );
+}
+
 /* charts */
 
 .rtb-chart {

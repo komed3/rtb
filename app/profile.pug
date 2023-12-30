@@ -25,7 +25,7 @@ block content
           )
             span!= '#' + profile.latest.rank
         if profile.info.industry
-          each industry of profile.info.industry
+          each industry in profile.info.industry
             a.tag.tag-primary(
               href!= core.url( '/industry/' + industry )
             )
@@ -78,7 +78,7 @@ block content
     if profile.bio && profile.bio.bio.length
       div.rtb-box.rtb-profile-bio
         h3.rtb-box-heading!= 'About ' + profile.info.name
-        each statement of profile.bio.bio
+        each statement in profile.bio.bio
           p!= statement
 
     //- personal stats
@@ -129,13 +129,13 @@ block content
       div.rtb-box.rtb-related
         h3.rtb-box-heading Related people
         div.rtb-grid.col3.rtb-profile-grid
-          each related of profile.related
+          each related in profile.related
             a.rtb-grid-item.rtb-grid-item-flex(
               href!= core.url( '/profile/' + related.uri )
             )
               img.rtb-image.rtb-grid-item-img(
                 src!= api.getProfileImage( related.uri ),
-                laading= 'lazy'
+                loading= 'lazy'
               )/
               div.rtb-grid-item-inner
                 span!= related.name
@@ -164,7 +164,7 @@ block content
       div.rtb-box.rtb-profile-assets
         h3.rtb-box-heading Financial assets
         div.rtb-grid.col3.rtb-profile-grid
-          each asset of profile.assets
+          each asset in profile.assets
             div.rtb-grid-item
               h4!= asset.exchange + ' | ' + asset.ticker
               span!= asset.companyName

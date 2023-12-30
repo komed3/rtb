@@ -1,9 +1,41 @@
 //- (general) stats page
 extends templates/layout.pug
 
+block title
+  title!= name + ' — Real-time billionaires'
+
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
   script( src= '/js/chart.min.js' )
 
 block styles
   link( rel='stylesheet', href= '/css/stats.css' )/
+
+block content
+  div.rtb-page.rtb-box.rtb-stats.rtb-stats-list
+    h1!= name
+    div.rtb-grid.col2.rtb-stats-list-grid
+      each item in list
+        div.rtb-grid-item.rtb-stats-list-grid-item
+          h2.rtb-stats-list-grid-label
+            a(
+              href= core.url( '/' + base + '/' + item[0] )
+            )!= api.indexes[ base ][ item[0] ]
+          div.rtb-grid.col2.rtb-stats-list-grid-value
+            div.rtb-grid-item
+              span Count
+              b!= item[1]
+            div.rtb-grid-item
+              span Net worth
+              b!= formatter.networth( item[2], 2 )
+          div.rtb-grid.rtb-profile-grid.rtb-stats-list-grid-profile
+            a.rtb-grid-item.rtb-grid-item-flex(
+              href!= core.url( '/profile/' + item[3] )
+            )
+              img.rtb-image.rtb-grid-item-img(
+                src!= api.getProfileImage( item[3] ),
+                loading= 'lazy'
+              )/
+              div.rtb-grid-item-inner
+                span!= api.getProfileName( item[3] )
+                h4!= '#' + item[4] + ' — ' + formatter.networth( item[5] )

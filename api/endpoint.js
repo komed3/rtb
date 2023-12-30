@@ -72,6 +72,27 @@ const resolveURI = ( uri ) => {
 };
 
 /**
+ * get profile name
+ * @param {String} uri profile URI
+ * @returns name
+ */
+const getProfileName = ( uri ) => {
+
+    uri = resolveURI( uri );
+
+    if( uri in index ) {
+
+        return index[ uri ].name;
+
+    } else {
+
+        return null;
+
+    }
+
+};
+
+/**
  * get profile image
  * @param {String} uri profile URI
  * @returns image
@@ -147,6 +168,7 @@ module.exports = {
     resolveURI,
     getJSONFile,
     getCSVFile,
+    getProfileName,
     getProfileImage,
     getFullProfile
 };
