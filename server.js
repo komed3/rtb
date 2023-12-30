@@ -114,9 +114,9 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
-                 * general statistics
+                 * (general) statistic page
                  */
-                case 'stats-general':
+                case 'stats':
 
                     res.locals.charts = {
                         count: api.getCSVFile( '/stats/count' ),
