@@ -53,7 +53,8 @@ block content
       h3.rtb-box-heading Changes by percentage
       div.rtb-chart.rtb-medium-chart(
         chart-type= 'percent',
-        chart-normalized= 1,
+        chart-normalize= 1,
+        chart-split= 1,
         chart-data!= core.chartData( charts.change )
       )
         canvas.rtb-chart-inner

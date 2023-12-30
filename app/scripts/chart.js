@@ -44,7 +44,8 @@ const chart_add = ( container, options, data ) => {
         container: container,
         chart: new Chart( ctx, options ),
         data: data,
-        normalized: !!( container.getAttribute( 'chart-normalized' ) || 0 )
+        normalize: !!( container.getAttribute( 'chart-normalize' ) || 0 ),
+        split: !!( container.getAttribute( 'chart-split' ) || 0 )
     };
 
     /**
@@ -155,7 +156,8 @@ const chart_data = ( uuid, range = [], limit = 500 ) => {
 
     if( uuid in charts ) {
 
-        let data = charts[ uuid ].data;
+        let chart = charts[ uuid ],
+            data = JSON.parse( JSON.stringify( chart.data ) );
 
         if( range.length == 2 ) {
 
@@ -192,11 +194,50 @@ const chart_data = ( uuid, range = [], limit = 500 ) => {
 
         d.push( data[ l - 1 ] );
 
+        /**
+         * normalize data if needed
+         */
+
+        if( chart.normalize ) {
+
+            return chart_data_normalize( d, 0, chart.split );
+
+        }
+
         return d;
 
     }
 
     return [];
+
+};
+
+/**
+ * normalize chart data
+ * @param {Array} data chart data
+ * @param {Float} n normalize
+ * @param {Boolean} split split data
+ * @returns normalized data
+ */
+const chart_data_normalize = ( data, n = 0, split = false ) => {
+
+    let abs = parseFloat( data[0][1] ) - n;
+
+    data = data.map( ( r ) => {
+
+        r[1] = parseFloat( r[1] ) - abs;
+
+        return r;
+
+    } );
+
+    if( split ) {
+
+        data = chart_split_data( data, n );
+
+    }
+
+    return data;
 
 };
 
@@ -727,7 +768,7 @@ const chart_type__percent = ( container, data ) => {
                 }
             }
         }
-    }, chart_split_data( data ) );
+    }, data );
 
 };
 
