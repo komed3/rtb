@@ -9,3 +9,17 @@ block content
     h1
       span Search results for 
       q!= global.query
+    p!= '<b>' + search.count + '</b> search results for <q>' + global.query + '</q> were found.'
+    div.rtb-divider
+    div.rtb-grid.col3.rtb-profile-grid
+      each item in search.results
+        a.rtb-grid-item.rtb-grid-item-flex(
+          href!= core.url( '/profile/' + item.uri )
+        )
+          img.rtb-image.rtb-grid-item-img(
+            src!= api.getProfileImage( item.uri ),
+            loading= 'lazy'
+          )/
+          div.rtb-grid-item-inner
+            span!= item.name
+            h4!= 'updated ' + formatter.date( item.update )

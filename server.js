@@ -122,7 +122,7 @@ routes.forEach( ( route ) => {
 
                     let query = res.locals.global.query.toLowerCase();
 
-                    if( query.length ) {
+                    if( query.length > 1 ) {
 
                         let results = [];
 
@@ -144,8 +144,10 @@ routes.forEach( ( route ) => {
 
                         }
 
-                        res.locals.results = results;
-                        res.locals.count = results.length;
+                        res.locals.search = {
+                            results: results,
+                            count: results.length
+                        };
 
                     } else {
 

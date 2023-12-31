@@ -140,6 +140,13 @@ a:hover {
     color: var( --accent-1 );
 }
 
+.rtb-divider {
+    margin: var( --padding ) auto;
+    width: 120px;
+    height: 2px;
+    background: var( --gray-1 );
+}
+
 .up {
     color: var( --color-good );
 }
