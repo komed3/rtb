@@ -9,9 +9,11 @@ var charts = {};
  * @param {Node} container chart container
  * @param {Object} options chart options
  * @param {Object} data chart data
+ * @param {Boolean} ctrl add chart controls
+ * @param {String|Null} range range to select
  * @returns uuid
  */
-const chart_add = ( container, options, data ) => {
+const chart_add = ( container, options, data, ctrl = true, range = 'year' ) => {
 
     let uuid = getID(),
         chart = container.querySelector( 'canvas' ),
@@ -23,18 +25,23 @@ const chart_add = ( container, options, data ) => {
 
     container.id = uuid;
 
-    /**
-     * add range selector
-     */
+    if( ctrl ) {
 
-    let controls = document.createElement( 'div' );
+        /**
+         * add chart controls
+         * (range selector)
+         */
 
-    controls.classList.add( 'rtb-chart-controls' );
-    controls.innerHTML = [ 'All', 'Year', 'Quarter', 'Month' ].map( ( r ) => {
-        return '<button chart-range="' + r.toLowerCase() + '">' + r + '</button>';
-    } ).join( '' );
+        let controls = document.createElement( 'div' );
 
-    container.insertBefore( controls, chart );
+        controls.classList.add( 'rtb-chart-controls' );
+        controls.innerHTML = [ 'All', 'Year', 'Quarter', 'Month' ].map( ( r ) => {
+            return '<button chart-range="' + r.toLowerCase() + '">' + r + '</button>';
+        } ).join( '' );
+
+        container.insertBefore( controls, chart );
+
+    }
 
     /**
      * create chart
@@ -52,7 +59,15 @@ const chart_add = ( container, options, data ) => {
      * load data
      */
 
-    chart_range( uuid, 'year' );
+    if( range ) {
+
+        chart_range( uuid, range );
+
+    }
+
+    /**
+     * return chart ID
+     */
 
     return uuid;
 
