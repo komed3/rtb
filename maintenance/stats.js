@@ -39,8 +39,16 @@ async function run() {
 
         let selfMade = {},
             agePyramide = {
-                m: {},
-                f: {}
+                m: {
+                    10: 0, 20: 0, 30: 0,
+                    40: 0, 50: 0, 60: 0,
+                    70: 0, 80: 0, 90: 0
+                },
+                f: {
+                    10: 0, 20: 0, 30: 0,
+                    40: 0, 50: 0, 60: 0,
+                    70: 0, 80: 0, 90: 0
+                }
             },
             maritalStatus = {},
             children = {
@@ -101,10 +109,6 @@ async function run() {
                     if( age in agePyramide[ info.gender ] ) {
 
                         agePyramide[ info.gender ][ age ]++;
-
-                    } else {
-
-                        agePyramide[ info.gender ][ age ] = 1;
 
                     }
 
