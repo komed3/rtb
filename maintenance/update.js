@@ -24,9 +24,9 @@ var sanitize = ( str ) => {
 
     return str
         .toLowerCase()
+        .trim()
         .replace( /[^a-z0-9-]/g, '-' )
-        .replace( /-{1,}/g, '-' )
-        .trim();
+        .replace( /-{1,}/g, '-' );
 
 };
 
