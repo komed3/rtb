@@ -935,7 +935,109 @@ const chart_type__pie = ( container, data ) => {
  */
 const chart_type__pyramid = ( container, data ) => {
 
-    //
+    let total = {
+        m: Object.values( data.m ).reduce( ( a, c ) => a + c, 0 ),
+        f: Object.values( data.f ).reduce( ( a, c ) => a + c, 0 )
+    };
+
+    chart_add( container, {
+        type: 'bar',
+        data: {
+            labels: Object.keys( data.m ).map( ( a ) => {
+                return a + ' to ' + ( parseInt( a ) + 9 )
+            } ),
+            datasets: [ {
+                label: 'Male',
+                data: Object.values( data.m ).map( a => a / total.m * -100 ),
+                borderWidth: 0,
+                backgroundColor: chart_color( chart_colors.green ),
+                barPercentage: 0.9,
+                categoryPercentage: 0.9
+            }, {
+                label: 'Female',
+                data: Object.values( data.f ).map( a => a / total.f * 100 ),
+                borderWidth: 0,
+                backgroundColor: chart_color( chart_colors.red ),
+                barPercentage: 0.9,
+                categoryPercentage: 0.9
+            } ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: {
+                    top: 12,
+                    left: 12,
+                    right: 32,
+                    bottom: 12
+                }
+            },
+            events: [],
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            scales: {
+                x: {
+                    stacked: false,
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: chart_color( chart_colors.background ),
+                        lineWidth: 3
+                    },
+                    ticks: {
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        },
+                        callback: ( value ) => {
+                            return Math.abs( value ) + '%';
+                        }
+                    }
+                },
+                y: {
+                    reverse: true,
+                    stacked: true,
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        padding: 12,
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                }
+            }
+        }
+    }, data, false, null );
 
 };
 
