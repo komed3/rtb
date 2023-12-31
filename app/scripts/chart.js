@@ -800,6 +800,84 @@ const chart_type__percent = ( container, data ) => {
 };
 
 /**
+ * create bar chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__bar = ( container, data ) => {
+
+    chart_add( container, {
+        type: 'bar',
+        data: {
+            labels: Object.keys( data ).map( a => capitalize( a.replaceAll( '-', ' ' ) ) ),
+            datasets: [ {
+                data: Object.values( data ),
+                borderWidth: 3,
+                borderColor: 'rgba( 255 255 255 / 1 )',
+                backgroundColor: chart_colors.schemes.red
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
+            events: [],
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: 'rgba( 1 2 3 / 1 )',
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                },
+                y: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: 'rgba( 245 246 247 / 1 )',
+                        lineWidth: 2,
+                        tickLength: 0
+                    },
+                    ticks: {
+                        maxTicksLimit: 4,
+                        padding: 12,
+                        color: 'rgba( 1 2 3 / 1 )',
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * create pie chart
  * @param {Node} container chart container
  * @param {Array} data chart data
@@ -818,6 +896,8 @@ const chart_type__pie = ( container, data ) => {
             } ),
             datasets: [ {
                 data: Object.values( data ),
+                borderWidth: 3,
+                borderColor: 'rgba( 255 255 255 / 1 )',
                 backgroundColor: chart_colors.schemes.red
             } ]
         },
@@ -860,6 +940,7 @@ const chart_types = {
     'networth': chart_type__networth,
     'rank': chart_type__rank,
     'percent': chart_type__percent,
+    'bar': chart_type__bar,
     'pie': chart_type__pie
 };
 
