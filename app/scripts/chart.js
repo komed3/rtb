@@ -617,7 +617,7 @@ const chart_type__percent = ( container, data ) => {
                         bottom: 4
                     },
                     caretPadding: 10,
-                    backgroundColor: chart_color( chart_color( chart_colors.background ), 0.9 ),
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
                     borderWidth: 2,
                     borderColor: chart_color( chart_colors.color ),
                     cornerRadius: 4,
