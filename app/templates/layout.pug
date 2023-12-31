@@ -32,7 +32,8 @@ html( lang= 'en' )
         input(
           type= 'text',
           name= 'q',
-          placeholder= 'Search …'
+          placeholder= 'Search …',
+          value!= global.query
         )/
         button( type= 'submit' )
           i.icon search

@@ -59,6 +59,7 @@ routes.forEach( ( route ) => {
             res.locals.api = api;
 
             res.locals.global = {
+                query: ( req.query.q || '' ).trim(),
                 file: route[1],
                 nav: route[2] || route[1]
             };
@@ -119,7 +120,7 @@ routes.forEach( ( route ) => {
                  */
                 case 'search':
 
-                    let query = ( req.query.q || '' ).toLowerCase().trim();
+                    let query = res.locals.global.query.toLowerCase();
 
                     if( query.length ) {
 
@@ -144,6 +145,7 @@ routes.forEach( ( route ) => {
                         }
 
                         res.locals.results = results;
+                        res.locals.count = results.length;
 
                     } else {
 

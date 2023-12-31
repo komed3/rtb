@@ -1,3 +1,11 @@
 //- search (results) page
 extends templates/layout.pug
 
+block title
+  title!= 'Search results for ' + global.query
+
+block content
+  div.rtb-page.rtb-box.rtb-search
+    h1
+      span Search results for 
+      q!= global.query
