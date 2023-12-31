@@ -175,6 +175,12 @@ a:hover {
     text-decoration-thickness: 3px;
 }
 
+.rtb-box-cols {
+    display: grid;
+    grid-template-columns: repeat( 2, 1fr );
+    gap: 24px;
+}
+
 /* image */
 
 .rtb-image {

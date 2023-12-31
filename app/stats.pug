@@ -55,6 +55,44 @@ block content
       )
         canvas.rtb-chart-inner
 
+    //- self-made score
+    div.rtb-box.rtb-stats-selfmade
+      h3.rtb-box-heading Self-made score
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'bar',
+        chart-data!= core.chartData( charts.selfMade )
+      )
+        canvas.rtb-chart-inner
+
+    //- age pyramide
+    div.rtb-box.rtb-stats-age
+      h3.rtb-box-heading Age pyramide
+      div.rtb-chart.rtb-medium-chart(
+        chart-type= 'pyramide',
+        chart-data!= core.chartData( charts.agePyramide )
+      )
+        canvas.rtb-chart-inner
+
+    div.rtb-box-cols
+    
+      //- marital status
+      div.rtb-box.rtb-stats-marital
+        h3.rtb-box-heading Marital status
+        div.rtb-chart.rtb-medium-chart(
+          chart-type= 'circle',
+          chart-data!= core.chartData( charts.maritalStatus )
+        )
+          canvas.rtb-chart-inner
+
+      //- children
+      div.rtb-box.rtb-stats-children
+        h3.rtb-box-heading Number of children
+        div.rtb-chart.rtb-medium-chart(
+          chart-type= 'circle',
+          chart-data!= core.chartData( charts.children )
+        )
+          canvas.rtb-chart-inner
+
     //- woman count
     div.rtb-box.rtb-stats-count
       h3.rtb-box-heading Number of womans
@@ -63,19 +101,3 @@ block content
         chart-data!= core.chartData( charts.woman )
       )
         canvas.rtb-chart-inner
-
-    //- self-made score
-    div.rtb-box.rtb-stats-selfmade
-      h3.rtb-box-heading Self-made score
-
-    //- age pyramide
-    div.rtb-box.rtb-stats-age
-      h3.rtb-box-heading Age pyramide
-
-    //- marital status
-    div.rtb-box.rtb-stats-marital
-      h3.rtb-box-heading Marital status
-
-    //- children
-    div.rtb-box.rtb-stats-children
-      h3.rtb-box-heading Number of children
