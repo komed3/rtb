@@ -136,8 +136,7 @@ routes.forEach( ( route ) => {
 
                                 results.push( {
                                     uri: uri,
-                                    name: p.name,
-                                    update: p.update
+                                    name: p.name
                                 } );
 
                             }
