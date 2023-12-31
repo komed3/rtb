@@ -38,7 +38,7 @@ async function run() {
         );
 
         let selfMade = {},
-            agePyramide = {
+            agePyramid = {
                 m: {
                     10: 0, 20: 0, 30: 0,
                     40: 0, 50: 0, 60: 0,
@@ -97,7 +97,7 @@ async function run() {
                 }
 
                 /**
-                 * age pyramide
+                 * age pyramid
                  */
 
                 if( info.gender && info.birthDate ) {
@@ -106,9 +106,9 @@ async function run() {
                         new Date() - new Date( info.birthDate )
                     ).getFullYear() - 1970 ) / 10 ) * 10;
 
-                    if( age in agePyramide[ info.gender ] ) {
+                    if( age in agePyramid[ info.gender ] ) {
 
-                        agePyramide[ info.gender ][ age ]++;
+                        agePyramid[ info.gender ][ age ]++;
 
                     }
 
@@ -194,8 +194,8 @@ async function run() {
         logging.update();
 
         fs.writeFileSync(
-            dir + 'stats/agePyramide',
-            JSON.stringify( agePyramide, null, 2 ),
+            dir + 'stats/agePyramid',
+            JSON.stringify( agePyramid, null, 2 ),
             { flag: 'w' }
         );
 

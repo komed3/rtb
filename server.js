@@ -123,7 +123,7 @@ routes.forEach( ( route ) => {
                         total: api.getCSVFile( '/stats/total' ),
                         woman: api.getCSVFile( '/stats/woman' ),
                         selfMade: api.getJSONFile( '/stats/selfMade' ),
-                        agePyramide: api.getJSONFile( '/stats/agePyramide' ),
+                        agePyramid: api.getJSONFile( '/stats/agePyramid' ),
                         maritalStatus: api.getJSONFile( '/stats/maritalStatus' ),
                         children: api.getJSONFile( '/stats/children' ).short
                     };
