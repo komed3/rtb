@@ -5,6 +5,18 @@
 var charts = {};
 
 /**
+ * global chart color palettes
+ */
+const chart_colors = {
+    schemes: {
+        red: [
+            '#2a0211', '#4f0420', '#75062e', '#9a073d', '#c0094c', '#e50b5b',
+            '#f42370', '#f64888', '#f86ea0', '#fa93b9', '#fcb9d1', '#fddeea'
+        ]
+    }
+};
+
+/**
  * create new chart
  * @param {Node} container chart container
  * @param {Object} options chart options
@@ -805,7 +817,8 @@ const chart_type__pie = ( container, data ) => {
                 ).toFixed( 1 ) + '%'
             } ),
             datasets: [ {
-                data: Object.values( data )
+                data: Object.values( data ),
+                backgroundColor: chart_colors.schemes.red
             } ]
         },
         options: {
@@ -816,6 +829,7 @@ const chart_type__pie = ( container, data ) => {
             layout: {
                 padding: 12
             },
+            events: [],
             plugins: {
                 legend: {
                     position: 'right',
