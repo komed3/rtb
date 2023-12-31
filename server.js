@@ -10,6 +10,7 @@
 
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 
+const cmpstr = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 
 const core = require( './src/core' );
@@ -103,6 +104,51 @@ routes.forEach( ( route ) => {
 
                         /**
                          * profile not given or exists
+                         * redirect to home
+                         */
+
+                        res.redirect( core.url( '/' ) );
+                        return ;
+
+                    }
+
+                    break;
+
+                /**
+                 * search (results) page
+                 */
+                case 'search':
+
+                    let query = ( req.query.q || '' ).toLowerCase().trim();
+
+                    if( query.length ) {
+
+                        let results = [];
+
+                        for( const [ uri, p ] of Object.entries( api.index ) ) {
+
+                            if(
+                                uri.includes( query ) ||
+                                p.name.toLowerCase().includes( query ) ||
+                                cmpstr.diceCoefficient( p.name, query, 'si' ) > 0.8
+                            ) {
+
+                                results.push( {
+                                    uri: uri,
+                                    name: p.name,
+                                    update: p.update
+                                } );
+
+                            }
+
+                        }
+
+                        res.locals.results = results;
+
+                    } else {
+
+                        /**
+                         * no or empty search query
                          * redirect to home
                          */
 
