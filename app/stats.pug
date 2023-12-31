@@ -41,7 +41,7 @@ block content
     div.rtb-box.rtb-stats-count
       h3.rtb-box-heading Number of billionaires
       div.rtb-chart.rtb-medium-chart(
-        chart-type= 'number',
+        chart-type= 'line',
         chart-data!= core.chartData( charts.count )
       )
         canvas.rtb-chart-inner
@@ -97,7 +97,7 @@ block content
     div.rtb-box.rtb-stats-count
       h3.rtb-box-heading Number of womans
       div.rtb-chart.rtb-medium-chart(
-        chart-type= 'number',
+        chart-type= 'line',
         chart-data!= core.chartData( charts.woman )
       )
         canvas.rtb-chart-inner

@@ -8,6 +8,11 @@ var charts = {};
  * global chart color palettes
  */
 const chart_colors = {
+    color: '1 2 3',
+    background: '255 255 255',
+    grid: '245 246 247',
+    red: '227 11 92',
+    green: '0 182 122',
     schemes: {
         red: [
             '#2a0211', '#4f0420', '#75062e', '#9a073d', '#c0094c', '#e50b5b',
@@ -325,127 +330,12 @@ const chart_gradient = ( container, stops, x = 0, y = 400 ) => {
 };
 
 /**
- * create (general) number chart
- * @param {Node} container chart container
- * @param {Array} data chart data
- */
-const chart_type__number = ( container, data ) => {
-
-    let rgb = '227 11 92';
-
-    chart_add( container, {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [ {
-                data: [],
-                lineTension: 0.05,
-                pointHitRadius: 100,
-                borderWidth: 3,
-                borderColor: chart_color( rgb ),
-                backgroundColor: chart_gradient( container, [
-                    chart_color( rgb, 0.5 ),
-                    chart_color( rgb, 0 )
-                ] ),
-                fill: true,
-                pointRadius: 0,
-                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
-                pointHoverBorderColor: chart_color( rgb ),
-                pointHoverBorderWidth: 3,
-                pointHoverRadius: 6
-            } ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            offset: true,
-            clip: false,
-            layout: {
-                padding: 12
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    displayColors: false,
-                    padding: {
-                        top: 11,
-                        left: 12,
-                        right: 14,
-                        bottom: 4
-                    },
-                    caretPadding: 10,
-                    backgroundColor: 'rgba( 255 255 255 / 0.9 )',
-                    borderWidth: 2,
-                    borderColor: chart_color( rgb ),
-                    cornerRadius: 4,
-                    titleColor: 'rgba( 1 2 3 / 1 )',
-                    titleFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 13
-                    },
-                    bodyColor: chart_color( rgb ),
-                    bodyFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 24,
-                        weight: 700
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    border: {
-                        display: false
-                    },
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        display: false
-                    }
-                },
-                y: {
-                    border: {
-                        display: false
-                    },
-                    grid: {
-                        color: 'rgba( 245 246 247 / 1 )',
-                        lineWidth: 2,
-                        tickLength: 0
-                    },
-                    ticks: {
-                        beginAtZero: false,
-                        maxTicksLimit: 4,
-                        padding: 12,
-                        color: 'rgba( 1 2 3 / 1 )',
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
-                        callback: ( value ) => {
-                            if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
-                                return parseInt( value );
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }, data );
-
-};
-
-/**
  * create net worth chart
  * @param {Node} container chart container
  * @param {Array} data chart data
  */
 const chart_type__networth = ( container, data ) => {
 
-    let rgb = '0 182 122';
-
     chart_add( container, {
         type: 'line',
         data: {
@@ -455,15 +345,15 @@ const chart_type__networth = ( container, data ) => {
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 3,
-                borderColor: chart_color( rgb ),
+                borderColor: chart_color( chart_colors.green ),
                 backgroundColor: chart_gradient( container, [
-                    chart_color( rgb, 0.5 ),
-                    chart_color( rgb, 0 )
+                    chart_color( chart_colors.green, 0.5 ),
+                    chart_color( chart_colors.green, 0 )
                 ] ),
                 fill: true,
                 pointRadius: 0,
-                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
-                pointHoverBorderColor: chart_color( rgb ),
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.green ),
                 pointHoverBorderWidth: 3,
                 pointHoverRadius: 6
             } ]
@@ -489,16 +379,16 @@ const chart_type__networth = ( container, data ) => {
                         bottom: 4
                     },
                     caretPadding: 10,
-                    backgroundColor: 'rgba( 255 255 255 / 0.9 )',
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
                     borderWidth: 2,
-                    borderColor: chart_color( rgb ),
+                    borderColor: chart_color( chart_colors.green ),
                     cornerRadius: 4,
-                    titleColor: 'rgba( 1 2 3 / 1 )',
+                    titleColor: chart_color( chart_colors.color ),
                     titleFont: {
                         family: 'Poppins, sans-serif',
                         size: 13
                     },
-                    bodyColor: chart_color( rgb ),
+                    bodyColor: chart_color( chart_colors.green ),
                     bodyFont: {
                         family: 'Poppins, sans-serif',
                         size: 24,
@@ -528,7 +418,7 @@ const chart_type__networth = ( container, data ) => {
                         display: false
                     },
                     grid: {
-                        color: 'rgba( 245 246 247 / 1 )',
+                        color: chart_color( chart_colors.grid ),
                         lineWidth: 2,
                         tickLength: 0
                     },
@@ -536,7 +426,7 @@ const chart_type__networth = ( container, data ) => {
                         beginAtZero: false,
                         maxTicksLimit: 6,
                         padding: 12,
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -562,8 +452,6 @@ const chart_type__networth = ( container, data ) => {
  */
 const chart_type__rank = ( container, data ) => {
 
-    let rgb = '227 11 92';
-
     chart_add( container, {
         type: 'line',
         data: {
@@ -573,10 +461,10 @@ const chart_type__rank = ( container, data ) => {
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 3,
-                borderColor: chart_color( rgb ),
+                borderColor: chart_color( chart_colors.red ),
                 pointRadius: 0,
-                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
-                pointHoverBorderColor: chart_color( rgb ),
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.red ),
                 pointHoverBorderWidth: 3,
                 pointHoverRadius: 6
             } ]
@@ -602,16 +490,16 @@ const chart_type__rank = ( container, data ) => {
                         bottom: 4
                     },
                     caretPadding: 10,
-                    backgroundColor: 'rgba( 255 255 255 / 0.9 )',
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
                     borderWidth: 2,
-                    borderColor: chart_color( rgb ),
+                    borderColor: chart_color( chart_colors.red ),
                     cornerRadius: 4,
-                    titleColor: 'rgba( 1 2 3 / 1 )',
+                    titleColor: chart_color( chart_colors.color ),
                     titleFont: {
                         family: 'Poppins, sans-serif',
                         size: 13
                     },
-                    bodyColor: chart_color( rgb ),
+                    bodyColor: chart_color( chart_colors.red ),
                     bodyFont: {
                         family: 'Poppins, sans-serif',
                         size: 24,
@@ -642,7 +530,7 @@ const chart_type__rank = ( container, data ) => {
                         display: false
                     },
                     grid: {
-                        color: 'rgba( 245 246 247 / 1 )',
+                        color: chart_color( chart_colors.grid ),
                         lineWidth: 2,
                         tickLength: 0
                     },
@@ -650,7 +538,7 @@ const chart_type__rank = ( container, data ) => {
                         beginAtZero: false,
                         maxTicksLimit: 4,
                         padding: 12,
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -676,9 +564,6 @@ const chart_type__rank = ( container, data ) => {
  */
 const chart_type__percent = ( container, data ) => {
 
-    let rgb_pos = '0 182 122',
-        rgb_neg = '227 11 92';
-
     chart_add( container, {
         type: 'line',
         data: {
@@ -688,12 +573,12 @@ const chart_type__percent = ( container, data ) => {
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 3,
-                borderColor: chart_color( rgb_pos ),
-                backgroundColor: chart_color( rgb_pos, 0.5 ),
+                borderColor: chart_color( chart_colors.green ),
+                backgroundColor: chart_color( chart_colors.green, 0.5 ),
                 fill: true,
                 pointRadius: 0,
-                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
-                pointHoverBorderColor: chart_color( rgb_pos ),
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.green ),
                 pointHoverBorderWidth: 3,
                 pointHoverRadius: 6
             }, {
@@ -701,12 +586,12 @@ const chart_type__percent = ( container, data ) => {
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 3,
-                borderColor: chart_color( rgb_neg ),
-                backgroundColor: chart_color( rgb_neg, 0.5 ),
+                borderColor: chart_color( chart_colors.red ),
+                backgroundColor: chart_color( chart_colors.red, 0.5 ),
                 fill: true,
                 pointRadius: 0,
-                pointHoverBackgroundColor: 'rgba( 255 255 255 / 1 )',
-                pointHoverBorderColor: chart_color( rgb_neg ),
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.red ),
                 pointHoverBorderWidth: 3,
                 pointHoverRadius: 6
             } ]
@@ -732,16 +617,16 @@ const chart_type__percent = ( container, data ) => {
                         bottom: 4
                     },
                     caretPadding: 10,
-                    backgroundColor: 'rgba( 255 255 255 / 0.9 )',
+                    backgroundColor: chart_color( chart_color( chart_colors.background ), 0.9 ),
                     borderWidth: 2,
-                    borderColor: 'rgba( 1 2 3 / 1 )',
+                    borderColor: chart_color( chart_colors.color ),
                     cornerRadius: 4,
-                    titleColor: 'rgba( 1 2 3 / 1 )',
+                    titleColor: chart_color( chart_colors.color ),
                     titleFont: {
                         family: 'Poppins, sans-serif',
                         size: 13
                     },
-                    bodyColor: 'rgba( 1 2 3 / 1 )',
+                    bodyColor: chart_color( chart_colors.color ),
                     bodyFont: {
                         family: 'Poppins, sans-serif',
                         size: 24,
@@ -774,7 +659,7 @@ const chart_type__percent = ( container, data ) => {
                         display: false
                     },
                     grid: {
-                        color: 'rgba( 245 246 247 / 1 )',
+                        color: chart_color( chart_colors.grid ),
                         lineWidth: 2,
                         tickLength: 0
                     },
@@ -782,7 +667,7 @@ const chart_type__percent = ( container, data ) => {
                         beginAtZero: false,
                         maxTicksLimit: 4,
                         padding: 12,
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -790,6 +675,117 @@ const chart_type__percent = ( container, data ) => {
                         },
                         callback: ( value ) => {
                             return Number( value.toFixed( 2 ) ) + '%';
+                        }
+                    }
+                }
+            }
+        }
+    }, data );
+
+};
+
+/**
+ * create line chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__line = ( container, data ) => {
+
+    chart_add( container, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [ {
+                data: [],
+                lineTension: 0.05,
+                pointHitRadius: 100,
+                borderWidth: 3,
+                borderColor: chart_color( chart_colors.red ),
+                backgroundColor: chart_gradient( container, [
+                    chart_color( chart_colors.red, 0.5 ),
+                    chart_color( chart_colors.red, 0 )
+                ] ),
+                fill: true,
+                pointRadius: 0,
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.red ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 6
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    displayColors: false,
+                    padding: {
+                        top: 11,
+                        left: 12,
+                        right: 14,
+                        bottom: 4
+                    },
+                    caretPadding: 10,
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
+                    borderWidth: 2,
+                    borderColor: chart_color( chart_colors.red ),
+                    cornerRadius: 4,
+                    titleColor: chart_color( chart_colors.color ),
+                    titleFont: {
+                        family: 'Poppins, sans-serif',
+                        size: 13
+                    },
+                    bodyColor: chart_color( chart_colors.red ),
+                    bodyFont: {
+                        family: 'Poppins, sans-serif',
+                        size: 24,
+                        weight: 700
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        display: false
+                    }
+                },
+                y: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: chart_color( chart_colors.grid ),
+                        lineWidth: 2,
+                        tickLength: 0
+                    },
+                    ticks: {
+                        beginAtZero: false,
+                        maxTicksLimit: 4,
+                        padding: 12,
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        },
+                        callback: ( value ) => {
+                            if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
+                                return parseInt( value );
+                            }
                         }
                     }
                 }
@@ -813,7 +809,7 @@ const chart_type__bar = ( container, data ) => {
             datasets: [ {
                 data: Object.values( data ),
                 borderWidth: 3,
-                borderColor: 'rgba( 255 255 255 / 1 )',
+                borderColor: chart_color( chart_colors.background ),
                 backgroundColor: chart_colors.schemes.red
             } ]
         },
@@ -843,7 +839,7 @@ const chart_type__bar = ( container, data ) => {
                         display: false
                     },
                     ticks: {
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -856,14 +852,14 @@ const chart_type__bar = ( container, data ) => {
                         display: false
                     },
                     grid: {
-                        color: 'rgba( 245 246 247 / 1 )',
+                        color: chart_color( chart_colors.grid ),
                         lineWidth: 2,
                         tickLength: 0
                     },
                     ticks: {
                         maxTicksLimit: 4,
                         padding: 12,
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -897,7 +893,7 @@ const chart_type__pie = ( container, data ) => {
             datasets: [ {
                 data: Object.values( data ),
                 borderWidth: 3,
-                borderColor: 'rgba( 255 255 255 / 1 )',
+                borderColor: chart_color( chart_colors.background ),
                 backgroundColor: chart_colors.schemes.red
             } ]
         },
@@ -915,7 +911,7 @@ const chart_type__pie = ( container, data ) => {
                     position: 'right',
                     labels: {
                         boxWidth: 20,
-                        color: 'rgba( 1 2 3 / 1 )',
+                        color: chart_color( chart_colors.color ),
                         font: {
                             family: 'Poppins, sans-serif',
                             size: 14,
@@ -933,15 +929,27 @@ const chart_type__pie = ( container, data ) => {
 };
 
 /**
+ * create age pyramid
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__pyramid = ( container, data ) => {
+
+    //
+
+};
+
+/**
  * register chart types
  */
 const chart_types = {
-    'number': chart_type__number,
     'networth': chart_type__networth,
     'rank': chart_type__rank,
     'percent': chart_type__percent,
+    'line': chart_type__line,
     'bar': chart_type__bar,
-    'pie': chart_type__pie
+    'pie': chart_type__pie,
+    'pyramid': chart_type__pyramid
 };
 
 /**
