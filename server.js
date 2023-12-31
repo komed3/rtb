@@ -121,7 +121,11 @@ routes.forEach( ( route ) => {
                     res.locals.charts = {
                         count: api.getCSVFile( '/stats/count' ),
                         total: api.getCSVFile( '/stats/total' ),
-                        woman: api.getCSVFile( '/stats/woman' )
+                        woman: api.getCSVFile( '/stats/woman' ),
+                        selfMade: api.getJSONFile( '/stats/selfMade' ),
+                        agePyramide: api.getJSONFile( '/stats/agePyramide' ),
+                        maritalStatus: api.getJSONFile( '/stats/maritalStatus' ),
+                        children: api.getJSONFile( '/stats/children' )
                     };
 
                     res.locals.stats = {
