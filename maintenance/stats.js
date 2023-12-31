@@ -1,0 +1,207 @@
+/**
+ * rtb script "stats"
+ * create / renew stats
+ */
+
+'use strict';
+
+const dir = __dirname + '/../api/';
+
+const colors = require( 'ansi-colors' );
+const fs = require( 'fs' );
+const logging = require( './_logging' );
+
+/**
+ * run info updater
+ */
+async function run() {
+
+    console.log( 'Real-time billionaires' );
+    console.log( colors.yellow( 'update / renew stats' ) );
+    console.log( '' );
+
+    if( fs.existsSync( dir + 'profile/_index' ) ) {
+
+        /**
+         * load profile index
+         */
+
+        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) );
+
+        /**
+         * generate stats
+         */
+
+        logging.next(
+            '[1/2] Process profiles and generate stats',
+            profiles.length, 'profiles'
+        );
+
+        let selfMade = {},
+            agePyramide = {
+                m: {},
+                f: {}
+            },
+            maritalStatus = {},
+            children = {};
+
+        profiles.forEach( ( uri ) => {
+
+            let path = dir + 'profile/' + uri + '/info';
+
+            let info = fs.existsSync( path )
+                ? JSON.parse( fs.readFileSync( path ) )
+                : {};
+
+            /**
+             * skip deceased profiles
+             */
+
+            if( !( info.deceased || false ) ) {
+
+                /**
+                 * self-made score
+                 */
+
+                if( 'selfMade' in info && info.selfMade.rank ) {
+
+                    if( info.selfMade.rank in selfMade ) {
+
+                        selfMade[ info.selfMade.rank ]++;
+
+                    } else {
+
+                        selfMade[ info.selfMade.rank ] = 1;
+
+                    }
+
+                }
+
+                /**
+                 * age pyramide
+                 */
+
+                if( info.gender && info.birthDate ) {
+
+                    let age = Math.floor( ( new Date(
+                        new Date() - new Date( info.birthDate )
+                    ).getFullYear() - 1970 ) / 10 ) * 10;
+
+                    if( age in agePyramide[ info.gender ] ) {
+
+                        agePyramide[ info.gender ][ age ]++;
+
+                    } else {
+
+                        agePyramide[ info.gender ][ age ] = 1;
+
+                    }
+
+                }
+
+                /**
+                 * marital status
+                 */
+
+                if( info.maritalStatus ) {
+
+                    info.maritalStatus.split( ',' ).map( ( status ) => {
+
+                        status = status
+                            .toLowerCase()
+                            .trim()
+                            .replace( /[^a-z0-9-]/g, '-' )
+                            .replace( /-{1,}/g, '-' );
+
+                        if( status in maritalStatus ) {
+
+                            maritalStatus[ status ]++;
+
+                        } else {
+
+                            maritalStatus[ status ] = 1;
+
+                        }
+
+                    } );
+
+                }
+
+                /**
+                 * number of children
+                 */
+
+                if( 'children' in info ) {
+
+                    if( info.children in children ) {
+
+                        children[ info.children ]++;
+
+                    } else {
+
+                        children[ info.children ] = 1;
+
+                    }
+
+                }
+
+            }
+
+            logging.update();
+
+        } );
+
+        /**
+         * save generated stats
+         */
+
+        logging.next(
+            '[2/2] Save generated stats',
+            4, 'steps'
+        );
+
+        fs.writeFileSync(
+            dir + 'stats/selfMade',
+            JSON.stringify( selfMade, null, 2 ),
+            { flag: 'w' }
+        );
+
+        logging.update();
+
+        fs.writeFileSync(
+            dir + 'stats/agePyramide',
+            JSON.stringify( agePyramide, null, 2 ),
+            { flag: 'w' }
+        );
+
+        logging.update();
+
+        fs.writeFileSync(
+            dir + 'stats/maritalStatus',
+            JSON.stringify( maritalStatus, null, 2 ),
+            { flag: 'w' }
+        );
+
+        logging.update();
+
+        fs.writeFileSync(
+            dir + 'stats/children',
+            JSON.stringify( children, null, 2 ),
+            { flag: 'w' }
+        );
+
+        logging.finish();
+
+    } else {
+
+        console.log( colors.red( 'ERR' ) + ' no profiles found' );
+
+    }
+
+};
+
+/**
+ * start stats updater
+ */
+
+run();

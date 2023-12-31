@@ -22,6 +22,7 @@
         "update": "node maintenance/update.js",
         "info": "node maintenance/info.js",
         "info-reset": "node maintenance/info.js --reset",
+        "stats": "node maintenance/stats.js",
         "compileSCSS": "node-sass app/styles/ -o public/styles/ --output-style compressed",
         "compileJS": "uglifyjs-folder app/scripts/ -o public/scripts/ --each"
     },
