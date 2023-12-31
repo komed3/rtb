@@ -346,15 +346,6 @@ async function run() {
             );
 
             /**
-             * add profile to index
-             */
-
-            index[ uri ] = {
-                name: name,
-                update: today
-            };
-
-            /**
              * latest (net worth) data
              */
 
@@ -395,6 +386,17 @@ async function run() {
                 }, null, 2 ),
                 { flag: 'w' }
             );
+
+            /**
+             * add profile to index
+             */
+
+            index[ uri ] = {
+                name: name,
+                rank: rank,
+                networth: networth,
+                update: today
+            };
 
             /**
              * append history
