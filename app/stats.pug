@@ -79,7 +79,7 @@ block content
       div.rtb-box.rtb-stats-marital
         h3.rtb-box-heading Marital status
         div.rtb-chart.rtb-medium-chart(
-          chart-type= 'circle',
+          chart-type= 'pie',
           chart-data!= core.chartData( charts.maritalStatus )
         )
           canvas.rtb-chart-inner
@@ -88,7 +88,7 @@ block content
       div.rtb-box.rtb-stats-children
         h3.rtb-box-heading Number of children
         div.rtb-chart.rtb-medium-chart(
-          chart-type= 'circle',
+          chart-type= 'pie',
           chart-data!= core.chartData( charts.children )
         )
           canvas.rtb-chart-inner

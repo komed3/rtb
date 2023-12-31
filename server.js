@@ -125,7 +125,7 @@ routes.forEach( ( route ) => {
                         selfMade: api.getJSONFile( '/stats/selfMade' ),
                         agePyramide: api.getJSONFile( '/stats/agePyramide' ),
                         maritalStatus: api.getJSONFile( '/stats/maritalStatus' ),
-                        children: api.getJSONFile( '/stats/children' )
+                        children: api.getJSONFile( '/stats/children' ).short
                     };
 
                     res.locals.stats = {

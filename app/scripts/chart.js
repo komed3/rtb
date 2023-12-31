@@ -788,13 +788,65 @@ const chart_type__percent = ( container, data ) => {
 };
 
 /**
+ * create pie chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__pie = ( container, data ) => {
+
+    let total = Object.values( data ).reduce( ( a, c ) => a + c, 0 );
+
+    chart_add( container, {
+        type: 'pie',
+        data: {
+            labels: Object.keys( data ).map( ( a ) => {
+                return capitalize( a.replaceAll( '-', ' ' ) ) + ' — ' + (
+                    data[ a ] / total * 100
+                ).toFixed( 1 ) + '%'
+            } ),
+            datasets: [ {
+                data: Object.values( data )
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 20,
+                        color: 'rgba( 1 2 3 / 1 )',
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: false
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * register chart types
  */
 const chart_types = {
     'number': chart_type__number,
     'networth': chart_type__networth,
     'rank': chart_type__rank,
-    'percent': chart_type__percent
+    'percent': chart_type__percent,
+    'pie': chart_type__pie
 };
 
 /**
