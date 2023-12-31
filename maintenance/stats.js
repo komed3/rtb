@@ -43,7 +43,18 @@ async function run() {
                 f: {}
             },
             maritalStatus = {},
-            children = {};
+            children = {
+                full: {},
+                short: {
+                    'none': 0,
+                    'one': 0,
+                    'two': 0,
+                    'three': 0,
+                    'four': 0,
+                    '5-to-10': 0,
+                    'over-10': 0
+                }
+            };
 
         profiles.forEach( ( uri ) => {
 
@@ -133,15 +144,25 @@ async function run() {
 
                 if( 'children' in info ) {
 
-                    if( info.children in children ) {
+                    if( info.children in children.full ) {
 
-                        children[ info.children ]++;
+                        children.full[ info.children ]++;
 
                     } else {
 
-                        children[ info.children ] = 1;
+                        children.full[ info.children ] = 1;
 
                     }
+
+                    children.short[ [
+                        'none', 'one', 'two', 'three', 'four', '5-to-10', 'over-10'
+                    ][
+                        info.children > 10
+                            ? 6
+                            : info.children > 4
+                                ? 5
+                                : info.children
+                    ] ]++;
 
                 }
 
