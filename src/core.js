@@ -58,12 +58,13 @@ const listlink = ( rank, list = 'rtb' ) => {
 
 /**
  * create pagination
+ * @param {String} query query string
  * @param {Int} max count of total items
  * @param {Int} page current page
  * @param {Int} limit item limit per page
  * @returns pagination
  */
-const pagination = ( max, page, limit ) => {
+const pagination = ( query, max, page, limit ) => {
 
     let maxPage = Math.ceil( max / limit ),
         pagination = '',
@@ -91,7 +92,11 @@ const pagination = ( max, page, limit ) => {
 
         } else {
 
-            pagination += '<a href="?page=' + p + '" class="rtb-pagination-link">' + p + '</a>';
+            query.page = p;
+
+            pagination += '<a class="rtb-pagination-link" href="?' + (
+                ( new URLSearchParams( query ) ).toString()
+            ) + '">' + p + '</a>';
 
         }
 

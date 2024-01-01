@@ -73,6 +73,7 @@ routes.forEach( ( route ) => {
             res.locals.api = api;
 
             res.locals.global = {
+                request: req.query,
                 query: ( req.query.q || '' ).trim(),
                 file: route[1],
                 nav: route[2] || route[1]
