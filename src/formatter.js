@@ -58,7 +58,7 @@ const change = ( change, digits = 1, base = 1e6, trimZero = true ) => {
         return '<span class="' + ( dir ? 'up' : 'down' ) + '">' +
             networth( change.value, digits, base, trimZero ) +
             ( parseFloat( pct ) != 0
-                ? ' (' + ( trimZero ? parseFloat( pct ) : pct ) + '%)'
+                ? '<pct> (' + ( trimZero ? parseFloat( pct ) : pct ) + '%)</pct>'
                 : '' ) +
         '</span>';
 

@@ -37,7 +37,8 @@
     --color-good: var( --accent-2 );
     --color-bad: var( --accent-1 );
 
-    --box-shadow: 2px 2px 4px rgba( 230 230 230 / 0.25 );
+    --shade-25: rgba( 230 230 230 / 0.25 );
+    --box-shadow: 2px 2px 4px var( --shade-25 );
 
 }
 
