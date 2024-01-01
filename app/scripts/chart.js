@@ -265,7 +265,7 @@ const chart_data_normalize = ( data, n = 0, split = false ) => {
 
     if( split ) {
 
-        data = chart_split_data( data, n );
+        data = chart_split_data( data, n ).slice( 2 );
 
     }
 
