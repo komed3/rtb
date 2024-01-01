@@ -78,7 +78,7 @@ body {
     line-height: 1.2;
     text-underline-offset: 10%;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     color: var( --color-main );
     background: var( --color-bg );
 }
@@ -101,7 +101,7 @@ h3 {
 
 p {
     margin: 8px 0;
-    font-size: 18px;
+    line-height: 1.4;
 }
 
 a {
@@ -212,7 +212,6 @@ a:hover {
     align-items: center;
     gap: 10px;
     padding: 10px 14px;
-    font-size: 18px;
     font-weight: 700;
     background: var( --gray-0 );
     border-radius: 4px;
@@ -275,7 +274,6 @@ a:hover {
 
 .rtb-profile-grid span {
     display: block;
-    font-size: 18px;
 }
 
 .rtb-profile-grid span::first-letter {
@@ -285,7 +283,6 @@ a:hover {
 .rtb-profile-grid b {
     display: block;
     margin-top: 2px;
-    font-size: 18px;
     color: var( --accent-1 );
 }
 
