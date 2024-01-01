@@ -56,11 +56,23 @@ const chartData = ( data ) => {
 }
 
 /**
+ * get random item from array
+ * @param {Array} arr array of items
+ * @returns random item
+ */
+const randItem = ( arr ) => {
+
+    return arr[ Math.floor( Math.random() * arr.length ) ];
+
+};
+
+/**
  * export public methods
  */
 module.exports = {
     parseURL,
     getCanonical,
     url,
-    chartData
+    chartData,
+    randItem
 };
