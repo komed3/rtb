@@ -124,22 +124,32 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
-    //- related people
-    if profile.related && profile.related.length
-      div.rtb-box.rtb-related
-        h3.rtb-box-heading Related people
-        div.rtb-grid.col3.rtb-profile-grid
-          each related in profile.related
-            a.rtb-grid-item.rtb-grid-item-flex(
-              href!= core.url( '/profile/' + related.uri )
-            )
-              img.rtb-image.rtb-grid-item-img(
-                src!= api.getProfileImage( related.uri ),
-                loading= 'lazy'
-              )/
-              div.rtb-grid-item-inner
-                span!= related.name
-                h4!= related.type || 'related profile'
+    div.rtb-box-cols
+
+      //- related people
+      if profile.related && profile.related.length
+        div.rtb-box.rtb-related
+          h3.rtb-box-heading Related people
+          div.rtb-grid.col2.rtb-profile-grid
+            each related in profile.related
+              a.rtb-grid-item.rtb-grid-item-flex(
+                href!= core.url( '/profile/' + related.uri )
+              )
+                img.rtb-image.rtb-grid-item-img(
+                  src!= api.getProfileImage( related.uri ),
+                  loading= 'lazy'
+                )/
+                div.rtb-grid-item-inner
+                  span!= related.name
+                  h4!= related.type || 'related profile'
+
+      //- did you know?
+      if profile.bio && profile.bio.about.length
+        div.rtb-box.rtb-profile-dyk
+          h3.rtb-box-heading Did you know?
+          center
+            each about of profile.bio.about
+              p!= about
 
     //- net worth history
     div.rtb-box.rtb-profile-history

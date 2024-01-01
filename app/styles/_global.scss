@@ -167,6 +167,7 @@ a:hover {
 /* box */
 
 .rtb-box {
+    flex: 1;
     margin-bottom: 24px;
     padding: 24px;
     background: var( --gray-0 );
@@ -183,8 +184,8 @@ a:hover {
 }
 
 .rtb-box-cols {
-    display: grid;
-    grid-template-columns: repeat( 2, 1fr );
+    display: flex;
+    flex-flow: row nowrap;
     gap: 24px;
 }
 
