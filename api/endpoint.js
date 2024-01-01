@@ -198,6 +198,47 @@ const getAnnualReport = ( uri ) => {
 };
 
 /**
+ * check if list exists
+ * @param {String} list list name
+ * @returns boolean, if list exists
+ */
+const isList = ( list ) => {
+
+    let path = __dirname + '/list/' + list + '/';
+
+    return fs.existsSync( path ) && fs.existsSync( path + 'latest' );
+
+}
+
+/**
+ * get (filtered) list
+ * @param {String} list list name
+ * @param {Object} query query params
+ * @returns list object
+ */
+const getList = ( list, query ) => {
+
+    /**
+     * get list
+     */
+
+    let res = getJSONFile( '/list/' + list + '/' + ( query.date || 'latest' ) );
+
+    /**
+     * filter list by query
+     */
+
+    //
+
+    /**
+     * return list object
+     */
+
+    return res;
+
+};
+
+/**
  * load profiles index + aliases
  */
 
@@ -227,5 +268,7 @@ module.exports = {
     getProfileImage,
     getProfile,
     getFullProfile,
-    getAnnualReport
+    getAnnualReport,
+    isList,
+    getList
 };

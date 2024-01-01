@@ -85,6 +85,31 @@ routes.forEach( ( route ) => {
             switch( route[1] ) {
 
                 /**
+                 * list page
+                 */
+                case 'list':
+
+                    let list = ( req.params.list || '' ).toLowerCase();
+
+                    if( api.isList( list ) ) {
+
+                        res.locals.global.nav = 'list-' + list;
+
+                        res.locals.list = api.getList( list, req.query );
+
+                    } else {
+
+                        /**
+                         * list not given or available
+                         * redirect to home
+                         */
+                        res.redirect( core.url( '/' ) );
+
+                    }
+
+                    break;
+
+                /**
                  * single profile page
                  */
                 case 'profile':

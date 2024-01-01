@@ -3,6 +3,7 @@ module.exports = [
     [ '/country/?', 'stats-list', 'country' ],
     [ '/industry/:single/?', 'stats-single', 'industry' ],
     [ '/industry/?', 'stats-list', 'industry' ],
+    [ '/list/:list/?', 'list' ],
     [ '/profile/:uri/?', 'profile' ],
     [ '/search/?', 'search' ],
     [ '/stats/?', 'stats' ]
