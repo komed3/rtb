@@ -7,6 +7,7 @@
 
 const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
+const lastYear = parseInt( today.split( '-' )[0] ) - 1;
 const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
 const colors = require( 'ansi-colors' );
@@ -430,6 +431,36 @@ async function run() {
                     : {};
 
                 /**
+                 * calc rank diff
+                 */
+
+                let annual = fs.existsSync( path + 'annual' )
+                    ? JSON.parse( fs.readFileSync( path + 'annual' ) )
+                    : {};
+
+                let flag = 'new', diff = 0;
+
+                if( lastYear in annual && annual[ lastYear ].rank.latest ) {
+
+                    diff = rank - annual[ lastYear ].rank.latest;
+
+                    flag = diff > 0 ? 'up' : diff < 0 ? 'down' : 'unchanged';
+
+                } else {
+
+                    Object.values( annual ).forEach( ( y ) => {
+
+                        if( d.rank.latest ) {
+
+                            flag = 'returnee';
+
+                        }
+
+                    } );
+
+                }
+
+                /**
                  * real-time list
                  */
 
@@ -448,6 +479,8 @@ async function run() {
                     age: age,
                     networth: networth,
                     change: change,
+                    diff: diff,
+                    flag: flag,
                     citizenship: country,
                     industry: _industries,
                     source: sources
