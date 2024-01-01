@@ -13,11 +13,12 @@ block content
 
     //- filter
     div.rtb-box.rtb-list-filter
+      //-
 
     //- list (content)
     div.rtb-box.rtb-list-content
       div.rtb-list
-        each item of list.list
+        each item in list.list
           a.rtb-list-item(
             href!= core.url( '/profile/' + item.uri ),
             id!= '_r' + item.rank
@@ -37,7 +38,12 @@ block content
             div.rtb-list-cell.rtb-list-age!= item.age || '—'
             div.rtb-list-cell.rtb-list-country!= api.indexes.country[ item.citizenship ]
             div.rtb-list-cell.rtb-list-source!= item.source.join( ', ' )
+        else
+          div.rtb-list-item.rtb-list-empty
+            div.rtb-list-cell
+              b There are no billionaires on this list that match your query.
 
     //- pagination
-    div.rtb-box.rtb-list-pagination
-      div.rtb-pagination!= core.pagination( global.request, list.count, list.page, 25 )
+    if list.count
+      div.rtb-box.rtb-list-pagination
+        div.rtb-pagination!= core.pagination( global.request, list.count, list.page, 25 )
