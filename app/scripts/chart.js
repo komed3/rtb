@@ -330,6 +330,37 @@ const chart_gradient = ( container, stops, x = 0, y = 400 ) => {
 };
 
 /**
+ * format chart values
+ * @param {Float} value input
+ * @param {String} type callback type
+ * @returns formatted value
+ */
+const chart_callback = ( value, type = 'number' ) => {
+
+    switch( type ) {
+
+        default:
+            return value;
+
+        case 'integer':
+            return parseInt( value );
+
+        case 'networth':
+            return '$' + parseFloat( ( value / 1000 ).toFixed( 2 ) ) + 'B';
+
+        case 'rank':
+            return '#' + parseInt( value );
+
+        case 'percent':
+            return Number( parseFloat( value ).toFixed( 2 ) ) + '%';
+
+    }
+
+};
+
+/* ------------------------------------------------------------------------------------ */
+
+/**
  * create net worth chart
  * @param {Node} container chart container
  * @param {Array} data chart data
@@ -390,7 +421,7 @@ const chart_type__networth = ( container, data ) => {
                     },
                     callbacks: {
                         label: ( item ) => {
-                            return '$' + parseFloat( ( item.parsed.y / 1000 ).toFixed( 2 ) ) + 'B';
+                            return chart_callback( item.parsed.y, 'networth' );
                         }
                     }
                 }
@@ -423,7 +454,7 @@ const chart_type__networth = ( container, data ) => {
                         color: chart_color( chart_colors.color ),
                         callback: ( value ) => {
                             if( value > 0 ) {
-                                return '$' + parseFloat( ( value / 1000 ).toFixed( 1 ) ) + 'B';
+                                return chart_callback( value, 'networth' );
                             }
                         }
                     }
@@ -490,7 +521,7 @@ const chart_type__rank = ( container, data ) => {
                     },
                     callbacks: {
                         label: ( item ) => {
-                            return '#' + item.parsed.y;
+                            return chart_callback( item.parsed.y, 'rank' );
                         }
                     }
                 }
@@ -524,7 +555,7 @@ const chart_type__rank = ( container, data ) => {
                         color: chart_color( chart_colors.color ),
                         callback: ( value ) => {
                             if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
-                                return '#' + parseInt( value );
+                                return chart_callback( value, 'rank' );
                             }
                         }
                     }
@@ -609,7 +640,7 @@ const chart_type__percent = ( container, data ) => {
                     },
                     callbacks: {
                         label: ( item ) => {
-                            return Number( item.parsed.y.toFixed( 2 ) ) + '%';
+                            return chart_callback( item.parsed.y, 'percent' );
                         }
                     }
                 }
@@ -641,7 +672,7 @@ const chart_type__percent = ( container, data ) => {
                         padding: 12,
                         color: chart_color( chart_colors.color ),
                         callback: ( value ) => {
-                            return Number( value.toFixed( 2 ) ) + '%';
+                            return chart_callback( value, 'percent' );
                         }
                     }
                 }
@@ -709,6 +740,11 @@ const chart_type__line = ( container, data ) => {
                     bodyColor: chart_color( chart_colors.red ),
                     bodyFont: {
                         size: 24
+                    },
+                    callbacks: {
+                        label: ( item ) => {
+                            return chart_callback( item.parsed.y, 'integer' );
+                        }
                     }
                 }
             },
@@ -740,7 +776,7 @@ const chart_type__line = ( container, data ) => {
                         color: chart_color( chart_colors.color ),
                         callback: ( value ) => {
                             if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
-                                return parseInt( value );
+                                return chart_callback( value, 'integer' );
                             }
                         }
                     }
@@ -1053,6 +1089,8 @@ const chart_types = {
     'pie': chart_type__pie,
     'pyramid': chart_type__pyramid
 };
+
+/* ------------------------------------------------------------------------------------ */
 
 /**
  * chart controls
