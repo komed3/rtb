@@ -307,6 +307,8 @@ const getList = ( list, query ) => {
 
     } );
 
+    res.filtered = res.count != raw.count;
+
     /**
      * slice results (pagination)
      */

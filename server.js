@@ -96,6 +96,7 @@ routes.forEach( ( route ) => {
 
                         res.locals.global.nav = 'list-' + list;
 
+                        res.locals.listURI = list;
                         res.locals.list = api.getList( list, req.query );
 
                     } else {

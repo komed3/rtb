@@ -12,8 +12,22 @@ block content
       h1 Real-time billionaires
 
     //- filter
-    div.rtb-box.rtb-list-filter
-      //-
+    form.rtb-box.rtb-list-filter(
+      action= '',
+      method= 'get'
+    )
+      div.rtb-grid.rtb-list-filter-grid
+        span.rtb-list-filter-label Filter by
+      div.rtb-grid.rtb-list-filter-grid
+        span.rtb-list-filter-label Sort by
+      div.rtb-grid.rtb-list-filter-grid
+        div.rtb-tags
+          if list.filtered
+            a.tag.tag-primary(
+                href!= core.url( '/list/' + listURI )
+            ) Reset filter
+        div.rtb-list-filter-gap
+        div.rtb-list-result!= '<b>' + list.count + '</b> entries were found'
 
     //- list (content)
     div.rtb-box.rtb-list-content
