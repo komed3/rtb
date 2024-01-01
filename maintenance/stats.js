@@ -37,32 +37,46 @@ async function run() {
             profiles.length, 'profiles'
         );
 
-        let selfMade = {},
-            agePyramid = {
-                m: {
-                    10: 0, 20: 0, 30: 0,
-                    40: 0, 50: 0, 60: 0,
-                    70: 0, 80: 0, 90: 0
-                },
-                f: {
-                    10: 0, 20: 0, 30: 0,
-                    40: 0, 50: 0, 60: 0,
-                    70: 0, 80: 0, 90: 0
-                }
+        let selfMade = {
+            'Inherited and no increase': 0,
+            'Inherited and managing': 0,
+            'Inherited and helping to increase': 0,
+            'Inherited and meaningful increase': 0,
+            'Inherited small, become big': 0,
+            'Hired hand or hands-off investor': 0,
+            'Self-made from moneyed background': 0,
+            'Self-made from middle-class': 0,
+            'Self-made from little to nothing': 0,
+            'Self-made and breaking major obstacles': 0
+        }, selfMadeKeys = Object.keys( selfMade );
+
+        let agePyramid = {
+            m: {
+                10: 0, 20: 0, 30: 0,
+                40: 0, 50: 0, 60: 0,
+                70: 0, 80: 0, 90: 0
             },
-            maritalStatus = {},
-            children = {
-                full: {},
-                short: {
-                    'none': 0,
-                    'one': 0,
-                    'two': 0,
-                    'three': 0,
-                    'four': 0,
-                    '5-to-10': 0,
-                    'over-10': 0
-                }
-            };
+            f: {
+                10: 0, 20: 0, 30: 0,
+                40: 0, 50: 0, 60: 0,
+                70: 0, 80: 0, 90: 0
+            }
+        };
+
+        let maritalStatus = {};
+
+        let children = {
+            full: {},
+            short: {
+                'none': 0,
+                'one': 0,
+                'two': 0,
+                'three': 0,
+                'four': 0,
+                '5-to-10': 0,
+                'over-10': 0
+            }
+        };
 
         profiles.forEach( ( uri ) => {
 
@@ -84,13 +98,11 @@ async function run() {
 
                 if( 'selfMade' in info && info.selfMade.rank ) {
 
-                    if( info.selfMade.rank in selfMade ) {
+                    let key = parseInt( info.selfMade.rank ) - 1;
 
-                        selfMade[ info.selfMade.rank ]++;
+                    if( key in selfMadeKeys ) {
 
-                    } else {
-
-                        selfMade[ info.selfMade.rank ] = 1;
+                        selfMade[ selfMadeKeys[ key ] ]++;
 
                     }
 
