@@ -311,9 +311,9 @@ const getList = ( list, query ) => {
      * slice results (pagination)
      */
 
-    let page = parseInt( query.page || 1 );
+    res.page = parseInt( query.page || 1 );
 
-    res.list = res.list.slice( ( page - 1 ) * 25, page * 25 );
+    res.list = res.list.slice( ( res.page - 1 ) * 25, res.page * 25 );
 
     /**
      * return list object

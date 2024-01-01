@@ -1,0 +1,22 @@
+.rtb-pagination {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.rtb-pagination * {
+    display: inline-block;
+    min-width: 38px;
+    padding: 7px 10px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.rtb-pagination-current {
+    color: var( --gray-0 );
+    background: var( --accent-1 );
+}

@@ -57,6 +57,53 @@ const listlink = ( rank, list = 'rtb' ) => {
 };
 
 /**
+ * create pagination
+ * @param {Int} max count of total items
+ * @param {Int} page current page
+ * @param {Int} limit item limit per page
+ * @returns pagination
+ */
+const pagination = ( max, page, limit ) => {
+
+    let maxPage = Math.ceil( max / limit ),
+        pagination = '',
+        latest = 0;
+
+    [ ...new Set( [
+        1,
+        Math.max( 1, page - 2 ),
+        Math.max( 1, page - 1 ),
+        page,
+        Math.min( maxPage, page + 1 ),
+        Math.min( maxPage, page + 2 ),
+        maxPage
+    ] ) ].forEach( ( p ) => {
+
+        if( p > latest + 1 ) {
+
+            pagination += '<span class="rtb-pagination-dots">…</span>';
+
+        }
+
+        if( p == page ) {
+
+            pagination += '<span class="rtb-pagination-current">' + p + '</span>';
+
+        } else {
+
+            pagination += '<a href="?page=' + p + '" class="rtb-pagination-link">' + p + '</a>';
+
+        }
+
+        latest = p;
+
+    } );
+
+    return pagination;
+
+};
+
+/**
  * format chart data for html output
  * @param {Object|Array} data chart data
  * @returns base64 stringified data
@@ -86,6 +133,7 @@ module.exports = {
     getCanonical,
     url,
     listlink,
+    pagination,
     chartData,
     randItem
 };
