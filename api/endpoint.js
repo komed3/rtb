@@ -33,7 +33,11 @@ const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
             .toString()
             .split( newLine )
             .filter( r => r )
-            .map( r => r.split( delimiter ) )
+            .map( ( r ) => {
+                return r.split( delimiter ).map( ( a ) => {
+                    return a.length ? a : null;
+                } );
+            } )
         : [];
 
 };
