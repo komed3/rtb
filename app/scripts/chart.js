@@ -1077,6 +1077,109 @@ const chart_type__pyramid = ( container, data ) => {
 };
 
 /**
+ * create (annual) report chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__report = ( container, data ) => {
+
+    let cbType = container.getAttribute( 'chart-callback' ) || null;
+
+    chart_add( container, {
+        type: 'line',
+        data: {
+            labels: data.map( r => r[0] ),
+            datasets: [ {
+                data: data.map( r => r[1] ),
+                lineTension: 0.05,
+                pointHitRadius: 100,
+                borderWidth: 4,
+                borderColor: chart_color( chart_colors.color ),
+                pointBackgroundColor: chart_color( chart_colors.background ),
+                pointBorderColor: chart_color( chart_colors.color ),
+                pointBorderWidth: 3,
+                pointRadius: 6,
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.color ),
+                pointHoverBorderWidth: 3,
+                pointHoverRadius: 4
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: {
+                    top: 12,
+                    left: 32,
+                    right: 32,
+                    bottom: 0
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    displayColors: false,
+                    padding: {
+                        top: 11,
+                        left: 12,
+                        right: 14,
+                        bottom: 4
+                    },
+                    caretPadding: 10,
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
+                    borderWidth: 2,
+                    borderColor: chart_color( chart_colors.color ),
+                    cornerRadius: 4,
+                    titleColor: chart_color( chart_colors.color ),
+                    bodyColor: chart_color( chart_colors.color ),
+                    bodyFont: {
+                        size: 24
+                    },
+                    callbacks: {
+                        label: ( item ) => {
+                            return chart_callback( item.parsed.y, cbType );
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 5,
+                        padding: 24,
+                        color: chart_color( chart_colors.color )
+                    }
+                },
+                y: {
+                    reverse: cbType == 'rank',
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * register chart types
  */
 const chart_types = {
@@ -1087,7 +1190,8 @@ const chart_types = {
     'bar': chart_type__bar,
     'column': chart_type__column,
     'pie': chart_type__pie,
-    'pyramid': chart_type__pyramid
+    'pyramid': chart_type__pyramid,
+    'report': chart_type__report
 };
 
 /* ------------------------------------------------------------------------------------ */

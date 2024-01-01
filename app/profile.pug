@@ -124,29 +124,29 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
-    //- annual report
+    //- annual reports
     if profile.annual
-      div.rtb-box.rtb-profile-annual
-        h3.rtb-box-heading Annual report
-          div.rtb-grid.col2
+      div.rtb-box-cols
 
-            //- net worth
-            div.rtb-grid-item
-              div.rtb-chart.rtb-medium-chart(
-                chart-type= 'report',
-                chart-callback= 'networth',
-                chart-data!= core.chartData( profile.annual.networth )
-              )
-                canvas.rtb-chart-inner
+        //- networth
+        div.rtb-box.rtb-profile-annual
+          h3.rtb-box-heading Net worth history
+          div.rtb-chart.rtb-medium-chart(
+            chart-type= 'report',
+            chart-callback= 'networth',
+            chart-data!= core.chartData( profile.annual.networth )
+          )
+            canvas.rtb-chart-inner
 
-            //- ranking
-            div.rtb-grid-item
-              div.rtb-chart.rtb-medium-chart(
-                chart-type= 'report',
-                chart-callback= 'rank',
-                chart-data!= core.chartData( profile.annual.rank )
-              )
-                canvas.rtb-chart-inner
+        //- ranking
+        div.rtb-box.rtb-profile-annual
+          h3.rtb-box-heading Annual ranking
+          div.rtb-chart.rtb-medium-chart(
+            chart-type= 'report',
+            chart-callback= 'rank',
+            chart-data!= core.chartData( profile.annual.rank )
+          )
+            canvas.rtb-chart-inner
 
     //- related people
     if profile.related && profile.related.length
