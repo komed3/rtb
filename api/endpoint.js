@@ -153,8 +153,43 @@ const getFullProfile = ( uri ) => {
             history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
             latest: getJSONFile( path + 'latest' ),
-            annual: getJSONFile( path + 'annual' )
+            annual: getAnnualReport( uri )
         };
+
+    }
+
+    return null;
+
+};
+
+/**
+ * get annual report from profile
+ * @param {String} uri profile URI
+ * @returns annual report
+ */
+const getAnnualReport = ( uri ) => {
+
+    let report = getJSONFile( '/profile/' + uri + '/annual' ),
+        charts = {
+            networth: [],
+            rank: []
+        };
+
+    if( Object.keys( report ) ) {
+
+        for( const [ year, row ] of Object.entries( report ).slice( -10 ) ) {
+
+            charts.networth.push( [
+                year, row.networth.latest
+            ] );
+
+            charts.rank.push( [
+                year, row.rank.latest
+            ] );
+
+        }
+
+        return charts;
 
     }
 
@@ -191,5 +226,6 @@ module.exports = {
     getProfileName,
     getProfileImage,
     getProfile,
-    getFullProfile
+    getFullProfile,
+    getAnnualReport
 };
