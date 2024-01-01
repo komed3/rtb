@@ -18,6 +18,52 @@ block content
     )
       div.rtb-grid.rtb-list-filter-grid
         span.rtb-list-filter-label Filter by
+        div.rtb-tags
+          input(
+            type= 'checkbox',
+            name= 'woman',
+            id= 'filter_by__woman',
+            checked= global.request.woman
+          )/
+          label.tag( for= 'filter_by__woman' ) Woman
+          input(
+            type= 'checkbox',
+            name= 'new',
+            id= 'filter_by__new',
+            checked= global.request.new
+          )/
+          label.tag( for= 'filter_by__new' ) New to list
+          input(
+            type= 'checkbox',
+            name= 'returnee',
+            id= 'filter_by__returnee',
+            checked= global.request.returnee
+          )/
+          label.tag( for= 'filter_by__returnee' ) Returnee
+          select(
+            name= 'country'
+          )
+            option(
+              value= ''
+            ) Countries
+            option( readonly, disabled ) ----------
+            each v, k in api.indexes.country
+              option(
+                value= k,
+                selected= ( global.request.country || '' ) == k
+              )!= v
+          select(
+            name= 'industry'
+          )
+            option(
+              value= ''
+            ) Industries
+            option( readonly, disabled ) ----------
+            each v, k in api.indexes.industry
+              option(
+                value= k,
+                selected= ( global.request.industry || '' ) == k
+              )!= v
       div.rtb-grid.rtb-list-filter-grid
         span.rtb-list-filter-label Sort by
       div.rtb-grid.rtb-list-filter-grid

@@ -1,6 +1,8 @@
 @import 'page';
 @import 'pagination';
 
+/* filter */
+
 .rtb-list-filter {
     display: flex;
     flex-flow: column nowrap;
@@ -23,6 +25,32 @@
 .rtb-list-filter-gap {
     flex: 1;
 }
+
+.rtb-list-filter input {
+    visibility: hidden;
+    flex: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.rtb-list-filter .tag {
+    height: 42px;
+    background: var( --gray-1 );
+    box-shadow: none;
+}
+
+.rtb-list-filter input:checked + .tag {
+    color: var( --gray-0 );
+    background: var( --accent-1 );
+}
+
+.rtb-list-filter select {
+    height: 42px;
+    font-size: 18px;
+}
+
+/* list */
 
 .rtb-list {
     display: table;

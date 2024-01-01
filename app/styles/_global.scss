@@ -125,13 +125,16 @@ input, textarea, select {
     border: 2px solid var( --accent-1 );
 }
 
+select, button {
+    cursor: pointer;
+}
+
 button {
     display: flex;
     align-items: center;
     color: var( --gray-0 );
     background: var( --accent-1 );
     border: 0;
-    cursor: pointer;
 }
 
 button .icon {
@@ -218,6 +221,7 @@ a:hover {
     background: var( --gray-0 );
     border-radius: 4px;
     box-shadow: var( --box-shadow );
+    cursor: pointer;
 }
 
 .rtb-tags .tag.tag-primary {
