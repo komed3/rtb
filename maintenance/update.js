@@ -366,7 +366,7 @@ async function run() {
 
                     change = {
                         value: Number( diff.toFixed( 3 ) ),
-                        pct: Number( ( diff / networth * 100 ).toFixed( 3 ) ),
+                        pct: Number( ( diff / ( latest.networth || 1 ) * 100 ).toFixed( 3 ) ),
                         date: ts
                     };
 
