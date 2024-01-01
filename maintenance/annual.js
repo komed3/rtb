@@ -56,9 +56,9 @@ async function run() {
 
             let report = {
                 rank: {
-                    value: last[1] || null,
+                    latest: last[1] || null,
                     first: first[1] || null,
-                    diff: parseInt( last[1] - first[1] ),
+                    diff: parseInt( first[1] - last[1] ),
                     average: parseInt( rank.reduce(
                         ( a, c ) => a + c, 0
                     ) / dayCount ),
@@ -67,7 +67,7 @@ async function run() {
                     range: null
                 },
                 networth: {
-                    value: last[2],
+                    latest: last[2],
                     first: first[2] || null,
                     diff: Number( parseFloat( last[2] - first[2] ).toFixed(3) ),
                     average: Number( parseFloat( ntw.reduce(
