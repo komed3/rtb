@@ -5,11 +5,11 @@
 
 'use strict';
 
-const dir = __dirname + '/../api/profile/';
-
+const api = require( './../api/endpoint' );
 const colors = require( 'ansi-colors' );
-const fs = require( 'fs' );
 const logging = require( './_logging' );
+
+const profiles = Object.keys( api.index );
 
 /**
  * create annual report
@@ -20,36 +20,29 @@ async function run() {
     console.log( colors.yellow( 'create annual report' ) );
     console.log( '' );
 
-    if( fs.existsSync( dir + 'profile/_index' ) ) {
+    /**
+     * generate annual report for each profile
+     */
 
-        /**
-         * load profile index
-         */
+    logging.next(
+        'Process profiles and generate stats',
+        profiles.length, 'profiles'
+    );
 
-        let profiles = Object.keys( JSON.parse( fs.readFileSync( dir + 'profile/_index' ) ) );
+    profiles.forEach( ( uri ) => {
 
-        /**
-         * generate stats
-         */
+        let path = '/profile/' + uri + '/';
 
-        logging.next(
-            'Process profiles and generate stats',
-            profiles.length, 'profiles'
-        );
+        let annual = api.getJSONFile( path + 'annual' ),
+            history = api.getCSVFile( path + 'history' );
 
-        profiles.forEach( ( uri ) => {
+        //
 
-            //
+        logging.update();
 
-        } );
+    } );
 
-        logging.finish();
-
-    } else {
-
-        console.log( colors.red( 'ERR' ) + ' no profiles found' );
-
-    }
+    logging.finish();
 
 };
 
