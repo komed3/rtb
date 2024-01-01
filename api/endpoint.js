@@ -124,6 +124,17 @@ const getProfileImage = ( uri ) => {
 };
 
 /**
+ * get profile info by URI
+ * @param {String} uri profile URI
+ * @returns profile info object
+ */
+const getProfile = ( uri ) => {
+
+    return getJSONFile( '/profile/' + uri + '/info' );
+
+};
+
+/**
  * get profile by URI
  * @param {String} uri profile URI
  * @returns profile object
@@ -141,7 +152,8 @@ const getFullProfile = ( uri ) => {
             related: getJSONFile( path + 'related' ),
             history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
-            latest: getJSONFile( path + 'latest' )
+            latest: getJSONFile( path + 'latest' ),
+            annual: getJSONFile( path + 'annual' )
         };
 
     }
@@ -178,5 +190,6 @@ module.exports = {
     getCSVFile,
     getProfileName,
     getProfileImage,
+    getProfile,
     getFullProfile
 };
