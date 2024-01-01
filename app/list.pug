@@ -13,6 +13,25 @@ block content
 
     //- list (content)
     div.rtb-box.rtb-list-content
+      div.rtb-list
+        each item of list.list
+          a.rtb-list-item(
+            href!= core.url( '/profile/' + item.uri ),
+            id!= '_r' + item.rank
+          )
+            img.rtb-image.rtb-list-image(
+              src!= api.getProfileImage( item.uri ),
+              loading= lazy
+            )/
+            div.rtb-list-rank!= '#' + item.rank
+            div.rtb-list-name!= item.name
+            div.rtb-list-networth
+              b!= formatter.networth( item.networth )
+              if item.change
+                span!= formatter.change( item.change )
+            div.rtb-list-age!= item.age || '—'
+            div.rtb-list-country!= api.indexes.country[ item.citizenship ]
+            div.rtb-list-source!= item.source.join( ', ' )
 
     //- pagination
     div.rtb-box.rtb-list-pagination

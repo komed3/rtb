@@ -45,6 +45,18 @@ const url = ( url ) => {
 };
 
 /**
+ * link to tist rank
+ * @param {Int} rank rank
+ * @param {String} list list name
+ * @returns link to list
+ */
+const listlink = ( rank, list = 'rtb' ) => {
+
+    return url( '/list/' + list + '?page=' + Math.ceil( rank / 25 ) + '#_r' + rank );
+
+};
+
+/**
  * format chart data for html output
  * @param {Object|Array} data chart data
  * @returns base64 stringified data
@@ -73,6 +85,7 @@ module.exports = {
     parseURL,
     getCanonical,
     url,
+    listlink,
     chartData,
     randItem
 };

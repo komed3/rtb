@@ -21,7 +21,7 @@ block content
       div.rtb-tags
         if profile.latest && profile.latest.rank && profile.latest.date == api.latest
           a.tag.tag-primary(
-            href!= core.url( '/list/rtb' )
+            href!= core.listlink( profile.latest.rank )
           )
             span!= '#' + profile.latest.rank
         if profile.info.industry
