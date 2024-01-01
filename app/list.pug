@@ -66,6 +66,31 @@ block content
               )!= v
       div.rtb-grid.rtb-list-filter-grid
         span.rtb-list-filter-label Sort by
+        select(
+          name= 'sort'
+        )
+          each v, k in { rank: 'Rank', name: 'Name', age: 'Age' }
+            option(
+                value= k,
+                selected= ( global.request.sort || 'rank' ) == k
+            )!= v
+        div.rtb-tags
+          input(
+            type= 'radio',
+            name= 'dir',
+            value= 'asc'
+            id= 'sort_dir__asc',
+            checked= ( global.request.dir || 'asc' == 'asc' )
+          )/
+          label.tag( for= 'sort_dir__asc' ) Ascending
+          input(
+            type= 'radio',
+            name= 'dir',
+            value= 'desc'
+            id= 'sort_dir__desc',
+            checked= ( global.request.dir || 'asc' == 'desc' )
+          )/
+          label.tag( for= 'sort_dir__desc' ) Descending
       div.rtb-grid.rtb-list-filter-grid
         div.rtb-tags
           if list.filtered
