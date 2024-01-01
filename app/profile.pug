@@ -124,9 +124,19 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
+    //- annual report
+    if profile.annual
+      div.rtb-box.rtb-profile-annual
+        h3.rtb-box-heading Annual report
+          div.rtb-chart.rtb-medium-chart(
+            chart-type= 'report',
+            chart-data!= core.chartData( profile.annual )
+          )
+            canvas.rtb-chart-inner
+
     //- related people
     if profile.related && profile.related.length
-      div.rtb-box.rtb-related
+      div.rtb-box.rtb-profile-related
         h3.rtb-box-heading Related people
         div.rtb-grid.col3.rtb-profile-grid
           each related in profile.related

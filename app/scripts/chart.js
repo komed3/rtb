@@ -1,10 +1,4 @@
 /**
- * global charts object
- * contains all registered charts
- */
-var charts = {};
-
-/**
  * global chart color palettes
  */
 const chart_colors = {
@@ -20,6 +14,12 @@ const chart_colors = {
         ]
     }
 };
+
+/**
+ * global charts object
+ * contains all registered charts
+ */
+var charts = {};
 
 /**
  * create new chart
@@ -384,15 +384,9 @@ const chart_type__networth = ( container, data ) => {
                     borderColor: chart_color( chart_colors.green ),
                     cornerRadius: 4,
                     titleColor: chart_color( chart_colors.color ),
-                    titleFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 13
-                    },
                     bodyColor: chart_color( chart_colors.green ),
                     bodyFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 24,
-                        weight: 700
+                        size: 24
                     },
                     callbacks: {
                         label: ( item ) => {
@@ -427,11 +421,6 @@ const chart_type__networth = ( container, data ) => {
                         maxTicksLimit: 6,
                         padding: 12,
                         color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
                         callback: ( value ) => {
                             if( value > 0 ) {
                                 return '$' + parseFloat( ( value / 1000 ).toFixed( 1 ) ) + 'B';
@@ -495,15 +484,9 @@ const chart_type__rank = ( container, data ) => {
                     borderColor: chart_color( chart_colors.red ),
                     cornerRadius: 4,
                     titleColor: chart_color( chart_colors.color ),
-                    titleFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 13
-                    },
                     bodyColor: chart_color( chart_colors.red ),
                     bodyFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 24,
-                        weight: 700
+                        size: 24
                     },
                     callbacks: {
                         label: ( item ) => {
@@ -539,11 +522,6 @@ const chart_type__rank = ( container, data ) => {
                         maxTicksLimit: 4,
                         padding: 12,
                         color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
                         callback: ( value ) => {
                             if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
                                 return '#' + parseInt( value );
@@ -622,15 +600,9 @@ const chart_type__percent = ( container, data ) => {
                     borderColor: chart_color( chart_colors.color ),
                     cornerRadius: 4,
                     titleColor: chart_color( chart_colors.color ),
-                    titleFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 13
-                    },
                     bodyColor: chart_color( chart_colors.color ),
                     bodyFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 24,
-                        weight: 700
+                        size: 24
                     },
                     filter: ( item ) => {
                         return item.parsed.y != 0;
@@ -668,11 +640,6 @@ const chart_type__percent = ( container, data ) => {
                         maxTicksLimit: 4,
                         padding: 12,
                         color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
                         callback: ( value ) => {
                             return Number( value.toFixed( 2 ) ) + '%';
                         }
@@ -739,15 +706,9 @@ const chart_type__line = ( container, data ) => {
                     borderColor: chart_color( chart_colors.red ),
                     cornerRadius: 4,
                     titleColor: chart_color( chart_colors.color ),
-                    titleFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 13
-                    },
                     bodyColor: chart_color( chart_colors.red ),
                     bodyFont: {
-                        family: 'Poppins, sans-serif',
-                        size: 24,
-                        weight: 700
+                        size: 24
                     }
                 }
             },
@@ -777,11 +738,6 @@ const chart_type__line = ( container, data ) => {
                         maxTicksLimit: 4,
                         padding: 12,
                         color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
                         callback: ( value ) => {
                             if( value > 0 && parseInt( value ) == parseFloat( value.toFixed( 1 ) ) ) {
                                 return parseInt( value );
@@ -839,12 +795,7 @@ const chart_type__bar = ( container, data ) => {
                         display: false
                     },
                     ticks: {
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 },
                 y: {
@@ -859,12 +810,7 @@ const chart_type__bar = ( container, data ) => {
                     ticks: {
                         maxTicksLimit: 4,
                         padding: 12,
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 }
             }
@@ -923,12 +869,7 @@ const chart_type__column = ( container, data ) => {
                         display: false
                     },
                     ticks: {
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 },
                 y: {
@@ -942,12 +883,7 @@ const chart_type__column = ( container, data ) => {
                     },
                     ticks: {
                         padding: 12,
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 }
             }
@@ -994,12 +930,7 @@ const chart_type__pie = ( container, data ) => {
                     position: 'right',
                     labels: {
                         boxWidth: 20,
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 },
                 tooltip: {
@@ -1065,12 +996,7 @@ const chart_type__pyramid = ( container, data ) => {
                     position: 'bottom',
                     labels: {
                         boxWidth: 20,
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 },
                 tooltip: {
@@ -1089,11 +1015,6 @@ const chart_type__pyramid = ( container, data ) => {
                     },
                     ticks: {
                         color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        },
                         callback: ( value ) => {
                             return Math.abs( value ) + '%';
                         }
@@ -1110,12 +1031,7 @@ const chart_type__pyramid = ( container, data ) => {
                     },
                     ticks: {
                         padding: 12,
-                        color: chart_color( chart_colors.color ),
-                        font: {
-                            family: 'Poppins, sans-serif',
-                            size: 14,
-                            weight: 700
-                        }
+                        color: chart_color( chart_colors.color )
                     }
                 }
             }
@@ -1157,6 +1073,13 @@ document.addEventListener( 'click', ( e ) => {
     }
 
 } );
+
+/**
+ * overide global chart settings
+ */
+Chart.defaults.font.family = '"Poppins", sans-serif';
+Chart.defaults.font.size = 14;
+Chart.defaults.font.weight = 700;
 
 /**
  * search for charts after DOM content has loaded
