@@ -11,6 +11,10 @@ const logging = require( './_logging' );
 
 const profiles = Object.keys( api.index );
 
+const year = process.argv.includes( '--year' )
+    ? process.argv[ process.argv.indexOf( '--year' ) + 1 ] || ( new Date() ).getFullYear()
+    : ( new Date() ).getFullYear();
+
 /**
  * create annual report
  */

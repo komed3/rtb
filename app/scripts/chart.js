@@ -874,6 +874,89 @@ const chart_type__bar = ( container, data ) => {
 };
 
 /**
+ * create column chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__column = ( container, data ) => {
+
+    chart_add( container, {
+        type: 'bar',
+        data: {
+            labels: Object.keys( data ).map( a => capitalize( a.replaceAll( '-', ' ' ) ) ),
+            datasets: [ {
+                data: Object.values( data ),
+                borderWidth: 3,
+                borderColor: chart_color( chart_colors.background ),
+                backgroundColor: chart_colors.schemes.red
+            } ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: {
+                    top: 12,
+                    left: 12,
+                    right: 32,
+                    bottom: 12
+                }
+            },
+            events: [],
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                },
+                y: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: chart_color( chart_colors.grid ),
+                        lineWidth: 2,
+                        tickLength: 0
+                    },
+                    ticks: {
+                        padding: 12,
+                        color: chart_color( chart_colors.color ),
+                        font: {
+                            family: 'Poppins, sans-serif',
+                            size: 14,
+                            weight: 700
+                        }
+                    }
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * create pie chart
  * @param {Node} container chart container
  * @param {Array} data chart data
@@ -1050,6 +1133,7 @@ const chart_types = {
     'percent': chart_type__percent,
     'line': chart_type__line,
     'bar': chart_type__bar,
+    'column': chart_type__column,
     'pie': chart_type__pie,
     'pyramid': chart_type__pyramid
 };

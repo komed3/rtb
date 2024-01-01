@@ -47,7 +47,7 @@ async function run() {
             'Self-made from moneyed background': 0,
             'Self-made from middle-class': 0,
             'Self-made from little to nothing': 0,
-            'Self-made and breaking major obstacles': 0
+            'Self-made with major obstacles': 0
         }, selfMadeKeys = Object.keys( selfMade );
 
         let agePyramid = {
