@@ -35,7 +35,11 @@ const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
             .filter( r => r )
             .map( ( r ) => {
                 return r.split( delimiter ).map( ( a ) => {
-                    return a.length ? a : null;
+                    return a.length
+                        ? !isNaN( a ) && !isNaN( parseFloat( a ) )
+                            ? parseFloat( a )
+                            : a
+                        : null;
                 } );
             } )
         : [];
