@@ -222,17 +222,104 @@ const getList = ( list, query ) => {
      * get list
      */
 
-    let res = getJSONFile( '/list/' + list + '/' + ( query.date || 'latest' ) );
+    let raw = getJSONFile( '/list/' + list + '/' + ( query.date || 'latest' ) );
 
     /**
      * filter list by query
      */
 
-    //
+    let res = {
+        count: 0,
+        woman: 0,
+        total: 0,
+        list: []
+    };
+
+    raw.list.forEach( ( item ) => {
+
+        if(
+            ( query.country && item.citizenship != query.country ) ||
+            ( query.industry && !item.industry.includes( query.industry ) ) ||
+            ( query.woman && item.gender != 'f' )
+        ) {
+
+            /**
+             * do nothing
+             */
+
+        } else {
+
+            /**
+             * register item
+             */
+
+            res.list.push( item );
+
+            res.count++;
+            res.total += item.networth;
+
+            if( item.gender == 'f' ) {
+
+                res.woman++;
+
+            }
+
+        }
+
+    } );
+
+    /**
+     * sort results
+     */
+
+    let desc = ( query.dir || 'asc' ) == 'desc';
+
+    res.list = res.list.sort( ( a, b ) => {
+
+        switch( query.sort || 'rank' ) {
+
+            /**
+             * sort by rank (by default)
+             */
+            default:
+            case 'rank':
+                return desc
+                    ? b.rank - a.rank
+                    : a.rank - b.rank;
+
+            /**
+             * sort by name (URI)
+             */
+            case 'name':
+                return desc
+                    ? b.uri.localeCompare( a.uri )
+                    : a.uri.localeCompare( b.uri );
+
+            /**
+             * sort by age
+             */
+            case 'age':
+                return desc
+                    ? b.age - a.age
+                    : a.age - b.age;
+
+        }
+
+    } );
+
+    /**
+     * slice results (pagination)
+     */
+
+    let page = parseInt( query.page || 1 );
+
+    res.list = res.list.slice( ( page - 1 ) * 25, page * 25 );
 
     /**
      * return list object
      */
+
+    res.total = Number( res.total.toFixed(3) );
 
     return res;
 
