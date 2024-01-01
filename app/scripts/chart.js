@@ -1115,7 +1115,7 @@ const chart_type__report = ( container, data ) => {
                     top: 12,
                     left: 32,
                     right: 32,
-                    bottom: 0
+                    bottom: -20
                 }
             },
             plugins: {
@@ -1149,6 +1149,7 @@ const chart_type__report = ( container, data ) => {
             },
             scales: {
                 x: {
+                    offset: true,
                     border: {
                         display: false
                     },
