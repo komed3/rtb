@@ -1,6 +1,9 @@
 //- list page
 extends templates/layout.pug
 
+block title
+  title!= listName
+
 block scripts
   script( src= '/js/list.min.js' )
 
@@ -12,7 +15,7 @@ block content
 
     //- header
     div.rtb-box.rtb-list-header
-      h1 Real-time billionaires
+      h1!= listName
 
     //- filter
     form.rtb-box.rtb-list-filter(

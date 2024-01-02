@@ -206,7 +206,7 @@ const isList = ( list ) => {
 
     let path = __dirname + '/list/' + list + '/';
 
-    return fs.existsSync( path ) && fs.existsSync( path + 'latest' );
+    return list in lists && fs.existsSync( path ) && fs.existsSync( path + 'latest' );
 
 }
 
@@ -345,8 +345,12 @@ const latest = fs.existsSync( __dirname + '/latest' )
     ? fs.readFileSync( __dirname + '/latest' ).toString()
     : ( new Date() ).toISOString().split( 'T' )[0];
 
+const days = getCSVFile( '/availableDays' );
+
 const index = getJSONFile( '/profile/_index' );
 const alias = getJSONFile( '/profile/_alias' );
+
+const lists = getJSONFile( '/list/_index' );
 
 const indexes = {
     industry: getJSONFile( '/stats/industry/_index' ),
@@ -357,8 +361,9 @@ const indexes = {
  * export public methods
  */
 module.exports = {
-    latest,
+    latest, days,
     index, alias,
+    lists,
     indexes,
     resolveURI,
     getJSONFile,
