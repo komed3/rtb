@@ -241,7 +241,7 @@ const getList = ( list, query ) => {
             ( query.country && item.citizenship != query.country ) ||
             ( query.industry && !item.industry.includes( query.industry ) ) ||
             ( query.woman && item.gender != 'f' ) ||
-            ( query.new && item.flag != 'new' ) ||
+            ( query.flag && item.flag != query.flag ) ||
             ( query.returnee && item.flag != 'returnee' )
         ) {
 

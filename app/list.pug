@@ -31,36 +31,22 @@ block content
           label.tag( for= 'filter_by__woman' ) Woman
           input(
             type= 'checkbox',
-            name= 'new',
+            name= 'flag',
+            value= 'new',
             id= 'filter_by__new',
-            checked= global.request.new
+            checked= ( global.request.flag == 'new' )
           )/
           label.tag( for= 'filter_by__new' ) New to list
-          input(
-            type= 'checkbox',
-            name= 'returnee',
-            id= 'filter_by__returnee',
-            checked= global.request.returnee
-          )/
-          label.tag( for= 'filter_by__returnee' ) Returnee
-          select(
-            name= 'country'
-          )
-            option(
-              value= ''
-            ) Countries
+          select( name= 'country' )
+            option( value= '' ) Countries
             option( readonly, disabled ) ----------
             each v, k in api.indexes.country
               option(
                 value= k,
                 selected= ( global.request.country || '' ) == k
               )!= v
-          select(
-            name= 'industry'
-          )
-            option(
-              value= ''
-            ) Industries
+          select( name= 'industry' )
+            option( value= '' ) Industries
             option( readonly, disabled ) ----------
             each v, k in api.indexes.industry
               option(
@@ -69,9 +55,7 @@ block content
               )!= v
       div.rtb-grid.rtb-list-filter-grid
         span.rtb-list-filter-label Sort by
-        select(
-          name= 'sort'
-        )
+        select( name= 'sort' )
           each v, k in { rank: 'Rank', diff: 'Difference', name: 'Name', age: 'Age' }
             option(
                 value= k,
