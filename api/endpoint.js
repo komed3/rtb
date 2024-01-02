@@ -240,7 +240,9 @@ const getList = ( list, query ) => {
         if(
             ( query.country && item.citizenship != query.country ) ||
             ( query.industry && !item.industry.includes( query.industry ) ) ||
-            ( query.woman && item.gender != 'f' )
+            ( query.woman && item.gender != 'f' ) ||
+            ( query.new && item.flag != 'new' ) ||
+            ( query.returnee && item.flag != 'returnee' )
         ) {
 
             /**
