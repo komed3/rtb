@@ -14,8 +14,12 @@
     overflow: hidden;
 }
 
-.rtb-wl-item:hover {
-    filter: opacity( 0.9 );
+.rtb-wl-item.empty {
+    opacity: 0.5;
+}
+
+a.rtb-wl-item:hover {
+    opacity: 0.9;
 }
 
 .rtb-wl-column {
@@ -59,6 +63,7 @@
 
 .rtb-wl-image {
     grid-row: 2;
+    background: var( --gray-1 );
 }
 
 .rtb-wl-image .rtb-image {

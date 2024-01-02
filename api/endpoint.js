@@ -376,9 +376,12 @@ const getList = ( list, query ) => {
  */
 const getMovers = ( date = 'latest', type = 'value', limit = 10 ) => {
 
+    let winner = getJSONFile( '/movers/' + type + '/winner/' + date ),
+        loser = getJSONFile( '/movers/' + type + '/loser/' + date );
+
     return {
-        winner: getJSONFile( '/movers/' + type + '/winner/' + date ).slice( 0, limit ),
-        loser: getJSONFile( '/movers/' + type + '/loser/' + date ).slice( 0, limit )
+        winner: Array.isArray( winner ) ? winner.slice( 0, limit ) : [],
+        loser: Array.isArray( loser ) ? loser.slice( 0, limit ) : []
     };
 
 };

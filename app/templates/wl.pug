@@ -2,31 +2,43 @@
 div.rtb-wl
 
   //- winner
-  each item, c in movers.winner.slice( 0, 5 )
-    a.rtb-wl-item.winner(
-      href!= core.url( '/profile/' + item[0] )
-    )
-      div( class!= 'rtb-wl-column c' + ( 4 - c ) )
-      div.rtb-wl-image
-        img.rtb-image(
-          src!= api.getProfileImage( item[0] ),
-          loading= 'lazy'
-        )/
-      div.rtb-wl-inner
-        b!= formatter.networth( item[1], 0 )
-        span!= api.getProfileName( item[0], true )
+  each i in [ 0, 1, 2, 3, 4 ]
+    if movers.winner[ i ]
+      a.rtb-wl-item.winner(
+        href!= core.url( '/profile/' + movers.winner[ i ][0] )
+      )
+        div( class!= 'rtb-wl-column c' + ( 4 - i ) )
+        div.rtb-wl-image
+          img.rtb-image(
+            src!= api.getProfileImage( movers.winner[ i ][0] ),
+            loading= 'lazy'
+          )/
+        div.rtb-wl-inner
+          b!= formatter.networth( movers.winner[ i ][1], 0 )
+          span!= api.getProfileName( movers.winner[ i ][0], true )
+    else
+      div.rtb-wl-item.empty.winner
+        div( class!= 'rtb-wl-column c' + i )
+        div.rtb-wl-image
+        div.rtb-wl-inner
 
   //- loser
-  each item, c in movers.loser.reverse().slice( 0, 5 )
-    a.rtb-wl-item.loser(
-      href!= core.url( '/profile/' + item[0] )
-    )
-      div( class!= 'rtb-wl-column c' + c )
-      div.rtb-wl-image
-        img.rtb-image(
-          src!= api.getProfileImage( item[0] ),
-          loading= 'lazy'
-        )/
-      div.rtb-wl-inner
-        b!= formatter.networth( item[1], 0 )
-        span!= api.getProfileName( item[0], true )
+  each i in [ 4, 3, 2, 1, 0 ]
+    if movers.loser[ i ]
+      a.rtb-wl-item.loser(
+        href!= core.url( '/profile/' + movers.loser[ i ][0] )
+      )
+        div( class!= 'rtb-wl-column c' + ( 4 - i ) )
+        div.rtb-wl-image
+          img.rtb-image(
+            src!= api.getProfileImage( movers.loser[ i ][0] ),
+            loading= 'lazy'
+          )/
+        div.rtb-wl-inner
+          b!= formatter.networth( movers.loser[ i ][1], 0 )
+          span!= api.getProfileName( movers.loser[ i ][0], true )
+    else
+      div.rtb-wl-item.empty.loser
+        div( class!= 'rtb-wl-column c' + i )
+        div.rtb-wl-image
+        div.rtb-wl-inner
