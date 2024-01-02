@@ -45,7 +45,7 @@ const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\r\n' ) =
             } )
         : [];
 
-    if( !isNaN( flatten ) ) {
+    if( flatten != null ) {
 
         res = res.map( r => r[ flatten ] || null );
 

@@ -1183,7 +1183,7 @@ const chart_type__report = ( container, data ) => {
             },
             scales: {
                 x: {
-                    offset: true,
+                    offset: data.length < 2,
                     border: {
                         display: false
                     },
