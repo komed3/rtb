@@ -364,6 +364,22 @@ const getList = ( list, query ) => {
 };
 
 /**
+ * fetch movers (winners & losers)
+ * @param {String} date date or latest
+ * @param {String} type movers type
+ * @param {Int} limit movers limit
+ * @returns daily movers
+ */
+const getMovers = ( date = 'latest', type = 'value', limit = 10 ) => {
+
+    return {
+        winner: getJSONFile( '/movers/' + type + '/winner/' + date ).slice( 0, limit ),
+        loser: getJSONFile( '/movers/' + type + '/loser/' + date ).slice( 0, limit )
+    };
+
+};
+
+/**
  * load profiles index + aliases
  */
 
@@ -400,5 +416,6 @@ module.exports = {
     getFullProfile,
     getAnnualReport,
     isList,
-    getList
+    getList,
+    getMovers
 };
