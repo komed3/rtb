@@ -288,6 +288,14 @@ const getList = ( list, query ) => {
                     : a.rank - b.rank;
 
             /**
+             * sort by rank difference
+             */
+            case 'diff':
+                return desc
+                    ? b.diff - a.diff
+                    : a.diff - b.diff;
+
+            /**
              * sort by name (URI)
              */
             case 'name':

@@ -72,7 +72,7 @@ block content
         select(
           name= 'sort'
         )
-          each v, k in { rank: 'Rank', name: 'Name', age: 'Age' }
+          each v, k in { rank: 'Rank', diff: 'Difference', name: 'Name', age: 'Age' }
             option(
                 value= k,
                 selected= ( global.request.sort || 'rank' ) == k
