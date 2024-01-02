@@ -591,8 +591,8 @@ async function run() {
      */
 
     logging.next(
-        '[4/8] save lists',
-        3, 'steps'
+        '[4/8] save real-time list',
+        4, 'steps'
     );
 
     stream = JSON.stringify( {
@@ -621,6 +621,19 @@ async function run() {
         dir + 'availableDays',
         today + '\r\n',
         { flag: 'a' }
+    );
+
+    logging.update();
+
+    fs.writeFileSync(
+        dir + 'list/_index',
+        JSON.stringify( {
+            ...( fs.existsSync( dir + 'list/_index' )
+                     ? JSON.parse( fs.readFileSync( dir + 'list/_index' ) )
+                     : {} ),
+            ...{ rtb: 'Real-time billionaires' }
+        }, null, 2 ),
+        { flag: 'w' }
     );
 
     logging.update();
