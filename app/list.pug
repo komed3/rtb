@@ -1,6 +1,9 @@
 //- list page
 extends templates/layout.pug
 
+block scripts
+  script( src= '/js/list.min.js' )
+
 block styles
   link( rel= 'stylesheet', href= '/css/list.css' )/
 
@@ -80,7 +83,7 @@ block content
             name= 'dir',
             value= 'asc'
             id= 'sort_dir__asc',
-            checked= ( global.request.dir || 'asc' == 'asc' )
+            checked= ( ( global.request.dir || 'asc' ) == 'asc' )
           )/
           label.tag( for= 'sort_dir__asc' ) Ascending
           input(
@@ -88,7 +91,7 @@ block content
             name= 'dir',
             value= 'desc'
             id= 'sort_dir__desc',
-            checked= ( global.request.dir || 'asc' == 'desc' )
+            checked= ( ( global.request.dir || null ) == 'desc' )
           )/
           label.tag( for= 'sort_dir__desc' ) Descending
       div.rtb-grid.rtb-list-filter-grid
@@ -129,6 +132,6 @@ block content
               b There are no billionaires on this list that match your query.
 
     //- pagination
-    if list.count
+    if list.count > 25
       div.rtb-box.rtb-list-pagination
         div.rtb-pagination!= core.pagination( global.request, list.count, list.page, 25 )
