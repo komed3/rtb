@@ -16,6 +16,8 @@ block content
     //- header
     div.rtb-box.rtb-list-header
       h1!= listName
+      -var movers = api.getMovers( list.date, 'value', 5 )
+      include templates/wl.pug
 
     //- filter
     form.rtb-box.rtb-list-filter(
