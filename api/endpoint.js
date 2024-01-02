@@ -238,110 +238,122 @@ const getList = ( list, query ) => {
      */
 
     let res = {
-        date: raw.date,
+        date: raw.date || query.date || latest,
         count: 0,
         woman: 0,
         total: 0,
         list: []
     };
 
-    raw.list.forEach( ( item ) => {
+    /**
+     * check if list exists
+     */
 
-        if(
-            ( query.country && item.citizenship != query.country ) ||
-            ( query.industry && !item.industry.includes( query.industry ) ) ||
-            ( query.woman && item.gender != 'f' ) ||
-            ( query.flag && item.flag != query.flag ) ||
-            ( query.returnee && item.flag != 'returnee' )
-        ) {
+    if( raw.list ) {
 
-            /**
-             * do nothing
-             */
+        /**
+         * filter list
+         */
 
-        } else {
+        raw.list.forEach( ( item ) => {
 
-            /**
-             * register item
-             */
+            if(
+                ( query.country && item.citizenship != query.country ) ||
+                ( query.industry && !item.industry.includes( query.industry ) ) ||
+                ( query.woman && item.gender != 'f' ) ||
+                ( query.flag && item.flag != query.flag ) ||
+                ( query.returnee && item.flag != 'returnee' )
+            ) {
 
-            res.list.push( item );
+                /**
+                 * do nothing
+                 */
 
-            res.count++;
-            res.total += item.networth;
+            } else {
 
-            if( item.gender == 'f' ) {
+                /**
+                 * add entry to list
+                 */
 
-                res.woman++;
+                res.list.push( item );
+
+                res.count++;
+                res.total += item.networth;
+
+                if( item.gender == 'f' ) {
+
+                    res.woman++;
+
+                }
 
             }
 
-        }
+        } );
 
-    } );
+        res.filtered = ( res.count != raw.count ) || ( res.date != latest );
 
-    /**
-     * sort results
-     */
+        /**
+         * sort results
+         */
 
-    let desc = ( query.dir || 'asc' ) == 'desc';
+        let desc = ( query.dir || 'asc' ) == 'desc';
 
-    res.list = res.list.sort( ( a, b ) => {
+        res.list = res.list.sort( ( a, b ) => {
 
-        switch( query.sort || 'rank' ) {
+            switch( query.sort || 'rank' ) {
 
-            /**
-             * sort by rank (by default)
-             */
-            default:
-            case 'rank':
-                return desc
-                    ? b.rank - a.rank
-                    : a.rank - b.rank;
+                /**
+                 * sort by rank (by default)
+                 */
+                default:
+                case 'rank':
+                    return desc
+                        ? b.rank - a.rank
+                        : a.rank - b.rank;
 
-            /**
-             * sort by rank difference
-             */
-            case 'diff':
-                return desc
-                    ? b.diff - a.diff
-                    : a.diff - b.diff;
+                /**
+                 * sort by rank difference
+                 */
+                case 'diff':
+                    return desc
+                        ? b.diff - a.diff
+                        : a.diff - b.diff;
 
-            /**
-             * sort by name (URI)
-             */
-            case 'name':
-                return desc
-                    ? b.uri.localeCompare( a.uri )
-                    : a.uri.localeCompare( b.uri );
+                /**
+                 * sort by name (URI)
+                 */
+                case 'name':
+                    return desc
+                        ? b.uri.localeCompare( a.uri )
+                        : a.uri.localeCompare( b.uri );
 
-            /**
-             * sort by age
-             */
-            case 'age':
-                return desc
-                    ? b.age - a.age
-                    : a.age - b.age;
+                /**
+                 * sort by age
+                 */
+                case 'age':
+                    return desc
+                        ? b.age - a.age
+                        : a.age - b.age;
 
-        }
+            }
 
-    } );
+        } );
 
-    res.filtered = ( res.count != raw.count ) || ( res.date != latest );
+        /**
+         * slice results (pagination)
+         */
 
-    /**
-     * slice results (pagination)
-     */
+        res.page = parseInt( query.page || 1 );
 
-    res.page = parseInt( query.page || 1 );
+        res.list = res.list.slice( ( res.page - 1 ) * 25, res.page * 25 );
 
-    res.list = res.list.slice( ( res.page - 1 ) * 25, res.page * 25 );
+        /**
+         * return list object
+         */
 
-    /**
-     * return list object
-     */
+        res.total = Number( res.total.toFixed(3) );
 
-    res.total = Number( res.total.toFixed(3) );
+    }
 
     return res;
 
