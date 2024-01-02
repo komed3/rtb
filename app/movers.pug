@@ -1,0 +1,14 @@
+//- daily movers page
+extends templates/layout.pug
+
+block title
+  title Winners & Losers
+
+block styles
+  link( rel= 'stylesheet', href= '/css/movers.css' )/
+
+block content
+  div.rtb-page.rtb-box.rtb-movers
+    h1 Winners &amp; Losers
+    -var movers = api.getMovers( 'latest', 'value', 5 )
+    include templates/wl.pug
