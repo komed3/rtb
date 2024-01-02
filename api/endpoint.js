@@ -290,7 +290,7 @@ const getList = ( list, query ) => {
 
         } );
 
-        res.filtered = ( res.count != raw.count ) || ( res.date != latest );
+        res.total = Number( res.total.toFixed(3) );
 
         /**
          * sort results
@@ -347,13 +347,17 @@ const getList = ( list, query ) => {
 
         res.list = res.list.slice( ( res.page - 1 ) * 25, res.page * 25 );
 
-        /**
-         * return list object
-         */
-
-        res.total = Number( res.total.toFixed(3) );
-
     }
+
+    /**
+     * set flag if list has active filters
+     */
+
+    res.filtered = ( res.count != raw.count ) || ( res.date != latest );
+
+    /**
+     * return list object
+     */
 
     return res;
 
