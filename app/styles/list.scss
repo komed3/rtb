@@ -26,7 +26,8 @@
     flex: 1;
 }
 
-.rtb-list-filter input {
+.rtb-list-filter input[type="checkbox"],
+.rtb-list-filter input[type="radio"] {
     visibility: hidden;
     flex: none;
     position: absolute;
@@ -45,6 +46,7 @@
     background: var( --accent-1 );
 }
 
+.rtb-list-filter input[type="date"],
 .rtb-list-filter select {
     height: 42px;
     font-size: 18px;

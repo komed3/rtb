@@ -81,6 +81,16 @@ block content
             checked= ( ( global.request.dir || null ) == 'desc' )
           )/
           label.tag( for= 'sort_dir__desc' ) Descending
+        div.rtb-list-filter-gap
+        span.rtb-list-filter-label Data as of
+        div.rtb-tags
+          input(
+            type= 'date',
+            name= 'date',
+            min= api.days[0],
+            max= api.latest,
+            value= list.date
+          )/
       div.rtb-grid.rtb-list-filter-grid
         div.rtb-tags
           if list.filtered
@@ -107,7 +117,7 @@ block content
               b!= '#' + item.rank
             div.rtb-list-cell.rtb-list-diff
               img.rtb-list-flag(
-                src!= '/res/flag-' + ( item.flag || 'unknown' ) + '.png'
+                src!= '/res/flag-' + ( item.flag || 'unchanged' ) + '.png'
               )/
             div.rtb-list-cell.rtb-list-name!= item.name
             div.rtb-list-cell.rtb-list-networth

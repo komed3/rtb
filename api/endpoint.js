@@ -22,13 +22,14 @@ const getJSONFile = ( file ) => {
 /**
  * get CSV content from file
  * @param {String} file path to file
+ * @param {Int|Null} flatten get only one column
  * @param {String} delimiter value delimiter
  * @param {String} newLine new line delimiter
  * @returns CSV content
  */
-const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
+const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\r\n' ) => {
 
-    return fs.existsSync( __dirname + file )
+    let res = fs.existsSync( __dirname + file )
         ? fs.readFileSync( __dirname + file )
             .toString()
             .split( newLine )
@@ -43,6 +44,14 @@ const getCSVFile = ( file, delimiter = ' ', newLine = '\r\n' ) => {
                 } );
             } )
         : [];
+
+    if( !isNaN( flatten ) ) {
+
+        res = res.map( r => r[ flatten ] || null );
+
+    }
+
+    return res;
 
 };
 
@@ -229,6 +238,7 @@ const getList = ( list, query ) => {
      */
 
     let res = {
+        date: raw.date,
         count: 0,
         woman: 0,
         total: 0,
@@ -317,7 +327,7 @@ const getList = ( list, query ) => {
 
     } );
 
-    res.filtered = res.count != raw.count;
+    res.filtered = ( res.count != raw.count ) || ( res.date != latest );
 
     /**
      * slice results (pagination)
@@ -345,7 +355,7 @@ const latest = fs.existsSync( __dirname + '/latest' )
     ? fs.readFileSync( __dirname + '/latest' ).toString()
     : ( new Date() ).toISOString().split( 'T' )[0];
 
-const days = getCSVFile( '/availableDays' );
+const days = getCSVFile( '/availableDays', 0 );
 
 const index = getJSONFile( '/profile/_index' );
 const alias = getJSONFile( '/profile/_alias' );
