@@ -1,0 +1,50 @@
+.rtb-chart {
+    position: relative;
+    width: 100%;
+}
+
+.rtb-chart canvas {
+    margin: 0 -12px;
+}
+
+.rtb-chart.rtb-big-chart {
+    height: 480px;
+}
+
+.rtb-chart.rtb-medium-chart {
+    height: 320px;
+}
+
+.rtb-chart.rtb-small-chart {
+    height: 180px;
+}
+
+.rtb-chart-controls {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 4px;
+}
+
+.rtb-chart-controls button {
+    height: auto;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.rtb-chart-controls button:not(.active) {
+    background: var( --gray-3 );
+}
+
+.rtb-chart-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    font-size: 20px;
+    font-weight: 700;
+}

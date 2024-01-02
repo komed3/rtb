@@ -61,11 +61,27 @@ const chart_add = ( container, options, data, ctrl = true, range = 'year' ) => {
     }
 
     /**
+     * empty chart message
+     */
+
+    let empty = document.createElement( 'div' );
+
+    empty.classList.add( 'rtb-chart-empty' );
+    empty.innerHTML = 'No data.';
+
+    empty.style.display = 'none';
+
+    container.insertBefore( empty, chart );
+
+    /**
      * create chart
      */
 
     charts[ uuid ] = {
         container: container,
+        target: chart,
+        ctx: ctx,
+        empty: empty,
         chart: new Chart( ctx, options ),
         data: data,
         normalize: !!( container.getAttribute( 'chart-normalize' ) || 0 ),
@@ -99,15 +115,33 @@ const chart_update = ( uuid, data ) => {
 
     if( uuid in charts ) {
 
-        charts[ uuid ].chart.data.labels = data.map( r => formatDate( r[0] ) );
+        let chart = charts[ uuid ];
+
+        chart.chart.data.labels = data.map( r => formatDate( r[0] ) );
 
         for( let i = 1, s = 0; i < Object.keys( data[0] ).length; i++, s++ ) {
 
-            charts[ uuid ].chart.data.datasets[ s ].data = data.map( r => r[ i ] );
+            chart.chart.data.datasets[ s ].data = data.map( r => r[ i ] );
 
         }
 
-        charts[ uuid ].chart.update();
+        chart.chart.update();
+
+        /**
+         * check empty chart
+         */
+
+        if( data.every( r => r[1] === null || r[1] === 0 ) ) {
+
+            chart.target.style.display = 'none';
+            chart.empty.style.display = 'block';
+
+        } else {
+
+            chart.target.style.display = 'block';
+            chart.empty.style.display = 'none';
+
+        }
 
     }
 
