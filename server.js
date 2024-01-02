@@ -101,6 +101,8 @@ routes.forEach( ( route ) => {
 
                         res.locals.list = api.getList( list, req.query );
 
+                        res.locals.movers = api.getMovers( res.locals.list.date || 'latest', 'value', 5 );
+
                     } else {
 
                         /**
@@ -110,6 +112,15 @@ routes.forEach( ( route ) => {
                         res.redirect( core.url( '/' ) );
 
                     }
+
+                    break;
+
+                /**
+                 * daily movers page
+                 */
+                case 'movers':
+
+                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
 
                     break;
 
