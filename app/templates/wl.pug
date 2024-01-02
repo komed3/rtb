@@ -1,1 +1,32 @@
 //- template/wl.pug
+div.rtb-wl
+
+  //- winner
+  each item, c in movers.winner.slice( 0, 5 )
+    a.rtb-wl-item.winner(
+      href!= core.url( '/profile/' + item[0] )
+    )
+      div( class!= 'rtb-wl-column c' + ( 4 - c ) )
+      div.rtb-wl-image
+        img.rtb-image(
+          src!= api.getProfileImage( item[0] ),
+          loading= 'lazy'
+        )/
+      div.rtb-wl-inner
+        b!= formatter.networth( item[1], 0 )
+        span!= api.getProfileName( item[0], true )
+
+  //- loser
+  each item, c in movers.loser.reverse().slice( 0, 5 )
+    a.rtb-wl-item.loser(
+      href!= core.url( '/profile/' + item[0] )
+    )
+      div( class!= 'rtb-wl-column c' + c )
+      div.rtb-wl-image
+        img.rtb-image(
+          src!= api.getProfileImage( item[0] ),
+          loading= 'lazy'
+        )/
+      div.rtb-wl-inner
+        b!= formatter.networth( item[1], 0 )
+        span!= api.getProfileName( item[0], true )

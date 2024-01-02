@@ -91,15 +91,19 @@ const resolveURI = ( uri ) => {
 /**
  * get profile name
  * @param {String} uri profile URI
+ * @param {Boolean} shorten shorten name
  * @returns name
  */
-const getProfileName = ( uri ) => {
+const getProfileName = ( uri, shorten = false ) => {
 
     uri = resolveURI( uri );
 
     if( uri in index ) {
 
-        return index[ uri ].name;
+        return index[ uri ].name
+            .toString()
+            .replace( shorten ? '& family' : '', '' )
+            .trim();
 
     } else {
 

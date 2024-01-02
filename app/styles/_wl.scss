@@ -1,0 +1,100 @@
+.rtb-wl {
+    display: grid;
+    grid-template-columns: repeat( 10, 84px );
+    justify-content: center;
+    gap: 6px;
+    margin: var( --padding ) 0;
+}
+
+.rtb-wl-item {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: repeat( 3, 84px );
+    gap: 6px;
+    overflow: hidden;
+}
+
+.rtb-wl-item:hover {
+    filter: opacity( 0.9 );
+}
+
+.rtb-wl-column {
+    position: relative;
+}
+
+.rtb-wl-column::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.rtb-wl-item.winner .rtb-wl-column,
+.rtb-wl-item.loser .rtb-wl-inner {
+    grid-row: 1;
+}
+
+.rtb-wl-item.loser .rtb-wl-column,
+.rtb-wl-item.winner .rtb-wl-inner {
+    grid-row: 3;
+}
+
+.rtb-wl-item.winner .rtb-wl-column::after {
+    bottom: 0;
+    background: var( --color-good );
+}
+
+.rtb-wl-item.loser .rtb-wl-column::after {
+    top: 0;
+    background: var( --color-bad );
+}
+
+@for $i from 0 through 4 {
+
+    .rtb-wl-column.c#{$i}::after {
+        height: #{ ( $i + 1 ) * 20 }#{'%'};
+    }
+
+}
+
+.rtb-wl-image {
+    grid-row: 2;
+}
+
+.rtb-wl-image .rtb-image {
+    display: block;
+    width: 84px;
+    height: 84px;
+    border-radius: 0;
+}
+
+.rtb-wl-inner {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 3px;
+    text-align: center;
+}
+
+.rtb-wl-item.loser .rtb-wl-inner {
+    flex-direction: column-reverse;
+    align-self: flex-end;
+}
+
+.rtb-wl-inner b {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.rtb-wl-item.winner .rtb-wl-inner b {
+    color: var( --color-good );
+}
+
+.rtb-wl-item.loser .rtb-wl-inner b {
+    color: var( --color-bad );
+}
+
+.rtb-wl-inner span {
+    font-size: 12px;
+    color: var( --color-main );
+}
