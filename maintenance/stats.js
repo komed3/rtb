@@ -63,6 +63,11 @@ async function run() {
             }
         };
 
+        let scatter = {
+            m: [],
+            f: []
+        };
+
         let maritalStatus = {};
 
         let children = {
@@ -80,10 +85,10 @@ async function run() {
 
         profiles.forEach( ( uri ) => {
 
-            let path = dir + 'profile/' + uri + '/info';
+            let path = dir + 'profile/' + uri + '/';
 
-            let info = fs.existsSync( path )
-                ? JSON.parse( fs.readFileSync( path ) )
+            let info = fs.existsSync( path + 'info' )
+                ? JSON.parse( fs.readFileSync( path + 'info' ) )
                 : {};
 
             /**
@@ -109,7 +114,7 @@ async function run() {
                 }
 
                 /**
-                 * age pyramid
+                 * age pyramid and scatter
                  */
 
                 if( info.gender && info.birthDate ) {
@@ -121,6 +126,21 @@ async function run() {
                     if( age in agePyramid[ info.gender ] ) {
 
                         agePyramid[ info.gender ][ age ]++;
+
+                    }
+
+                    let networth = fs.existsSync( path + 'latest' )
+                        ? JSON.parse( fs.readFileSync( path + 'latest' ) ).networth
+                        : 0;
+
+                    if( networth >= 1000 ) {
+
+                        scatter[ info.gender ].push( {
+                            x: age,
+                            y: networth,
+                            uri: uri,
+                            name: info.name
+                        } );
 
                     }
 
@@ -194,7 +214,7 @@ async function run() {
 
         logging.next(
             '[2/2] Save generated stats',
-            4, 'steps'
+            5, 'steps'
         );
 
         fs.writeFileSync(
@@ -208,6 +228,14 @@ async function run() {
         fs.writeFileSync(
             dir + 'stats/agePyramid',
             JSON.stringify( agePyramid, null, 2 ),
+            { flag: 'w' }
+        );
+
+        logging.update();
+
+        fs.writeFileSync(
+            dir + 'stats/scatter',
+            JSON.stringify( scatter, null, 2 ),
             { flag: 'w' }
         );
 
