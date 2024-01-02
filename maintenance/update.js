@@ -442,7 +442,7 @@ async function run() {
 
                 if( lastYear in annual && annual[ lastYear ].rank.latest ) {
 
-                    diff = rank - annual[ lastYear ].rank.latest;
+                    diff = annual[ lastYear ].rank.latest - rank;
 
                     flag = diff > 0 ? 'up' : diff < 0 ? 'down' : 'unchanged';
 

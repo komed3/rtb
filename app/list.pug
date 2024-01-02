@@ -118,6 +118,10 @@ block content
               )/
             div.rtb-list-cell.rtb-list-rank
               b!= '#' + item.rank
+            div.rtb-list-cell.rtb-list-diff
+              img.rtb-list-flag(
+                src!= '/res/flag-' + ( item.flag || 'unknown' ) + '.png'
+              )/
             div.rtb-list-cell.rtb-list-name!= item.name
             div.rtb-list-cell.rtb-list-networth
               b!= formatter.networth( item.networth, 1, 1e6, false )
