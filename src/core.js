@@ -57,8 +57,22 @@ const listlink = ( rank, list = 'rtb' ) => {
 };
 
 /**
+ * get query to certain page
+ * @param {Object} query query object
+ * @param {*} page page number
+ * @returns query string
+ */
+const paginationLink = ( query, page ) => {
+
+    query.page = page;
+
+    return '?' + ( new URLSearchParams( query ) ).toString();
+
+};
+
+/**
  * create pagination
- * @param {String} query query string
+ * @param {Object} query query object
  * @param {Int} max count of total items
  * @param {Int} page current page
  * @param {Int} limit item limit per page
@@ -69,6 +83,14 @@ const pagination = ( query, max, page, limit ) => {
     let maxPage = Math.ceil( max / limit ),
         pagination = '',
         latest = 0;
+
+    if( page > 1 ) {
+
+        pagination += '<a class="rtb-pagination-link" href="' +
+            paginationLink( query, page - 1 ) +
+        '">« Previous</a>';
+
+    }
 
     [ ...new Set( [
         1,
@@ -92,17 +114,23 @@ const pagination = ( query, max, page, limit ) => {
 
         } else {
 
-            query.page = p;
-
-            pagination += '<a class="rtb-pagination-link" href="?' + (
-                ( new URLSearchParams( query ) ).toString()
-            ) + '">' + p + '</a>';
+            pagination += '<a class="rtb-pagination-link" href="' +
+                paginationLink( query, p ) +
+            '">' + p + '</a>';
 
         }
 
         latest = p;
 
     } );
+
+    if( page < maxPage ) {
+
+        pagination += '<a class="rtb-pagination-link" href="' +
+            paginationLink( query, page + 1 ) +
+        '">Next »</a>';
+
+    }
 
     return pagination;
 
