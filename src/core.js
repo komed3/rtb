@@ -40,7 +40,7 @@ const getCanonical = ( url, split = true ) => {
  */
 const url = ( url ) => {
 
-    return getCanonical( url, false );
+    return getCanonical( url, false ) || '/';
 
 };
 
