@@ -372,17 +372,31 @@ const getList = ( list, query ) => {
  * @param {String} date date or latest
  * @param {String} type movers type
  * @param {Int} limit movers limit
+ * @param {Boolean} resolve resolve URI to name
  * @returns daily movers
  */
-const getMovers = ( date = 'latest', type = 'value', limit = 10 ) => {
+const getMovers = ( date = 'latest', type = 'value', limit = 10, resolve = false ) => {
 
     let winner = getJSONFile( '/movers/' + type + '/winner/' + date ),
         loser = getJSONFile( '/movers/' + type + '/loser/' + date );
 
-    return {
+    let movers = {
         winner: Array.isArray( winner ) ? winner.slice( 0, limit ) : [],
         loser: Array.isArray( loser ) ? loser.slice( 0, limit ) : []
     };
+
+    if( resolve ) {
+
+        /**
+         * resolve URI to name
+         */
+
+        movers.winner = movers.winner.map( r => [ getProfileName( r[0], true ), r[1] ] );
+        movers.loser = movers.loser.map( r => [ getProfileName( r[0], true ), r[1] ] );
+
+    }
+
+    return movers;
 
 };
 
