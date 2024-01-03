@@ -84,6 +84,17 @@ routes.forEach( ( route ) => {
             switch( route[1] ) {
 
                 /**
+                 * error 404 page
+                 */
+                case '404':
+
+                    res.locals.profiles = Object.entries( api.index ).sort(
+                        () => 0.5 - Math.random()
+                    ).slice( 0, 12 );
+
+                    break;
+
+                /**
                  * list page
                  */
                 case 'list':
@@ -283,7 +294,7 @@ routes.forEach( ( route ) => {
                     res.locals.latest = history.splice( -1 )[0];
 
                     res.locals.profiles = api.getJSONFile( '/filter/' + route[2] + '/' + req.params.single ).sort(
-                        ( a, b ) => 0.5 - Math.random()
+                        () => 0.5 - Math.random()
                     ).slice( 0, 12 );
 
                     break;

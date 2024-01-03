@@ -27,3 +27,14 @@ block content
 
     div.rtb-box.rtb-error-profiles
       h3.rtb-box-heading Visit some random profiles
+      div.rtb-grid.col3.rtb-profile-grid
+        each item in profiles
+          a.rtb-grid-item.rtb-grid-item-flex(
+            href!= core.url( '/profile/' + item[0] )
+          )
+              img.rtb-image.rtb-grid-item-img(
+                src!= api.getProfileImage( item[0] ),
+                loading= 'lazy'
+              )/
+              div.rtb-grid-item-inner
+                span!= item[1].name
