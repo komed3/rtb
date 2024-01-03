@@ -1356,7 +1356,9 @@ const chart_type__movers = ( container, data ) => {
                 borderColor: chart_color( chart_colors.background ),
                 hoverBorderColor: chart_color( chart_colors.background ),
                 backgroundColor: chart_color( chart_colors.green ),
-                hoverBackgroundColor: chart_color( chart_colors.green )
+                hoverBackgroundColor: chart_color( chart_colors.green ),
+                borderRadius: 12,
+                borderSkipped: false
             }, {
                 label: 'Losers',
                 data: [
@@ -1367,7 +1369,9 @@ const chart_type__movers = ( container, data ) => {
                 borderColor: chart_color( chart_colors.background ),
                 hoverBorderColor: chart_color( chart_colors.background ),
                 backgroundColor: chart_color( chart_colors.red ),
-                hoverBackgroundColor: chart_color( chart_colors.red )
+                hoverBackgroundColor: chart_color( chart_colors.red ),
+                borderRadius: 12,
+                borderSkipped: false
             } ]
         },
         options: {
