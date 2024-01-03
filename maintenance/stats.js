@@ -6,6 +6,7 @@
 'use strict';
 
 const dir = __dirname + '/../api/';
+const today = ( new Date() ).toISOString().split( 'T' )[0];
 
 const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
@@ -119,25 +120,24 @@ async function run() {
 
                 if( info.gender && info.birthDate ) {
 
-                    let age = Math.floor( ( new Date(
-                        new Date() - new Date( info.birthDate )
-                    ).getFullYear() - 1970 ) / 10 ) * 10;
+                    let age = new Date( new Date() - new Date( info.birthDate ) ).getFullYear() - 1970,
+                        ageStep = Math.floor( age / 10 ) * 10;
 
-                    if( age in agePyramid[ info.gender ] ) {
+                    if( ageStep in agePyramid[ info.gender ] ) {
 
-                        agePyramid[ info.gender ][ age ]++;
+                        agePyramid[ info.gender ][ ageStep ]++;
 
                     }
 
-                    let networth = fs.existsSync( path + 'latest' )
-                        ? JSON.parse( fs.readFileSync( path + 'latest' ) ).networth
-                        : 0;
+                    let latest = fs.existsSync( path + 'latest' )
+                        ? JSON.parse( fs.readFileSync( path + 'latest' ) )
+                        : {};
 
-                    if( networth >= 1000 ) {
+                    if( ( latest.date || null ) == today && ( latest.networth || 0 ) >= 1000 ) {
 
                         scatter[ info.gender ].push( {
                             x: age,
-                            y: networth,
+                            y: latest.networth,
                             uri: uri,
                             name: info.name
                         } );
