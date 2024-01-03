@@ -45,6 +45,34 @@ const url = ( url ) => {
 };
 
 /**
+ * sanitize input
+ * @param {String} str input
+ * @returns sanitized string
+ */
+var sanitize = ( str ) => {
+
+    return str
+        .toLowerCase()
+        .trim()
+        .replace( /[^a-z0-9-]/g, '-' )
+        .replace( /-{1,}/g, '-' );
+
+};
+
+/**
+ * calculate age from date
+ * @param {String|Null} date date or null
+ * @returns age or null
+ */
+var date2age = ( date ) => {
+
+    return date ? new Date(
+        new Date() - new Date( date )
+    ).getFullYear() - 1970 : null;
+
+};
+
+/**
  * link to tist rank
  * @param {Int} rank rank
  * @param {String} list list name
@@ -165,6 +193,8 @@ module.exports = {
     parseURL,
     getCanonical,
     url,
+    sanitize,
+    date2age,
     listlink,
     pagination,
     chartData,
