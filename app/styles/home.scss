@@ -1,0 +1,32 @@
+@import 'page';
+@import 'wl';
+
+.rtb-home h1 {
+    text-align: center;
+}
+
+.rtb-home-grid {
+    display: grid;
+    grid-template-columns: repeat( 2, 1fr );
+    gap: var( --padding );
+    margin: var( --padding ) 0;
+}
+
+.rtb-home-grid-item {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.rtb-home-grid-item b {
+    font-size: 36px;
+    font-weight: 900;
+    color: var( --accent-1 );
+}
+
+.rtb-home-grid-item span {
+    text-transform: uppercase;
+    color: var( --gray-3 );
+}

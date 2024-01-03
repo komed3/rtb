@@ -1,3 +1,17 @@
 //- home page
 extends templates/layout.pug
 
+block styles
+  link( rel= 'stylesheet', href= '/css/home.css' )/
+
+block content
+  div.rtb-page.rtb-box.rtb-home
+    h1 Tracking real-time billionaires
+    div.rtb-home-grid
+      div.rtb-home-grid-item
+        b!= stats.count
+        span Billionaires count
+      div.rtb-home-grid-item
+        b!= formatter.networth( stats.total, 2 )
+        span Combined net worth
+    include templates/wl.pug

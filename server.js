@@ -95,6 +95,20 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
+                 * home page
+                 */
+                case 'home':
+
+                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
+
+                    res.locals.stats = {
+                        count: api.getCSVFile( '/stats/count', 1 ).pop(),
+                        total: api.getCSVFile( '/stats/total', 1 ).pop()
+                    };
+
+                    break;
+
+                /**
                  * list page
                  */
                 case 'list':
