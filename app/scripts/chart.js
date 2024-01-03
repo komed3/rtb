@@ -380,7 +380,9 @@ const chart_callback = ( value, type = 'number' ) => {
             return parseInt( value );
 
         case 'networth':
-            return '$' + parseFloat( ( value / 1000 ).toFixed( 2 ) ) + 'B';
+            return ( value < 0 ? '-$' : '$' ) + parseFloat(
+                ( Math.abs( value ) / 1000 ).toFixed( 2 )
+            ) + 'B';
 
         case 'rank':
             return '#' + parseInt( value );
@@ -1329,6 +1331,133 @@ const chart_type__report = ( container, data ) => {
 };
 
 /**
+ * create daily movers chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__movers = ( container, data ) => {
+
+    let cbType = container.getAttribute( 'chart-callback' ) || null;
+
+    chart_add( container, {
+        type: 'bar',
+        data: {
+            labels: [
+                ...data.winner.map( r => r[0] ),
+                ...data.loser.reverse().map( r => r[0] )
+            ],
+            datasets: [ {
+                label: 'Winners',
+                data: [
+                    ...data.winner.map( r => r[1] ),
+                    ...Array.from( { length: data.loser.length }, () => null )
+                ],
+                borderWidth: 3,
+                borderColor: chart_color( chart_colors.background ),
+                hoverBorderColor: chart_color( chart_colors.background ),
+                backgroundColor: chart_color( chart_colors.green ),
+                hoverBackgroundColor: chart_color( chart_colors.green )
+            }, {
+                label: 'Losers',
+                data: [
+                    ...Array.from( { length: data.winner.length }, () => null ),
+                    ...data.loser.map( r => r[1] )
+                ],
+                borderWidth: 3,
+                borderColor: chart_color( chart_colors.background ),
+                hoverBorderColor: chart_color( chart_colors.background ),
+                backgroundColor: chart_color( chart_colors.red ),
+                hoverBackgroundColor: chart_color( chart_colors.red )
+            } ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: {
+                    top: 12,
+                    left: 12,
+                    right: 32,
+                    bottom: 12
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    displayColors: false,
+                    padding: {
+                        top: 11,
+                        left: 12,
+                        right: 14,
+                        bottom: 4
+                    },
+                    caretPadding: 10,
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
+                    borderWidth: 2,
+                    borderColor: chart_color( chart_colors.color ),
+                    cornerRadius: 4,
+                    titleColor: chart_color( chart_colors.color ),
+                    bodyColor: chart_color( chart_colors.color ),
+                    bodyFont: {
+                        size: 24
+                    },
+                    callbacks: {
+                        label: ( item ) => {
+                            return chart_callback( item.parsed.x, cbType );
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: false,
+                    position: 'top',
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        padding: 12,
+                        maxTicksLimit: 6,
+                        color: chart_color( chart_colors.color ),
+                        callback: ( value ) => {
+                            return chart_callback( value, cbType );
+                        }
+                    }
+                },
+                y: {
+                    stacked: true,
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        color: chart_color( chart_colors.grid ),
+                        lineWidth: 2,
+                        tickLength: 0
+                    },
+                    ticks: {
+                        padding: 12,
+                        crossAlign: 'far',
+                        color: chart_color( chart_colors.color )
+                    },
+                    afterFit: ( scaleInstance ) => {
+                        scaleInstance.width = 280;
+                    }
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * register chart types
  */
 const chart_types = {
@@ -1341,7 +1470,8 @@ const chart_types = {
     'pie': chart_type__pie,
     'scatter': chart_type__scatter,
     'pyramid': chart_type__pyramid,
-    'report': chart_type__report
+    'report': chart_type__report,
+    'movers': chart_type__movers
 };
 
 /* ------------------------------------------------------------------------------------ */
