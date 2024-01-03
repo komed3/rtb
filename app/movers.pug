@@ -4,10 +4,37 @@ extends templates/layout.pug
 block title
   title Winners & Losers
 
+block scripts
+  script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
+  script( src='/js/chart.min.js' )
+
 block styles
   link( rel= 'stylesheet', href= '/css/movers.css' )/
 
 block content
-  div.rtb-page.rtb-box.rtb-movers
-    h1 Winners &amp; Losers
-    include templates/wl.pug
+  div.rtb-page.rtb-movers
+
+    //- header
+    div.rtb-box.rtb-movers-header
+      h1 Winners &amp; Losers
+      include templates/wl.pug
+
+    //- winners & losers in net worth
+    div.rtb-box.rtb-movers-value
+      h3.rtb-box-heading Daily movers in net worth
+      div.rtb-chart.rtb-large-chart(
+        chart-type= 'movers',
+        chart-callback= 'networth',
+        chart-data!= core.chartData( charts.networth )
+      )
+        canvas.rtb-chart-inner
+
+    //- winners & losers in percent
+    div.rtb-box.rtb-movers-percent
+      h3.rtb-box-heading Daily movers in percent
+      div.rtb-chart.rtb-large-chart(
+        chart-type= 'movers',
+        chart-callback= 'percent',
+        chart-data!= core.chartData( charts.percent )
+      )
+        canvas.rtb-chart-inner

@@ -120,7 +120,12 @@ routes.forEach( ( route ) => {
                  */
                 case 'movers':
 
-                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
+                    res.locals.movers = api.getMovers( 'latest', 'value' );
+
+                    res.locals.charts = {
+                        networth: res.locals.movers,
+                        percent: api.getMovers( 'latest', 'pct' )
+                    };
 
                     break;
 
