@@ -8,8 +8,6 @@
 
 'use strict';
 
-const today = ( new Date() ).toISOString().split( 'T' )[0];
-
 const cmpstr = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 
