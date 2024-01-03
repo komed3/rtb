@@ -99,7 +99,10 @@ block content
                 href!= core.url( '/list/' + listURI )
             ) Reset filter
         div.rtb-list-filter-gap
-        div.rtb-list-result!= '<b>' + list.count + '</b> entries were found'
+        div.rtb-list-result
+          span!= 'Page <b>' + list.page + '</b> of ' + Math.ceil( list.count / 25 )
+          span  / 
+          span!= '<b>' + list.count + '</b> entries were found'
 
     //- list (content)
     div.rtb-box.rtb-list-content
