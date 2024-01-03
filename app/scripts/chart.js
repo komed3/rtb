@@ -853,9 +853,6 @@ const chart_type__bar = ( container, data ) => {
             plugins: {
                 legend: {
                     display: false
-                },
-                tooltip: {
-                    enabled: false
                 }
             },
             scales: {
@@ -927,9 +924,6 @@ const chart_type__column = ( container, data ) => {
             plugins: {
                 legend: {
                     display: false
-                },
-                tooltip: {
-                    enabled: false
                 }
             },
             scales: {
@@ -955,6 +949,7 @@ const chart_type__column = ( container, data ) => {
                     },
                     ticks: {
                         padding: 12,
+                        crossAlign: 'far',
                         color: chart_color( chart_colors.color )
                     }
                 }
@@ -1004,9 +999,6 @@ const chart_type__pie = ( container, data ) => {
                         boxWidth: 20,
                         color: chart_color( chart_colors.color )
                     }
-                },
-                tooltip: {
-                    enabled: false
                 }
             }
         }
@@ -1184,9 +1176,6 @@ const chart_type__pyramid = ( container, data ) => {
                         boxWidth: 20,
                         color: chart_color( chart_colors.color )
                     }
-                },
-                tooltip: {
-                    enabled: false
                 }
             },
             scales: {
