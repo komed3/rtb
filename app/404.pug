@@ -1,0 +1,29 @@
+//- 404 error page
+extends templates/layout.pug
+
+block title
+  title Error 404 — page not found
+
+block content
+  div.rtb-page.rtb-error
+
+    div.rtb-box.rtb-error-header
+      h1 Error 404: page not found
+      p The requested page could not be found. The content may have been deleted, moved to another URL, or the request contains a spelling mistake.
+       |  Please try again, search for a profile or use one of the following links to access the most popular content on this website:
+      ul
+        li
+          a(
+            href!= core.url( '/list/rtb' )
+          ) Real-time billionaires list
+        li
+          a(
+            href!= core.url( '/movers' )
+          ) Winners &amp; Losers
+        li
+          a(
+            href!= core.url( '/stats' )
+          ) Statistics &amp; Analytics
+
+    div.rtb-box.rtb-error-profiles
+      h3.rtb-box-heading Visit some random profiles

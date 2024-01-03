@@ -318,6 +318,16 @@ routes.forEach( ( route ) => {
 } );
 
 /**
+ * 404 redirect
+ */
+
+app.all( '*', ( req, res ) => {
+
+    res.redirect( core.url( '/404' ) );
+
+} );
+
+/**
  * start web server
  */
 
