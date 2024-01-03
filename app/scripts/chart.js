@@ -1013,6 +1013,120 @@ const chart_type__pie = ( container, data ) => {
 };
 
 /**
+ * create scatter chart
+ * @param {Node} container chart container
+ * @param {Array} data chart data
+ */
+const chart_type__scatter = ( container, data ) => {
+
+    chart_add( container, {
+        type: 'scatter',
+        data: {
+            datasets: [ {
+                label: 'Male',
+                data: data.m,
+                radius: 5,
+                backgroundColor: chart_color( chart_colors.background ),
+                borderColor: chart_color( chart_colors.green ),
+                borderWidth: 2,
+                pointStyle: 'rectRot',
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.green ),
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 3,
+                order: 2
+            }, {
+                label: 'Female',
+                data: data.f,
+                radius: 5,
+                backgroundColor: chart_color( chart_colors.background ),
+                borderColor: chart_color( chart_colors.red ),
+                borderWidth: 2,
+                pointHoverBackgroundColor: chart_color( chart_colors.background ),
+                pointHoverBorderColor: chart_color( chart_colors.red ),
+                pointHoverBorderWidth: 2,
+                pointHoverRadius: 3,
+                order: 1
+            } ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            offset: true,
+            clip: false,
+            layout: {
+                padding: 12
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    displayColors: false,
+                    padding: {
+                        top: 6,
+                        left: 12,
+                        right: 14,
+                        bottom: 4
+                    },
+                    caretPadding: 10,
+                    backgroundColor: chart_color( chart_colors.background, 0.9 ),
+                    borderWidth: 2,
+                    borderColor: chart_color( chart_colors.color ),
+                    cornerRadius: 4,
+                    titleColor: chart_color( chart_colors.color ),
+                    bodyColor: chart_color( chart_colors.color ),
+                    callbacks: {
+                        title: () => {
+                            return null;
+                        },
+                        label: ( item ) => {
+                            return item.raw.name + ' (' + item.parsed.x + ') ' +
+                                chart_callback( item.parsed.y, 'networth' );
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        padding: 12,
+                        color: chart_color( chart_colors.color )
+                    }
+                },
+                y: {
+                    type: 'logarithmic',
+                    border: {
+                        display: false
+                    },
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        padding: 12,
+                        beginAtZero: false,
+                        maxTicksLimit: 6,
+                        color: chart_color( chart_colors.color ),
+                        callback: ( value ) => {
+                            if( value > 0 ) {
+                                return chart_callback( value, 'networth' );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }, data, false, null );
+
+};
+
+/**
  * create age pyramid
  * @param {Node} container chart container
  * @param {Array} data chart data
@@ -1225,6 +1339,7 @@ const chart_types = {
     'bar': chart_type__bar,
     'column': chart_type__column,
     'pie': chart_type__pie,
+    'scatter': chart_type__scatter,
     'pyramid': chart_type__pyramid,
     'report': chart_type__report
 };

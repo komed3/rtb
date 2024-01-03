@@ -55,6 +55,15 @@ block content
       )
         canvas.rtb-chart-inner
 
+    //- analytics (scatter)
+    div.rtb-box.rtb-stats-scatter
+      h3.rtb-box-heading Profile analytics
+      div.rtb-chart.rtb-big-chart(
+        chart-type= 'scatter',
+        chart-data!= core.chartData( charts.scatter )
+      )
+        canvas.rtb-chart-inner
+
     //- self-made score
     div.rtb-box.rtb-stats-selfmade
       h3.rtb-box-heading Self-made score
