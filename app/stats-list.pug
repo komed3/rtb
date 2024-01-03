@@ -2,7 +2,7 @@
 extends templates/layout.pug
 
 block title
-  title!= name + ' — Real-time billionaires'
+  title!= name.plural + ' — Real-time billionaires'
 
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
@@ -13,28 +13,27 @@ block styles
 
 block content
   div.rtb-page.rtb-box.rtb-stats.rtb-stats-list
-    h1!= name
-    div.rtb-stats-list-grid
-      each item in list
-        div.rtb-stats-list-grid-item
-          h2.rtb-stats-list-grid-label
-            a(
-              href= core.url( '/' + base + '/' + item[0] )
-            )!= api.indexes[ base ][ item[0] ]
-          div.rtb-stats-list-grid-value
-            span Net worth
-            b!= formatter.networth( item[2], 2 )
-          div.rtb-stats-list-grid-value
-            span Count
-            b!= item[1]
-          div.rtb-grid.rtb-profile-grid.rtb-stats-list-grid-profile
-            a.rtb-grid-item.rtb-grid-item-flex(
-              href!= core.url( '/profile/' + item[3] )
-            )
-              img.rtb-image.rtb-grid-item-img(
-                src!= api.getProfileImage( item[3] ),
-                loading= 'lazy'
-              )/
-              div.rtb-grid-item-inner
-                span!= api.getProfileName( item[3] )
-                h4!= '#' + item[4] + ' — ' + formatter.networth( item[5] )
+    h1!= name.plural
+    table.rtb-stats-list-table
+      thead
+        tr.rtb-stats-list-table-row
+          th!= name.singular
+          th.right Count
+          th.right Net worth
+          th Richest
+      tbody
+        each item in list
+          tr.rtb-stats-list-table-row
+            td.rtb-stats-list-table-label
+              a(
+                href= core.url( '/' + base + '/' + item[0] )
+              )!= api.indexes[ base ][ item[0] ]
+            td.rtb-stats-list-table-count.right!= item[1]
+            td.rtb-stats-list-table-networth.right!= formatter.networth( item[2], 2 )
+            td.rtb-stats-list-table-profile
+              div
+                b!= '#' + item[4]
+                a(
+                  href!= core.url( '/profile/' + item[3] )
+                )!= api.getProfileName( item[3] )
+                span!= '(' + formatter.networth( item[5] ) + ')'

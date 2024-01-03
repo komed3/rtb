@@ -275,8 +275,14 @@ routes.forEach( ( route ) => {
 
                     res.locals.base = route[2];
                     res.locals.name = {
-                        country: 'Countries',
-                        industry: 'Industries'
+                        country: {
+                            singular: 'Country',
+                            plural: 'Countries'
+                        },
+                        industry: {
+                            singular: 'Industry',
+                            plural: 'Industries'
+                        }
                     }[ route[2] ];
 
                     res.locals.list = api.getCSVFile( '/stats/' + route[2] + '/_list' );

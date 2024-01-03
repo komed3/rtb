@@ -35,36 +35,43 @@
     color: var( --accent-1 );
 }
 
-.rtb-stats-list-grid {
-    display: grid;
-    grid-template-columns: repeat( 2, 1fr );
-    gap: 24px;
+.rtb-stats-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-.rtb-stats-list-grid-item {
-    padding: 12px 16px 16px 16px;
-    border: 2px solid var( --gray-1 );
-    border-radius: 10px;
+.rtb-stats-list-table th,
+.rtb-stats-list-table td {
+    padding: 12px;
 }
 
-.rtb-stats-list-grid-label {
-    margin: 0;
-}
-
-.rtb-stats-list-grid-value {
-    margin: 12px 0;
-}
-
-.rtb-stats-list-grid-value span {
-    margin-right: 12px;
+.rtb-stats-list-table th {
+    text-align: left;
     text-transform: uppercase;
     font-size: 13px;
-    font-weight: 700;
-    color: var( --gray-3 );
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
 }
 
-.rtb-stats-list-grid-value b {
-    font-size: 20px;
-    font-weight: 700;
-    color: var( --accent-1 );
+.rtb-stats-list-table .right {
+    text-align: right;
+}
+
+.rtb-stats-list-table-label {
+    font-weight: 900;
+}
+
+.rtb-stats-list-table-networth {
+    border-right: 2px solid var( --gray-1 );
+}
+
+.rtb-stats-list-table-profile div {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+}
+
+.rtb-stats-list-table tbody tr:not(:last-of-type) td {
+    border-bottom: 2px solid var( --gray-1 );
 }
