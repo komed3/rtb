@@ -450,7 +450,7 @@ async function run() {
 
                     Object.values( annual ).forEach( ( y ) => {
 
-                        if( d.rank.latest ) {
+                        if( y.rank.latest ) {
 
                             flag = 'returnee';
 
