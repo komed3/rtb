@@ -35,6 +35,7 @@
         "express": "^4.18.2",
         "fs": "^0.0.1-security",
         "i18n-iso-countries": "^7.7.0",
-        "pug": "^3.0.2"
+        "pug": "^3.0.2",
+        "svgworld": "^0.1.0"
     }
 }

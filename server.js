@@ -27,6 +27,7 @@ const app = express();
  * static resources
  */
 
+app.use( '/modules', express.static( __dirname + '/node_modules/' ) );
 app.use( '/css', express.static( __dirname + '/public/styles' ) );
 app.use( '/js', express.static( __dirname + '/public/scripts' ) );
 app.use( '/res', express.static( __dirname + '/public/resources' ) );
@@ -265,6 +266,10 @@ routes.forEach( ( route ) => {
                         total: res.locals.charts.total.slice(-1)[0],
                         woman: res.locals.charts.woman.slice(-1)[0]
                     };
+
+                    res.locals.map = api.getCSVFile( '/stats/country/_list' ).map( ( r ) => {
+                        return { id: r[0], y: r[1] };
+                    } );
 
                     break;
 
