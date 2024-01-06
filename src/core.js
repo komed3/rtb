@@ -85,6 +85,20 @@ const listlink = ( rank, list = 'rtb' ) => {
 };
 
 /**
+ * calculate bar height in percent
+ * @param {Float} value value
+ * @param {Float} max maximum value
+ * @param {Float} min minimum value
+ * @param {Float} threshold minimum height
+ * @returns bar height in percent
+ */
+const barHeight = ( value, max, min = 0, threshold = 10 ) => {
+
+    return Math.max( threshold, ( value - min ) / ( max - min ) * 100 );
+
+};
+
+/**
  * get query to certain page
  * @param {Object} query query object
  * @param {*} page page number
@@ -196,6 +210,7 @@ module.exports = {
     sanitize,
     date2age,
     listlink,
+    barHeight,
     pagination,
     chartData,
     randItem

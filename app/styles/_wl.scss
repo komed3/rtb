@@ -31,6 +31,7 @@ a.rtb-wl-item:hover {
     position: absolute;
     left: 0;
     right: 0;
+    height: var( --h, 0% );
 }
 
 .rtb-wl-item.winner .rtb-wl-column,
@@ -51,14 +52,6 @@ a.rtb-wl-item:hover {
 .rtb-wl-item.loser .rtb-wl-column::after {
     top: 0;
     background: var( --color-bad );
-}
-
-@for $i from 0 through 4 {
-
-    .rtb-wl-column.c#{$i}::after {
-        height: #{ ( $i + 1 ) * 20 }#{'%'};
-    }
-
 }
 
 .rtb-wl-image {
