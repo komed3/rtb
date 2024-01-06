@@ -135,7 +135,7 @@ block content
               loading= 'lazy'
             )/
             div.rtb-grid-item-inner
-              b!= formatter.networth( profile.latest.networth / 60000 ).replace( '$', '' )
+              b!= formatter.networth( profile.latest.networth / 6e4, 0 ).replace( '$', '' )
               h4 troy ounces of gold
           div.rtb-grid-item.rtb-grid-item-flex
             img.rtb-grid-item-img(
@@ -143,7 +143,7 @@ block content
               loading= 'lazy'
             )/
             div.rtb-grid-item-inner
-              b!= formatter.networth( profile.latest.networth / 65000 ).replace( '$', '' )
+              b!= formatter.networth( profile.latest.networth / 65e3, 0 ).replace( '$', '' )
               h4 median U.S. household
           div.rtb-grid-item.rtb-grid-item-flex
             img.rtb-grid-item-img(
@@ -151,7 +151,7 @@ block content
               loading= 'lazy'
             )/
             div.rtb-grid-item-inner
-              b!= formatter.networth( profile.latest.networth / 100000 ).replace( '$', '' )
+              b!= formatter.networth( profile.latest.networth / 1e5, 0 ).replace( '$', '' )
               h4 median U.S. income
           div.rtb-grid-item.rtb-grid-item-flex
             img.rtb-grid-item-img(
