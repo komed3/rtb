@@ -9,6 +9,17 @@ const getID = () => {
 };
 
 /**
+ * UTF-8 decode
+ * @param {String} str string
+ * @returns UTF-8 decoded string
+ */
+const utf8 = ( str ) => {
+
+    return decodeURIComponent( escape( str ) );
+
+};
+
+/**
  * capitalize string
  * @param {String} str string
  * @returns capitalized string

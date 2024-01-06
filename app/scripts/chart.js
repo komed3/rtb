@@ -1058,7 +1058,7 @@ const chart_type__scatter = ( container, data ) => {
                             return null;
                         },
                         label: ( item ) => {
-                            return item.raw.name + ' (' + item.parsed.x + ') ' +
+                            return utf8( item.raw.name ) + ' (' + item.parsed.x + ') ' +
                                 chart_callback( item.parsed.y, 'networth' );
                         }
                     }
@@ -1315,8 +1315,8 @@ const chart_type__movers = ( container, data ) => {
         type: 'bar',
         data: {
             labels: [
-                ...data.winner.map( r => r[0] ),
-                ...data.loser.reverse().map( r => r[0] )
+                ...data.winner.map( r => utf8( r[0] ) ),
+                ...data.loser.reverse().map( r => utf8( r[0] ) )
             ],
             datasets: [ {
                 label: 'Winners',
