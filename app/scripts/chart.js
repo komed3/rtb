@@ -618,25 +618,10 @@ const chart_type__percent = ( container, data ) => {
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 3,
-                borderColor: chart_color( chart_colors.green ),
-                backgroundColor: chart_color( chart_colors.green, 0.5 ),
-                fill: true,
+                borderColor: chart_color( chart_colors.color ),
                 pointRadius: 0,
                 pointHoverBackgroundColor: chart_color( chart_colors.background ),
-                pointHoverBorderColor: chart_color( chart_colors.green ),
-                pointHoverBorderWidth: 3,
-                pointHoverRadius: 6
-            }, {
-                data: [],
-                lineTension: 0.05,
-                pointHitRadius: 100,
-                borderWidth: 3,
-                borderColor: chart_color( chart_colors.red ),
-                backgroundColor: chart_color( chart_colors.red, 0.5 ),
-                fill: true,
-                pointRadius: 0,
-                pointHoverBackgroundColor: chart_color( chart_colors.background ),
-                pointHoverBorderColor: chart_color( chart_colors.red ),
+                pointHoverBorderColor: chart_color( chart_colors.color ),
                 pointHoverBorderWidth: 3,
                 pointHoverRadius: 6
             } ]
@@ -671,9 +656,6 @@ const chart_type__percent = ( container, data ) => {
                     bodyFont: {
                         size: 24
                     },
-                    filter: ( item ) => {
-                        return item.parsed.y != 0;
-                    },
                     callbacks: {
                         label: ( item ) => {
                             return chart_callback( item.parsed.y, 'percent' );
@@ -703,7 +685,7 @@ const chart_type__percent = ( container, data ) => {
                         tickLength: 0
                     },
                     ticks: {
-                        beginAtZero: false,
+                        beginAtZero: true,
                         maxTicksLimit: 4,
                         padding: 12,
                         color: chart_color( chart_colors.color ),
