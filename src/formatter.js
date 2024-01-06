@@ -41,6 +41,25 @@ const networth = ( value, digits = 1, base = 1e6, trimZero = true ) => {
 };
 
 /**
+ * format percentage
+ * @param {Float} value percent
+ * @param {Int} digits number of digits
+ * @param {Boolean} trimZero trim zero
+ * @returns formatted percentage
+ */
+const percent = ( value, digits= 1, trimZero = true ) => {
+
+    let pct = value.toFixed( digits );
+
+    return (
+        trimZero
+            ? parseFloat( pct )
+            : pct
+    ) + '%';
+
+};
+
+/**
  * format net worth change
  * @param {Object|Null} change change object
  * @param {Int} digits number of digits
@@ -72,5 +91,8 @@ const change = ( change, digits = 1, base = 1e6, trimZero = true ) => {
  * export public methods
  */
 module.exports = {
-    date, networth, change
+    date,
+    networth,
+    percent,
+    change
 };
