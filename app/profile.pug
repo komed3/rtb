@@ -124,6 +124,60 @@ block content
             h4 Self-made
             span!= profile.info.selfMade.type
 
+    //- relative values
+    if profile.latest.networth
+      div.rtb-profile-relative
+        h3.rtb-box-heading!= profile.info.name + '’s fortune is worth'
+        div.rtb-grid.col3.rtb-profile-grid
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/goldbars.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.networth( profile.latest.networth / 60000 ).replace( '$', '' )
+              h4 troy ounces of gold
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/savings.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.networth( profile.latest.networth / 65000 ).replace( '$', '' )
+              h4 median U.S. household
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/income.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.networth( profile.latest.networth / 100000 ).replace( '$', '' )
+              h4 median U.S. income
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/credit-card.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.percent( profile.latest.networth / 5e4, 3 )
+              h4 U.S. credit card volume
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/earnings.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.percent( profile.latest.networth / 25e4, 3 )
+              h4 GDP of the United States
+          div.rtb-grid-item.rtb-grid-item-flex
+            img.rtb-grid-item-img(
+              src= '/res/debt.png',
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              b!= formatter.percent( profile.latest.networth / 34e4, 3 )
+              h4 United States debt
+
     //- annual reports
     if profile.annual
       div.rtb-box-cols

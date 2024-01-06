@@ -54,12 +54,21 @@
     color: var( --gray-3 );
 }
 
+.rtb-profile-relative {
+    margin: var( --padding );
+}
+
+.rtb-profile-relative h3 {
+    text-align: center;
+}
+
 .rtb-profile-dyk {
     margin: var( --padding ) auto;
     max-width: 600px;
     text-align: center;
 }
 
-.rtb-profile-dyk q {
+.rtb-profile-dyk q,
+.rtb-profile-relative b {
     font-size: 24px;
 }
