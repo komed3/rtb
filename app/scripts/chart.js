@@ -344,14 +344,15 @@ const chart_color = ( rgb, alpha = 1 ) => {
  * create chart color gradient
  * @param {Node} container chart container
  * @param {Array} stops gradient stops
- * @param {Number} x horizontal stop
- * @param {Number} y vertical stop
  * @returns color gradient
  */
-const chart_gradient = ( container, stops, x = 0, y = 400 ) => {
+const chart_gradient = ( container, stops ) => {
+
+    let classes = container.classList.value,
+        y = classes.includes( 'big' ) ? 400 : classes.includes( 'medium' ) ? 300 : 160;
 
     let ctx = container.querySelector( 'canvas' ).getContext( '2d' ),
-        gradient = ctx.createLinearGradient( 0, 0, x, y );
+        gradient = ctx.createLinearGradient( 0, 0, 0, y );
 
     stops.forEach( ( s, i ) => {
 
