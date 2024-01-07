@@ -64,6 +64,8 @@ routes.forEach( ( route ) => {
 
         try {
 
+            api.updateIndex();
+
             let file = route[1];
 
             res.locals.isoc = isoCountries;

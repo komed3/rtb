@@ -401,24 +401,33 @@ const getMovers = ( date = 'latest', type = 'value', limit = 10, resolve = false
 };
 
 /**
- * load profiles index + aliases
+ * update API index
+ * load profiles index + aliases etc.
  */
 
-const latest = fs.existsSync( __dirname + '/latest' )
-    ? fs.readFileSync( __dirname + '/latest' ).toString()
-    : ( new Date() ).toISOString().split( 'T' )[0];
+var latest, days, index, alias, lists, indexes;
 
-const days = getCSVFile( '/availableDays', 0 );
+const updateIndex = () => {
 
-const index = getJSONFile( '/profile/_index' );
-const alias = getJSONFile( '/profile/_alias' );
+    latest = fs.existsSync( __dirname + '/latest' )
+        ? fs.readFileSync( __dirname + '/latest' ).toString()
+        : ( new Date() ).toISOString().split( 'T' )[0];
 
-const lists = getJSONFile( '/list/_index' );
+    days = getCSVFile( '/availableDays', 0 );
 
-const indexes = {
-    industry: getJSONFile( '/stats/industry/_index' ),
-    country: getJSONFile( '/stats/country/_index' )
+    index = getJSONFile( '/profile/_index' );
+    alias = getJSONFile( '/profile/_alias' );
+
+    lists = getJSONFile( '/list/_index' );
+
+    indexes = {
+        industry: getJSONFile( '/stats/industry/_index' ),
+        country: getJSONFile( '/stats/country/_index' )
+    };
+
 };
+
+updateIndex();
 
 /**
  * export public methods
@@ -438,5 +447,6 @@ module.exports = {
     getAnnualReport,
     isList,
     getList,
-    getMovers
+    getMovers,
+    updateIndex
 };

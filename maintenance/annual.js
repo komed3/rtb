@@ -10,6 +10,8 @@ const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
 const logging = require( './_logging' );
 
+api.updateIndex();
+
 const profiles = Object.keys( api.index );
 
 const year = process.argv.includes( '--year' )
