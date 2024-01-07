@@ -42,7 +42,7 @@ const saveJSONFile = ( file, content ) => {
  * @param {String} newLine new line delimiter
  * @returns CSV content
  */
-const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\r\n' ) => {
+const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\n' ) => {
 
     let res = fs.existsSync( __dirname + file )
         ? fs.readFileSync( __dirname + file )
