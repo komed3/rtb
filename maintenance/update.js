@@ -10,6 +10,7 @@ const today = ( new Date() ).toISOString().split( 'T' )[0];
 const lastYear = parseInt( today.split( '-' )[0] ) - 1;
 const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
+const os = require( 'node:os' );
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
 const fs = require( 'fs' );
@@ -413,7 +414,7 @@ async function run() {
                         networth,
                         change ? change.value : 0,
                         change ? change.pct : 0
-                    ].join( ' ' ) + '\r\n',
+                    ].join( ' ' ) + os.EOL,
                     { flag: 'a' }
                 );
 
@@ -619,7 +620,7 @@ async function run() {
 
     fs.appendFileSync(
         dir + 'availableDays',
-        today + '\r\n',
+        today + os.EOL,
         { flag: 'a' }
     );
 
@@ -650,7 +651,7 @@ async function run() {
 
     fs.appendFileSync(
         dir + 'stats/total',
-        today + ' ' + stats.total.toFixed( 3 ) + '\r\n',
+        today + ' ' + stats.total.toFixed( 3 ) + os.EOL,
         { flag: 'a' }
     );
 
@@ -658,7 +659,7 @@ async function run() {
 
     fs.appendFileSync(
         dir + 'stats/count',
-        today + ' ' + stats.count + '\r\n',
+        today + ' ' + stats.count + os.EOL,
         { flag: 'a' }
     );
 
@@ -666,7 +667,7 @@ async function run() {
 
     fs.appendFileSync(
         dir + 'stats/woman',
-        today + ' ' + stats.woman + '\r\n',
+        today + ' ' + stats.woman + os.EOL,
         { flag: 'a' }
     );
 
@@ -699,7 +700,7 @@ async function run() {
                     path + _k,
                     today + ' ' + v.count + ' ' + v.total.toFixed( 3 ) + ' ' + (
                         v.value / v.count
-                    ).toFixed( 3 ) + ' ' + v.first.profile + '\r\n',
+                    ).toFixed( 3 ) + ' ' + v.first.profile + os.EOL,
                     { flag: 'a' }
                 );
 
@@ -719,7 +720,7 @@ async function run() {
                     ( a, b ) => b[1] - a[1]
                 ).map(
                     ( a ) => a.join( ' ' )
-                ).join( '\r\n' ),
+                ).join( os.EOL ),
                 { flag: 'w' }
             );
 

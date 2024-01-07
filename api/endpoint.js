@@ -4,6 +4,7 @@
 
 'use strict';
 
+const os = require( 'node:os' );
 const fs = require( 'fs' );
 
 /**
@@ -39,15 +40,14 @@ const saveJSONFile = ( file, content ) => {
  * @param {String} file path to file
  * @param {Int|Null} flatten get only one column
  * @param {String} delimiter value delimiter
- * @param {String} newLine new line delimiter
  * @returns CSV content
  */
-const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\n' ) => {
+const getCSVFile = ( file, flatten = null, delimiter = ' ' ) => {
 
     let res = fs.existsSync( __dirname + file )
         ? fs.readFileSync( __dirname + file )
             .toString()
-            .split( newLine )
+            .split( os.EOL )
             .filter( r => r )
             .map( ( r ) => {
                 return r.split( delimiter ).map( ( a ) => {
@@ -75,13 +75,12 @@ const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\n' ) => 
  * @param {String} file path to file
  * @param {Array} content file content
  * @param {String} delimiter value delimiter
- * @param {String} newLine new line delimiter
  */
-const saveCSVFile = ( file, content, delimiter = ' ', newLine = '\r\n' ) => {
+const saveCSVFile = ( file, content, delimiter = ' ' ) => {
 
     fs.writeFileSync(
         __dirname + file,
-        content.map( r => r.join( delimiter ) ).join( newLine ),
+        content.map( r => r.join( delimiter ) ).join( os.EOL ) + os.EOL,
         { flag: 'w' }
     );
 

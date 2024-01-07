@@ -8,6 +8,7 @@
 const dir = __dirname + '/../api/';
 const threshold = 0.85;
 
+const os = require( 'node:os' );
 const cmpstr = require( 'cmpstr' );
 const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
@@ -108,11 +109,11 @@ const test = ( from, to ) => {
     if( files[ to + '/history' ] && files[ from + '/history' ] ) {
 
         let history_from = fs.readFileSync( path + from + '/history' )
-                .toString().split( '\r\n' ).filter( a => a )
+                .toString().split( os.EOL ).filter( a => a )
                 .map( a => a.split( ' ' )[0] );
 
         let history_to = fs.readFileSync( path + to + '/history' )
-                .toString().split( '\r\n' ).filter( a => a )
+                .toString().split( os.EOL ).filter( a => a )
                 .map( a => a.split( ' ' )[0] );
 
         let dublicates = history_from.filter( a => history_to.includes( a ) );
@@ -209,11 +210,11 @@ const merge = ( from, to ) => {
     ) {
 
         let history_from = fs.readFileSync( path + from + '/history' )
-                .toString().split( '\r\n' ).filter( a => a )
+                .toString().split( os.EOL ).filter( a => a )
                 .map( a => a.split( ' ' ) );
 
         let history_to = fs.readFileSync( path + to + '/history' )
-                .toString().split( '\r\n' ).filter( a => a )
+                .toString().split( os.EOL ).filter( a => a )
                 .map( a => a.split( ' ' ) );
 
         let history = {};
@@ -238,7 +239,7 @@ const merge = ( from, to ) => {
 
         fs.writeFileSync(
             path + to + '/history',
-            Object.values( history ).filter( a => a ).join( '\r\n' ) + '\r\n',
+            Object.values( history ).filter( a => a ).join( os.EOL ) + os.EOL,
             { flag: 'w' }
         );
 
