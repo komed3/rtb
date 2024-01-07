@@ -20,6 +20,21 @@ const getJSONFile = ( file ) => {
 };
 
 /**
+ * save JSON content into file
+ * @param {String} file path to file
+ * @param {Mixed} content file content
+ */
+const saveJSONFile = ( file, content ) => {
+
+    fs.writeFileSync(
+        __dirname + file,
+        JSON.stringify( content, null, 2 ),
+        { flag: 'w' }
+    );
+
+};
+
+/**
  * get CSV content from file
  * @param {String} file path to file
  * @param {Int|Null} flatten get only one column
@@ -52,6 +67,23 @@ const getCSVFile = ( file, flatten = null, delimiter = ' ', newLine = '\r\n' ) =
     }
 
     return res;
+
+};
+
+/**
+ * save CSV content into file
+ * @param {String} file path to file
+ * @param {Array} content file content
+ * @param {String} delimiter value delimiter
+ * @param {String} newLine new line delimiter
+ */
+const saveCSVFile = ( file, content, delimiter = ' ', newLine = '\r\n' ) => {
+
+    fs.writeFileSync(
+        __dirname + file,
+        content.map( r => r.join( delimiter ) ).join( newLine ),
+        { flag: 'w' }
+    );
 
 };
 
@@ -439,7 +471,9 @@ module.exports = {
     indexes,
     resolveURI,
     getJSONFile,
+    saveJSONFile,
     getCSVFile,
+    saveCSVFile,
     getProfileName,
     getProfileImage,
     getProfile,
