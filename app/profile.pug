@@ -48,12 +48,12 @@ block content
               href= core.url( 'profile/' + prev )
             )
               i.icon arrow_back
-              span!= api.index[ prev ].name
+              span!= api.getProfileName( prev, true )
           if next
             a.tag(
               href= core.url( 'profile/' + next )
             )
-              span!= api.index[ next ].name
+              span!= api.getProfileName( next, true )
               i.icon arrow_forward
 
     //- header
