@@ -189,10 +189,13 @@ const getFullProfile = ( uri ) => {
 
     if( fs.existsSync( __dirname + path ) ) {
 
+        let rank = getJSONFile( path + 'rank' );
+
         return {
             info: getJSONFile( path + 'info' ),
             bio: getJSONFile( path + 'bio' ),
-            rank: getJSONFile( path + 'rank' ),
+            rank: rank,
+            hasRank: ( rank?.rtb?.date || null ) == latest,
             related: getJSONFile( path + 'related' ),
             history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
