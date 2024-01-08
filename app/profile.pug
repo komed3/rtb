@@ -93,7 +93,7 @@ block content
           div.rtb-grid-item
             h4 Source of wealth
             span!= profile.info.source.join( ', ' )
-        if profile.info.residence
+        if profile.info.residence && profile.info.residence.country
           - 
             var residence = [
               profile.info.residence.city,
