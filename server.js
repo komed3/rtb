@@ -262,7 +262,6 @@ routes.forEach( ( route ) => {
                         count: api.getCSVFile( '/stats/count' ),
                         total: api.getCSVFile( '/stats/total' ),
                         woman: api.getCSVFile( '/stats/woman' ),
-                        scatter: api.getJSONFile( '/stats/scatter' ),
                         selfMade: api.getJSONFile( '/stats/selfMade' ),
                         agePyramid: api.getJSONFile( '/stats/agePyramid' ),
                         maritalStatus: api.getJSONFile( '/stats/maritalStatus' ),
