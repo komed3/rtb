@@ -47,8 +47,6 @@ async function run() {
 
         if( info && Object.keys( info ).length ) {
 
-            let age = core.date2age( info.birthDate );
-
             /**
              * filter: woman
              */
@@ -60,26 +58,30 @@ async function run() {
             }
 
             /**
-             * filter: young / old
-             */
-
-            if( age < 50 ) {
-
-                filter.young.push( uri );
-
-            } else if( age > 80 ) {
-
-                filter.old.push( uri );
-
-            }
-
-            /**
              * filter: deceased
              */
 
             if( info.deceased ) {
 
                 filter.deceased.push( uri );
+
+            } else {
+
+                /**
+                 * filter: young / old
+                 */
+
+                let age = core.date2age( info.birthDate );
+
+                if( age < 50 ) {
+
+                    filter.young.push( uri );
+
+                } else if( age > 80 ) {
+
+                    filter.old.push( uri );
+
+                }
 
             }
 
