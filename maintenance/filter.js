@@ -73,11 +73,11 @@ async function run() {
 
                 let age = core.date2age( info.birthDate );
 
-                if( age < 50 ) {
+                if( age != null && age < 50 ) {
 
                     filter.young.push( uri );
 
-                } else if( age > 80 ) {
+                } else if( age != null && age > 80 ) {
 
                     filter.old.push( uri );
 
