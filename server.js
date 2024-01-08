@@ -10,10 +10,8 @@
 
 const cmpstr = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
-
 const core = require( './src/core' );
 const formatter = require( './src/formatter' );
-const api = require( './api/endpoint' );
 
 /**
  * express framework
@@ -64,7 +62,15 @@ routes.forEach( ( route ) => {
 
         try {
 
-            api.updateIndex();
+            /**
+             * load API
+             */
+
+            const api = require( './api/endpoint' );
+
+            /**
+             * locals
+             */
 
             let file = route[1];
 
