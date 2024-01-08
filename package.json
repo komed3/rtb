@@ -22,6 +22,7 @@
         "update": "node maintenance/update.js",
         "info": "node maintenance/info.js",
         "info-reset": "node maintenance/info.js --reset",
+        "filter": "node maintenance/filter.js",
         "stats": "node maintenance/stats.js",
         "annual": "node maintenance/annual.js",
         "compileSCSS": "node-sass app/styles/ -o public/styles/ --output-style compressed",

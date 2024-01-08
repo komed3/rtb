@@ -1,5 +1,7 @@
 'use strict';
 
+const isoCountries = require( 'i18n-iso-countries' );
+
 /**
  * parse url
  * @param {String} url url to parse
@@ -49,7 +51,7 @@ const url = ( url ) => {
  * @param {String} str input
  * @returns sanitized string
  */
-var sanitize = ( str ) => {
+const sanitize = ( str ) => {
 
     return str
         .toLowerCase()
@@ -64,11 +66,30 @@ var sanitize = ( str ) => {
  * @param {String|Null} date date or null
  * @returns age or null
  */
-var date2age = ( date ) => {
+const date2age = ( date ) => {
 
     return date ? new Date(
         new Date() - new Date( date )
     ).getFullYear() - 1970 : null;
+
+};
+
+/**
+ * get (short) country name
+ * @param {String} country ISO code
+ * @returns country name
+ */
+var countryName = ( country ) => {
+
+    let name = isoCountries.getName( country, 'en', { select: 'alias' } );
+
+    if( name.length < 4 ) {
+
+        name = isoCountries.getName( country, 'en' );
+
+    }
+
+    return name.split( ', ' )[0];
 
 };
 
@@ -209,6 +230,7 @@ module.exports = {
     url,
     sanitize,
     date2age,
+    countryName,
     listlink,
     barHeight,
     pagination,
