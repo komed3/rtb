@@ -307,6 +307,7 @@ routes.forEach( ( route ) => {
                 case 'stats-single':
 
                     res.locals.base = route[2];
+                    res.locals.singleKey = req.params.single;
                     res.locals.name = {
                         country: 'Countries',
                         industry: 'Industries'

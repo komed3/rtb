@@ -21,6 +21,13 @@ block content
       )
         i.icon arrow_back
         span!= name
+      div.seperator
+      a.tag( href!= core.url( '/list/rtb?' + base + '=' + singleKey ) )
+        i.icon tag
+        span Real-time list
+      a.tag( href!= core.url( '/filter/' + base + '/' + singleKey ) )
+        i.icon people
+        span All profiles
 
     //- header
     div.rtb-box.rtb-stats-header

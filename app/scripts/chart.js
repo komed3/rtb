@@ -943,7 +943,7 @@ const chart_type__column = ( container, data ) => {
                         tickLength: 0
                     },
                     ticks: {
-                        padding: 12,
+                        padding: 24,
                         crossAlign: 'far',
                         color: chart_color( chart_colors.color )
                     }
