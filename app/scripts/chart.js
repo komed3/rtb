@@ -117,31 +117,43 @@ const chart_update = ( uuid, data ) => {
 
         let chart = charts[ uuid ];
 
-        chart.chart.data.labels = data.map( r => formatDate( r[0] ) );
-
-        for( let i = 1, s = 0; i < Object.keys( data[0] ).length; i++, s++ ) {
-
-            chart.chart.data.datasets[ s ].data = data.map( r => r[ i ] );
-
-        }
-
-        chart.chart.update();
-
         /**
-         * check empty chart
+         * check empty chart + assign new chart data
          */
 
-        if( data.every( r => r[1] === null || r[1] === 0 ) ) {
+        if( data.every( r => !Array.isArray( r ) || r[1] === null || r[1] === 0 ) ) {
+
+            chart.chart.data.labels = [];
+
+            for( let s = 0; s < chart.chart.data.datasets.length; s++ ) {
+
+                chart.chart.data.datasets[ s ].data = [];
+
+            }
 
             chart.target.style.display = 'none';
             chart.empty.style.display = 'block';
 
         } else {
 
+            chart.chart.data.labels = data.map( r => formatDate( r[0] ) );
+
+            for( let i = 1, s = 0; i < Object.keys( data[0] ).length; i++, s++ ) {
+
+                chart.chart.data.datasets[ s ].data = data.map( r => r[ i ] );
+
+            }
+
             chart.target.style.display = 'block';
             chart.empty.style.display = 'none';
 
         }
+
+        /**
+         * update chart
+         */
+
+        chart.chart.update();
 
     }
 
@@ -1207,6 +1219,8 @@ const chart_type__report = ( container, data ) => {
 
     let cbType = container.getAttribute( 'chart-callback' ) || null;
 
+    data = data.filter( r => r[1] != null );
+
     chart_add( container, {
         type: 'line',
         data: {
@@ -1258,7 +1272,7 @@ const chart_type__report = ( container, data ) => {
                     borderColor: chart_color( chart_colors.color ),
                     cornerRadius: 4,
                     titleColor: chart_color( chart_colors.color ),
-                    bodyColor: chart_color( chart_colors.color ),
+                    bodyColor: chart_color( chart_colors.red ),
                     bodyFont: {
                         size: 24
                     },
