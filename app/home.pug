@@ -5,13 +5,25 @@ block styles
   link( rel= 'stylesheet', href= '/css/home.css' )/
 
 block content
-  div.rtb-page.rtb-box.rtb-home
-    h1 Tracking real-time billionaires
-    div.rtb-home-grid
-      div.rtb-home-grid-item
-        b!= stats.count
-        span Billionaires count
-      div.rtb-home-grid-item
-        b!= formatter.networth( stats.total, 2 )
-        span Combined net worth
-    include templates/wl.pug
+  div.rtb-page.rtb-home
+
+    //- header
+    div.rtb-box.rtb-home-header
+      h1 Tracking real-time billionaires
+      include templates/wl.pug
+      div.rtb-home-grid
+        div.rtb-home-grid-item
+          b!= stats.count
+          span Billionaires count
+        div.rtb-home-grid-item
+          b!= formatter.networth( stats.total, 2 )
+          span Combined net worth
+
+    //- list
+    div.rtb-box.rtb-home-list
+      h3.rtb-box-heading The world’s richest
+      include templates/table.pug
+
+    //- about
+    div.rtb-box.rtb-home-about
+      h3.rtb-box-heading About this project

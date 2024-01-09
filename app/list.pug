@@ -106,35 +106,7 @@ block content
 
     //- list (content)
     div.rtb-box.rtb-list-content
-      div.rtb-list
-        each item in list.list
-          a.rtb-list-item(
-            href!= core.url( '/profile/' + item.uri ),
-            id!= '_r' + item.rank
-          )
-            div.rtb-list-cell.rtb-list-image
-              img.rtb-image(
-                src!= api.getProfileImage( item.uri ),
-                loading= lazy
-              )/
-            div.rtb-list-cell.rtb-list-rank
-              b!= '#' + item.rank
-            div.rtb-list-cell.rtb-list-diff
-              img.rtb-list-flag(
-                src!= '/res/flag-' + ( item.flag || 'unknown' ) + '.png'
-              )/
-            div.rtb-list-cell.rtb-list-name!= item.name
-            div.rtb-list-cell.rtb-list-networth
-              b!= formatter.networth( item.networth, 1, 1e6, false )
-              if item.change
-                span!= formatter.change( item.change )
-            div.rtb-list-cell.rtb-list-age!= item.age || '—'
-            div.rtb-list-cell.rtb-list-country!= api.indexes.country[ item.citizenship ]
-            div.rtb-list-cell.rtb-list-source!= item.source.join( ', ' )
-        else
-          div.rtb-list-item.rtb-list-empty
-            div.rtb-list-cell
-              b There are no billionaires on this list that match your query.
+      include templates/table.pug
 
     //- pagination
     if list.count > 25
