@@ -139,4 +139,4 @@ block content
     //- pagination
     if list.count > 25
       div.rtb-box.rtb-list-pagination
-        div.rtb-pagination!= core.pagination( global.request, list.count, list.page, 25 )
+        div.rtb-pagination!= core.pagination( global.request, list.count, list.page, list.limit )
