@@ -115,7 +115,7 @@ routes.forEach( ( route ) => {
                         total: api.getCSVFile( '/stats/total', 1 ).pop()
                     };
 
-                    res.locals.list = api.getList( 'rtb', { limit: 12 } );
+                    res.locals.list = api.getList( 'rtb', { limit: 10 } );
 
                     break;
 
@@ -330,7 +330,7 @@ routes.forEach( ( route ) => {
 
                     res.locals.list = api.getList( 'rtb', {
                         [ route[2] ]: req.params.single,
-                        limit: 12
+                        limit: 10
                     } );
 
                     break;
