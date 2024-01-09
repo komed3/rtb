@@ -1,2 +1,34 @@
 //- filter page
 extends templates/layout.pug
+
+block title
+  title!= name + ' — Real-time billionaires'
+
+block styles
+  link( rel='stylesheet', href= '/css/filter.css' )/
+
+block content
+  div.rtb-page.rtb-filter
+
+    //- back to list
+    div.rtb-tags.rtb-filter-tags
+      a.tag(
+        href!= core.url( '/filter' )
+      )
+        i.icon arrow_back
+        span Filter
+
+    //- profile list
+    div.rtb-box.rtb-filter-profiles
+      h1!= name
+      div.rtb-grid.col3.rtb-profile-grid
+        each uri in profiles
+          a.rtb-grid-item.rtb-grid-item-flex(
+            href!= core.url( '/profile/' + uri )
+          )
+            img.rtb-image.rtb-grid-item-img(
+              src!= api.getProfileImage( uri ),
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              span!= api.getProfileName( uri )

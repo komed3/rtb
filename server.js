@@ -336,6 +336,39 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
+                 * (single) filter page
+                 */
+                case 'filter':
+
+                    let filterIndex = api.getJSONFile( '/filter/_index' );
+
+                    if( req.params.filter in filterIndex._global ) {
+
+                        res.locals.name = filterIndex._global[ req.params.filter ];
+                        res.locals.profiles = api.getJSONFile( '/filter/' + req.params.filter );
+
+                    } else if(
+                        req.params.filter in filterIndex &&
+                        req.params.single in filterIndex[ req.params.filter ].index
+                    ) {
+
+                        res.locals.name = filterIndex[ req.params.filter ].index[ req.params.single ];
+                        res.locals.profiles = api.getJSONFile( '/filter/' + req.params.filter + '/' + req.params.single );
+
+                    } else {
+
+                        /**
+                         * filter does not exists or not given
+                         * redirect to filter list page
+                         */
+                        res.redirect( core.url( '/filter' ) );
+                        return ;
+
+                    }
+
+                    break;
+
+                /**
                  * filter list page
                  */
                 case 'filter-all':
