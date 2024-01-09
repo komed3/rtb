@@ -99,12 +99,12 @@ block content
             var residence = [
               profile.info.residence.city,
               profile.info.residence.state,
-              isoc.getName( profile.info.residence.country, 'en' ),
-              '—'
-            ]
-          div.rtb-grid-item
-            h4 Residence
-            span!= residence.filter( a => a ).slice( 0, 2 ).join( ', ' )
+              isoc.getName( profile.info.residence.country, 'en' )
+            ].filter( a => a ).slice( 0, 2 ).join( ', ' )
+          if residence
+            div.rtb-grid-item
+              h4 Residence
+              span!= residence
         if profile.info.maritalStatus
           div.rtb-grid-item
             h4 Marital status
