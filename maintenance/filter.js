@@ -35,6 +35,8 @@ async function run() {
         selfMade: []
     }
 
+    let indexes = {};
+
     logging.next(
         '[1/2] process profiles',
         profiles.length,
@@ -139,7 +141,7 @@ async function run() {
 
     logging.next(
         '[2/2] process filter',
-        Object.keys( filter ).length,
+        Object.keys( filter ).length + 1,
         'filter'
     );
 
@@ -179,11 +181,13 @@ async function run() {
 
             }
 
+            indexes[ key ] = Object.keys( index ).sort().reduce( ( a, b ) => ( {
+                ...a, [ b ]: index[ b ]
+            } ), {} );
+
             api.saveJSONFile(
                 path + '_index',
-                Object.keys( index ).sort().reduce( ( a, b ) => ( {
-                    ...a, [ b ]: index[ b ]
-                } ), {} )
+                indexes[ key ]
             );
 
         }
@@ -191,6 +195,31 @@ async function run() {
         logging.update();
 
     }
+
+    /**
+     * save global filter index
+     */
+
+    api.saveJSONFile(
+        '/filter/_index',
+        {
+            _global: {
+                woman: 'Female billionaires',
+                young: 'Young billionaires',
+                old: 'Old billionaires',
+                selfMade: 'Self-made billionaires',
+                deceased: 'Deceased billionaires'
+            },
+            industry: {
+                label: 'Industries',
+                index: indexes.industry
+            },
+            country: {
+                label: 'Countries',
+                index: indexes.country
+            }
+        }
+    );
 
     logging.finish();
 

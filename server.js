@@ -150,20 +150,6 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
-                 * daily movers page
-                 */
-                case 'movers':
-
-                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
-
-                    res.locals.charts = {
-                        networth: api.getMovers( 'latest', 'value', 10, true ),
-                        percent: api.getMovers( 'latest', 'pct', 10, true )
-                    };
-
-                    break;
-
-                /**
                  * single profile page
                  */
                 case 'profile':
@@ -205,6 +191,20 @@ routes.forEach( ( route ) => {
                         return ;
 
                     }
+
+                    break;
+
+                /**
+                 * daily movers page
+                 */
+                case 'movers':
+
+                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
+
+                    res.locals.charts = {
+                        networth: api.getMovers( 'latest', 'value', 10, true ),
+                        percent: api.getMovers( 'latest', 'pct', 10, true )
+                    };
 
                     break;
 
@@ -332,6 +332,15 @@ routes.forEach( ( route ) => {
                         [ route[2] ]: req.params.single,
                         limit: 10
                     } );
+
+                    break;
+
+                /**
+                 * filter list page
+                 */
+                case 'filter-all':
+
+                    res.locals.filter = api.getJSONFile( '/filter/_index' );
 
                     break;
 
