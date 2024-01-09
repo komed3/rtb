@@ -10,6 +10,7 @@ module.exports = [
     [ '/industry/?', 'stats-list', 'industry' ],
     [ '/list/:list/?', 'list' ],
     [ '/movers/?', 'movers' ],
+    [ '/privacy/?', 'privacy' ],
     [ '/profile/:uri/?', 'profile' ],
     [ '/search/?', 'search' ],
     [ '/stats/?', 'stats' ]

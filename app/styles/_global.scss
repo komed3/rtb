@@ -126,6 +126,10 @@ a {
     color: inherit;
 }
 
+p a {
+    color: var( --accent-1 );
+}
+
 input, textarea, select, button {
     height: 36px;
     padding: 0 10px;
