@@ -5,7 +5,7 @@ module.exports = [
     [ '/country/?', 'stats-list', 'country' ],
     [ '/filter/:filter/:single/?', 'filter' ],
     [ '/filter/:filter/?', 'filter' ],
-    [ '/filter/?', 'filter' ],
+    [ '/filter/?', 'filter-all', 'filter' ],
     [ '/industry/:single/?', 'stats-single', 'industry' ],
     [ '/industry/?', 'stats-list', 'industry' ],
     [ '/list/:list/?', 'list' ],

@@ -107,6 +107,16 @@ p {
     line-height: 1.4;
 }
 
+ul.col2 {
+    column-count: 2;
+    column-gap: var( --padding );
+}
+
+ul.col3 {
+    column-count: 3;
+    column-gap: var( --padding );
+}
+
 ul li {
     padding: 4px 0;
 }

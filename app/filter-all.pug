@@ -1,0 +1,46 @@
+//- filter page
+extends templates/layout.pug
+
+block title
+  title Filter — Real-time billionaires
+
+block content
+  div.rtb-page.rtb-box.rtb-filter
+    h1 Filter
+    p There are a number of filters provided for filtering and searching profiles based on specific criteria.
+     |  For example, by gender, age or nationality. A list of all active filters can be found down below.
+    ul
+      li
+        a(
+          href!= core.url( '/filter/woman' )
+        ) Female billionaires
+      li
+        a(
+          href!= core.url( '/filter/young' )
+        ) Young billionaires
+      li
+        a(
+          href!= core.url( '/filter/old' )
+        ) Old billionaires
+      li
+        a(
+          href!= core.url( '/filter/selfMade' )
+        ) Self-made billionaires
+      li
+        a(
+          href!= core.url( '/filter/deceased' )
+        ) Deceased billionaires
+    h2 Industries
+    ul.col2
+      each name, key in api.getJSONFile( '/filter/industry/_index' )
+        li
+          a(
+            href!= core.url( '/filter/industry/' + key )
+          )!= name
+    h2 Countries
+    ul.col3
+      each name, key in api.getJSONFile( '/filter/country/_index' )
+        li
+          a(
+            href!= core.url( '/filter/country/' + key )
+          )!= name
