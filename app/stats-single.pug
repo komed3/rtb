@@ -65,20 +65,35 @@ block content
       )
         canvas.rtb-chart-inner
 
-    //- billionaires (selection)
-    div.rtb-box.rtb-stats-profiles
-      h3.rtb-box-heading!= 'Some billionaires from ' + single
-      div.rtb-grid.col3.rtb-profile-grid
-        each item in profiles
-          a.rtb-grid-item.rtb-grid-item-flex(
-            href!= core.url( '/profile/' + item )
-          )
-            img.rtb-image.rtb-grid-item-img(
-              src!= api.getProfileImage( item ),
-              loading= 'lazy'
-            )/
-            div.rtb-grid-item-inner
-              span!= api.getProfileName( item )
+    //- richest billionaires
+    if list && list.count > 1
+      div.rtb-box.rtb-stats-profiles
+        h3.rtb-box-heading!= 'Richest billionaires from ' + single
+        div.rtb-list
+          each item in list.list
+            a.rtb-list-item(
+              href!= core.url( '/profile/' + item.uri ),
+              id!= '_r' + item.rank
+            )
+              div.rtb-list-cell.rtb-list-image
+                img.rtb-image(
+                  src!= api.getProfileImage( item.uri ),
+                  loading= lazy
+                )/
+              div.rtb-list-cell.rtb-list-rank
+                b!= '#' + item.rank
+              div.rtb-list-cell.rtb-list-diff
+                img.rtb-list-flag(
+                  src!= '/res/flag-' + ( item.flag || 'unknown' ) + '.png'
+                )/
+              div.rtb-list-cell.rtb-list-name!= item.name
+              div.rtb-list-cell.rtb-list-networth
+                b!= formatter.networth( item.networth, 1, 1e6, false )
+                if item.change
+                  span!= formatter.change( item.change )
+              div.rtb-list-cell.rtb-list-age!= item.age || '—'
+              div.rtb-list-cell.rtb-list-country!= api.indexes.country[ item.citizenship ]
+              div.rtb-list-cell.rtb-list-source!= item.source.join( ', ' )
 
     //- total net worth
     div.rtb-box.rtb-stats-total

@@ -1,5 +1,6 @@
 @import 'page';
 @import 'wl';
+@import 'table';
 @import 'pagination';
 
 /* filter */
@@ -51,91 +52,4 @@
 .rtb-list-filter select {
     height: 42px;
     font-size: 18px;
-}
-
-/* list */
-
-.rtb-list {
-    display: table;
-    margin: -14px 0;
-    width: 100%;
-    text-transform: capitalize;
-}
-
-.rtb-list-item {
-    display: table-row;
-    height: 100px;
-}
-
-.rtb-list-item:not(:last-of-type) .rtb-list-cell {
-    border-bottom: 2px solid var( --gray-1 );
-}
-
-.rtb-list-cell {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 14px;
-}
-
-.rtb-list-image {
-    padding-left: 0;
-    width: 100px;
-}
-
-.rtb-list-image .rtb-image {
-    display: block;
-    height: 72px;
-    width: 72px;
-}
-
-.rtb-list-rank,
-.rtb-list-networth {
-    text-align: right;
-}
-
-.rtb-list-rank,
-.rtb-list-diff,
-.rtb-list-age {
-    width: 1px;
-}
-
-.rtb-list-rank b,
-.rtb-list-networth b {
-    display: block;
-    font-weight: 900;
-}
-
-.rtb-list-diff img {
-    display: block;
-    width: 22px;
-    height: 22px;
-}
-
-.rtb-list-networth span {
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.rtb-list-networth span pct {
-    display: none;
-}
-
-.rtb-list-age,
-.rtb-list-country,
-.rtb-list-source {
-    font-size: 14px;
-}
-
-.rtb-list-age {
-    text-align: center;
-}
-
-.rtb-list-source {
-    padding-right: 0;
-}
-
-.rtb-list-empty {
-    height: 240px;
-    text-align: center;
-    vertical-align: middle;
 }

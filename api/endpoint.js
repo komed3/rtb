@@ -382,8 +382,12 @@ const getList = ( list, query ) => {
          */
 
         res.page = parseInt( query.page || 1 );
+        res.limit = parseInt( query.limit || 25 );
 
-        res.list = res.list.slice( ( res.page - 1 ) * 25, res.page * 25 );
+        res.list = res.list.slice(
+            res.limit * ( res.page - 1 ),
+            res.limit * res.page
+        );
 
     }
 

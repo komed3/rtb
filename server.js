@@ -326,9 +326,10 @@ routes.forEach( ( route ) => {
 
                     res.locals.latest = history.splice( -1 )[0];
 
-                    res.locals.profiles = api.getJSONFile( '/filter/' + route[2] + '/' + req.params.single ).sort(
-                        () => 0.5 - Math.random()
-                    ).slice( 0, 12 );
+                    res.locals.list = api.getList( 'rtb', {
+                        [ route[2] ]: req.params.single,
+                        limit: 12
+                    } );
 
                     break;
 
