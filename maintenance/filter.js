@@ -169,7 +169,11 @@ async function run() {
 
                 let _k = core.sanitize( k );
 
-                index[ _k ] = key == 'country' ? core.countryName( k ) : k;
+                index[ _k ] = key == 'country'
+                    ? core.countryName( k )
+                    : key in api.indexes
+                        ? api.indexes[ key ][ k ] || k
+                        : k;
 
                 api.saveJSONFile( path + _k, v.sort() );
 
