@@ -143,6 +143,10 @@ const paginationLink = ( query, page ) => {
  */
 const pagination = ( query, max, page, limit ) => {
 
+    max = parseInt( max );
+    page = parseInt( page );
+    limit = parseInt( limit );
+
     let maxPage = Math.ceil( max / limit ),
         pagination = '',
         latest = 0;

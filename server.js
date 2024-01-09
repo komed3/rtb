@@ -366,6 +366,15 @@ routes.forEach( ( route ) => {
 
                     }
 
+                    res.locals.count = res.locals.profiles.length;
+                    res.locals.maxPage = Math.ceil( res.locals.count / 36 );
+                    res.locals.page = req.query.page || 1;
+
+                    res.locals.profiles = res.locals.profiles.slice(
+                        36 * ( res.locals.page - 1 ),
+                        36 * res.locals.page
+                    );
+
                     break;
 
                 /**

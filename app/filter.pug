@@ -21,6 +21,8 @@ block content
     //- profile list
     div.rtb-box.rtb-filter-profiles
       h1!= name
+      p!= 'Page <b>' + page + '</b> of ' + maxPage + ' / <b>' + count + '</b> profiles found'
+      div.rtb-divider
       div.rtb-grid.col3.rtb-profile-grid
         each uri in profiles
           a.rtb-grid-item.rtb-grid-item-flex(
@@ -32,3 +34,8 @@ block content
             )/
             div.rtb-grid-item-inner
               span!= api.getProfileName( uri )
+
+    //- pagination
+    if maxPage > 1
+      div.rtb-box.rtb-filter-pagination
+        div.rtb-pagination!= core.pagination( {}, count, page, 36 )
