@@ -185,24 +185,26 @@ block content
       div.rtb-box-cols
 
         //- networth
-        div.rtb-box.rtb-profile-annual
-          h3.rtb-box-heading Net worth history
-          div.rtb-chart.rtb-medium-chart(
-            chart-type= 'report',
-            chart-callback= 'networth',
-            chart-data!= core.chartData( profile.annual.networth )
-          )
-            canvas.rtb-chart-inner
+        if profile.annual.networth.length
+          div.rtb-box.rtb-profile-annual
+            h3.rtb-box-heading Net worth history
+            div.rtb-chart.rtb-medium-chart(
+              chart-type= 'report',
+              chart-callback= 'networth',
+              chart-data!= core.chartData( profile.annual.networth )
+            )
+              canvas.rtb-chart-inner
 
         //- ranking
-        div.rtb-box.rtb-profile-annual
-          h3.rtb-box-heading Annual ranking
-          div.rtb-chart.rtb-medium-chart(
-            chart-type= 'report',
-            chart-callback= 'rank',
-            chart-data!= core.chartData( profile.annual.rank )
-          )
-            canvas.rtb-chart-inner
+        if profile.annual.rank.length
+          div.rtb-box.rtb-profile-annual
+            h3.rtb-box-heading Annual ranking
+            div.rtb-chart.rtb-medium-chart(
+              chart-type= 'report',
+              chart-callback= 'rank',
+              chart-data!= core.chartData( profile.annual.rank )
+            )
+              canvas.rtb-chart-inner
 
     //- related people
     if profile.related && profile.related.length
