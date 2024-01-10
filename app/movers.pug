@@ -19,11 +19,12 @@ block content
     //- winners & losers in net worth
     div.rtb-box.rtb-movers-value
       h3.rtb-box-heading Daily movers in net worth
-      -movers = charts.networth
+      -var movers = charts.networth
       include templates/movers.pug
 
     //- winners & losers in percent
     div.rtb-box.rtb-movers-percent
       h3.rtb-box-heading Daily movers in percent
-      -movers = charts.percent
+      -var movers = charts.percent
+      -var moversFormat = 'percent'
       include templates/movers.pug

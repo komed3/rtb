@@ -1,6 +1,45 @@
 //- templates/movers.pug
 div.rtb-movers
+  -var moversFormat = moversFormat || 'networth'
+  -var moversDigits = parseInt( moversDigits || 0 )
 
-  //- winner
+  //- winner / loser loop
+  each type in [ 'winner', 'loser' ]
 
-  //- loser
+    //- fetch min / max values
+    -var maxValue = movers[ type ].length ? movers[ type ][0][1] : 0
+    -var minValue = movers[ type ].length ? movers[ type ][ movers[ type ].length - 1 ][1] : 1
+
+    //- loop through movers
+    each item in movers[ type ]
+
+      //- check if item exists
+      if Array.isArray( item ) && item.length == 2
+
+        //- add movers item
+        a.rtb-wl-item.winner(
+          class!= 'rtb-movers-item ' + type,
+          href!= core.url( '/profile/' + item[0] )
+        )
+          div.rtb-movers-column(
+            style!= '--h: ' + core.barHeight(
+              item[1],
+              maxValue,
+              minValue
+            ) + '%;'
+          )
+          div.rtb-movers-image
+            img.rtb-image(
+              src!= api.getProfileImage( item[0] ),
+              loading= 'lazy'
+            )/
+          div.rtb-movers-inner
+            b!= formatter[ moversFormat ]( item[1], moversDigits )
+            span!= api.getProfileName( item[0], true )
+
+      //- add empty movers item
+      else
+        div( class!= 'rtb-movers-item ' + type + ' empty' )
+          div.rtb-movers-column( style!= '--h: 0%;' )
+          div.rtb-movers-image
+          div.rtb-movers-inner
