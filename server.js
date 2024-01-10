@@ -108,7 +108,7 @@ routes.forEach( ( route ) => {
                  */
                 case 'home':
 
-                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
+                    res.locals.movers = api.getMovers( 'latest', 'value', 5, true );
 
                     res.locals.stats = {
                         count: api.getCSVFile( '/stats/count', 1 ).pop(),
@@ -135,7 +135,7 @@ routes.forEach( ( route ) => {
 
                         res.locals.list = api.getList( list, req.query );
 
-                        res.locals.movers = api.getMovers( res.locals.list.date || 'latest', 'value', 5 );
+                        res.locals.movers = api.getMovers( res.locals.list.date || 'latest', 'value', 5, true );
 
                     } else {
 
@@ -199,7 +199,7 @@ routes.forEach( ( route ) => {
                  */
                 case 'movers':
 
-                    res.locals.wl = api.getMovers( 'latest', 'value', 5 );
+                    res.locals.wl = api.getMovers( 'latest', 'value', 5, true );
 
                     res.locals.charts = {
                         networth: api.getMovers( 'latest', 'value', 10 ),

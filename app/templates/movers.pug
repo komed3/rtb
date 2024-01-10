@@ -1,5 +1,5 @@
 //- templates/movers.pug
-div.rtb-movers
+div( class!= 'rtb-movers ' + ( moversDirection || 'column' ) )
   -var moversFormat = moversFormat || 'networth'
   -var moversDigits = parseInt( moversDigits || 0 )
 
@@ -7,8 +7,19 @@ div.rtb-movers
   each type in [ 'winner', 'loser' ]
 
     //- fetch min / max values
-    -var maxValue = movers[ type ].length ? movers[ type ][0][1] : 0
-    -var minValue = movers[ type ].length ? movers[ type ][ movers[ type ].length - 1 ][1] : 1
+    -var lastItem = movers[ type ].length - 1;
+    -
+     var maxValue = movers[ type ].length && Array.isArray( movers[ type ][0] )
+        ? parseFloat( movers[ type ][0][1] )
+        : 0
+    -
+     var minValue = movers[ type ].length && Array.isArray( movers[ type ][ lastItem ] )
+        ? parseFloat( movers[ type ][ lastItem ][1] )
+        : 1
+
+    //- reverse losers
+    if type == 'loser'
+      -movers.loser = movers.loser.reverse()
 
     //- loop through movers
     each item in movers[ type ]
@@ -17,7 +28,7 @@ div.rtb-movers
       if Array.isArray( item ) && item.length == 2
 
         //- add movers item
-        a.rtb-wl-item.winner(
+        a(
           class!= 'rtb-movers-item ' + type,
           href!= core.url( '/profile/' + item[0] )
         )
@@ -34,7 +45,7 @@ div.rtb-movers
               loading= 'lazy'
             )/
           div.rtb-movers-inner
-            b!= formatter[ moversFormat ]( item[1], moversDigits )
+            b!= formatter[ moversFormat ]( Math.abs( item[1] ), moversDigits )
             span!= api.getProfileName( item[0], true )
 
       //- add empty movers item

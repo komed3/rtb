@@ -410,10 +410,10 @@ const getList = ( list, query ) => {
  * @param {String} date date or latest
  * @param {String} type movers type
  * @param {Int} limit movers limit
- * @param {Boolean} resolve resolve URI to name
+ * @param {Boolean} fill fill empty elements
  * @returns daily movers
  */
-const getMovers = ( date = 'latest', type = 'value', limit = 10, resolve = false ) => {
+const getMovers = ( date = 'latest', type = 'value', limit = 10, fill = false ) => {
 
     let winner = getJSONFile( '/movers/' + type + '/winner/' + date ),
         loser = getJSONFile( '/movers/' + type + '/loser/' + date );
@@ -423,14 +423,23 @@ const getMovers = ( date = 'latest', type = 'value', limit = 10, resolve = false
         loser: Array.isArray( loser ) ? loser.slice( 0, limit ) : []
     };
 
-    if( resolve ) {
+    if( fill ) {
 
         /**
-         * resolve URI to name
+         * fill empty elements
          */
 
-        movers.winner = movers.winner.map( r => [ getProfileName( r[0], true ), r[1] ] );
-        movers.loser = movers.loser.map( r => [ getProfileName( r[0], true ), r[1] ] );
+        for( let i = movers.winner.length; i < limit; i++ ) {
+
+            movers.winner.push( null );
+
+        }
+
+        for( let i = movers.loser.length; i < limit; i++ ) {
+
+            movers.loser.unshift( null );
+
+        }
 
     }
 
