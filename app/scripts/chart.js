@@ -110,8 +110,9 @@ const chart_add = ( container, options, data, ctrl = true, range = 'year' ) => {
  * update chart data
  * @param {String} uuid chart ID
  * @param {Array} data chart data
+ * @param {Boolean} format format date
  */
-const chart_update = ( uuid, data ) => {
+const chart_update = ( uuid, data, format = true ) => {
 
     if( uuid in charts ) {
 
@@ -136,7 +137,19 @@ const chart_update = ( uuid, data ) => {
 
         } else {
 
-            chart.chart.data.labels = data.map( r => formatDate( r[0] ) );
+            if( format ) {
+
+                /**
+                 * format date (MM/DD/YY)
+                 */
+
+                chart.chart.data.labels = data.map( r => formatDate( r[0] ) );
+
+            } else {
+
+                chart.chart.data.labels = data.map( r => r[0] );
+
+            }
 
             for( let i = 1, s = 0; i < Object.keys( data[0] ).length; i++, s++ ) {
 
@@ -1105,14 +1118,12 @@ const chart_type__report = ( container, data ) => {
 
     let cbType = container.getAttribute( 'chart-callback' ) || null;
 
-    data = data.filter( r => r[1] != null );
-
-    chart_add( container, {
+    let uuid = chart_add( container, {
         type: 'line',
         data: {
-            labels: data.map( r => r[0] ),
+            labels: [],
             datasets: [ {
-                data: data.map( r => r[1] ),
+                data: [],
                 lineTension: 0.05,
                 pointHitRadius: 100,
                 borderWidth: 4,
@@ -1199,6 +1210,16 @@ const chart_type__report = ( container, data ) => {
             }
         }
     }, data, false, null );
+
+    if( uuid ) {
+
+        chart_update(
+            uuid,
+            data.filter( r => r[1] != null ),
+            false
+        );
+
+    }
 
 };
 
