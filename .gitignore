@@ -6,6 +6,5 @@ api/*
 !api/endpoint.js
 
 # public + compiled files
-public/images
 public/scripts
 public/styles

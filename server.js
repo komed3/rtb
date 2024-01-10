@@ -26,6 +26,7 @@ const app = express();
  */
 
 app.use( '/modules', express.static( __dirname + '/node_modules/' ) );
+
 app.use( '/css', express.static( __dirname + '/public/styles' ) );
 app.use( '/js', express.static( __dirname + '/public/scripts' ) );
 app.use( '/res', express.static( __dirname + '/public/resources' ) );
