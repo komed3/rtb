@@ -87,6 +87,33 @@ const saveCSVFile = ( file, content, delimiter = ' ' ) => {
 };
 
 /**
+ * find nearest date
+ * @param {String} date target date string
+ * @returns nearest date
+ */
+const nearestDate = ( date ) => {
+
+    let target = date instanceof Date ? date : new Date( date ),
+        diff = Infinity, nearest = -1;
+
+    days.forEach( ( day ) => {
+
+        let distance = Math.abs( ( new Date( day ) ) - target );
+
+        if( distance < diff ) {
+
+            diff = distance;
+            nearest = day;
+
+        }
+
+    } );
+
+    return nearest;
+
+};
+
+/**
  * resolve URI
  * @param {String|Null} uri request URI
  * @returns resolved URI
@@ -484,6 +511,7 @@ module.exports = {
     index, alias,
     lists,
     indexes,
+    nearestDate,
     resolveURI,
     getJSONFile,
     saveJSONFile,
