@@ -199,11 +199,11 @@ routes.forEach( ( route ) => {
                  */
                 case 'movers':
 
-                    res.locals.movers = api.getMovers( 'latest', 'value', 5 );
+                    res.locals.wl = api.getMovers( 'latest', 'value', 5 );
 
                     res.locals.charts = {
-                        networth: api.getMovers( 'latest', 'value', 10, true ),
-                        percent: api.getMovers( 'latest', 'pct', 10, true )
+                        networth: api.getMovers( 'latest', 'value', 10 ),
+                        percent: api.getMovers( 'latest', 'pct', 10 )
                     };
 
                     break;
