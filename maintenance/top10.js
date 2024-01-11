@@ -7,7 +7,6 @@
 
 const api = require( './../api/endpoint' );
 const colors = require( 'ansi-colors' );
-const logging = require( './_logging' );
 
 /**
  * create top 10 billionaires list over time
@@ -22,18 +21,27 @@ async function run() {
         top10 = {};
 
     /**
-     * loop trought days
+     * loop trought months
      */
 
-    logging.next(
-        'Loop trought days',
-        api.days.length + 1,
-        'days'
-    );
+    console.log( 'Loop trought months ...' );
 
-    api.days.forEach( ( day ) => {
+    let date = new Date( api.days[0] ),
+        end = new Date( api.days[ api.days.length - 1 ] );
 
-        let list = [];
+    while( date < end ) {
+
+        /**
+         * get last available day of month
+         */
+
+        let latest = new Date( date.getFullYear(), date.getMonth() + 1, 0 ),
+            month = latest.toISOString().substring( 0, 7 ) + '-01',
+            day = api.nearestDate( latest ), list = [];
+
+        date = new Date( latest.setDate( latest.getDate() + 1 ) );
+
+        console.log( '... ' + month + ' (' + day + ')' );
 
         /**
          * get real-time list
@@ -58,14 +66,14 @@ async function run() {
         } );
 
         /**
-         * add day to top 10 list
+         * add month to top 10 list
          */
 
-        top10[ day ] = list;
+        top10[ month ] = list;
 
-        logging.update();
+    }
 
-    } );
+    console.log( colors.green( 'DONE' ) );
 
     /**
      * save top 10 list
@@ -75,8 +83,6 @@ async function run() {
         profiles: profiles,
         list: top10
     } );
-
-    logging.finish();
 
 };
 
