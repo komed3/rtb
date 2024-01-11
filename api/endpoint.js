@@ -93,6 +93,19 @@ const saveCSVFile = ( file, content, delimiter = ' ' ) => {
  */
 const nearestDate = ( date ) => {
 
+    /**
+     * latest >> get latest date
+     */
+    if( date == 'latest' ) {
+
+        return days[ days.length - 1 ];
+
+    }
+
+    /**
+     * check distance to each day and return nearest
+     */
+
     let target = date instanceof Date ? date : new Date( date ),
         diff = Infinity, nearest = -1;
 
@@ -293,17 +306,22 @@ const isList = ( list ) => {
 const getList = ( list, query ) => {
 
     /**
+     * fetch nearest available day
+     */
+    let nearest = nearestDate( query.date || 'latest' );
+
+    /**
      * get list
      */
 
-    let raw = getJSONFile( '/list/' + list + '/' + ( query.date || 'latest' ) );
+    let raw = getJSONFile( '/list/' + list + '/' + nearest );
 
     /**
      * filter list by query
      */
 
     let res = {
-        date: raw.date || query.date || latest,
+        date: raw.date || nearest || query.date || latest,
         count: 0,
         woman: 0,
         total: 0,
