@@ -119,6 +119,12 @@ const chart_update = ( uuid, data, format = true ) => {
         let chart = charts[ uuid ];
 
         /**
+         * set x axis offset
+         */
+
+        chart.chart.options.scales.x.offset = data.length < 2;
+
+        /**
          * check empty chart + assign new chart data
          */
 
@@ -1182,7 +1188,6 @@ const chart_type__report = ( container, data ) => {
             },
             scales: {
                 x: {
-                    offset: data.length < 2,
                     border: {
                         display: false
                     },
