@@ -214,7 +214,8 @@ routes.forEach( ( route ) => {
                  */
                 case 'search':
 
-                    let query = res.locals.global.query.toLowerCase();
+                    let query = res.locals.global.query.toLowerCase(),
+                        searchPage = parseInt( req.query.page || 1 );
 
                     if( query.length > 1 ) {
 
@@ -238,8 +239,13 @@ routes.forEach( ( route ) => {
                         }
 
                         res.locals.search = {
-                            results: results,
-                            count: results.length
+                            count: results.length,
+                            page: searchPage,
+                            maxPage: Math.ceil( results.length / 36 ),
+                            results: results.slice(
+                                ( searchPage - 1 ) * 36,
+                                searchPage * 36
+                            )
                         };
 
                     } else {

@@ -4,21 +4,32 @@ extends templates/layout.pug
 block title
   title!= 'Search results for ' + global.query
 
+block styles
+  link( rel='stylesheet', href= '/css/search.css' )/
+
 block content
-  div.rtb-page.rtb-box.rtb-search
-    h1
-      span Search results for 
-      q!= global.query
-    p!= '<b>' + search.count + '</b> search results for <q>' + global.query + '</q> were found.'
-    div.rtb-divider
-    div.rtb-grid.col3.rtb-profile-grid
-      each item in search.results
-        a.rtb-grid-item.rtb-grid-item-flex(
-          href!= core.url( '/profile/' + item.uri )
-        )
-          img.rtb-image.rtb-grid-item-img(
-            src!= api.getProfileImage( item.uri ),
-            loading= 'lazy'
-          )/
-          div.rtb-grid-item-inner
-            span!= item.name
+  div.rtb-page.rtb-search
+
+    //- search results
+    div.rtb-box.rtb-search-results
+      h1
+        span Search results for 
+        q!= global.query
+      p!= 'Page <b>' + search.page + '</b> of ' + search.maxPage + ' / <b>' + search.count + '</b> search results for <q>' + global.query + '</q> were found.'
+      div.rtb-divider
+      div.rtb-grid.col3.rtb-profile-grid
+        each item in search.results
+          a.rtb-grid-item.rtb-grid-item-flex(
+            href!= core.url( '/profile/' + item.uri )
+          )
+            img.rtb-image.rtb-grid-item-img(
+              src!= api.getProfileImage( item.uri ),
+              loading= 'lazy'
+            )/
+            div.rtb-grid-item-inner
+              span!= item.name
+
+    //- pagination
+    if search.maxPage > 1
+      div.rtb-box.rtb-filter-pagination
+        div.rtb-pagination!= core.pagination( { q: global.query }, search.count, search.page, 36 )
