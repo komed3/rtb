@@ -25,6 +25,7 @@
         "filter": "node maintenance/filter.js",
         "stats": "node maintenance/stats.js",
         "annual": "node maintenance/annual.js",
+        "top10": "node maintenance/top10.js",
         "compileSCSS": "node-sass app/styles/ -o public/styles/ --output-style compressed",
         "compileJS": "uglifyjs-folder app/scripts/ -o public/scripts/ --each"
     },
