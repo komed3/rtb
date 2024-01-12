@@ -13,5 +13,6 @@ module.exports = [
     [ '/privacy/?', 'privacy' ],
     [ '/profile/:uri/?', 'profile' ],
     [ '/search/?', 'search' ],
-    [ '/stats/?', 'stats' ]
+    [ '/stats/?', 'stats' ],
+    [ '/top10/?', 'top10' ]
 ];
