@@ -120,7 +120,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
                     pct = Math.max( 5, ( profiles[ uri ] - min ) / range * 100 ) + '%';
 
-                    networth = '$' + Number( ( profiles[ uri ] / 1000 ).toFixed( 2 ) ) + 'B';
+                    networth = '$' + Number( ( profiles[ uri ] / 1000 ).toFixed( 1 ) ) + 'B';
 
                     left = sort.indexOf( uri ) * width;
 
