@@ -12,9 +12,64 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    padding: 0 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    padding: 24px 5px 0 5px;
     overflow: hidden;
-    transition: all 1s ease-out;
+    transition: all 500ms ease-out;
+}
+
+.rtb-top10-profile-column {
+    position: relative;
+    flex: 1;
+}
+
+.rtb-top10-profile-column .col {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var( --accent-1 );
+    transition: all 750ms ease-out;
+}
+
+.rtb-top10-profile-column .col b {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.rtb-top10-profile-image {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    background: var( --gray-2 );
+}
+
+.rtb-top10-profile-inner {
+    flex: 0 0 86px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    background: var( --gray-0 );
+}
+
+.rtb-top10-profile-inner a {
+    font-size: 16px;
+    font-weight: 700;
+    color: var( --accent-1 );
+}
+
+.rtb-top10-profile-inner span {
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 .rtb-top10-footer {

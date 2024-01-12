@@ -138,15 +138,13 @@ document.addEventListener( 'DOMContentLoaded', () => {
             el.innerHTML = '<div class="rtb-top10-profile-column">' +
                 '<div class="col"><b>$0</b></div>' +
             '</div>' +
-            '<div class="rtb-top10-profile-image">' +
-            '<img src="' + (
-                    profile.image || '/res/blank-' + (
-                        profile.gender || 'm'
-                    ) + '.jpg'
-                ) + '" />' +
-            '</div>' +
+            '<img class="rtb-image rtb-top10-profile-image" src="' + (
+                profile.image || '/res/blank-' + (
+                    profile.gender || 'm'
+                ) + '.jpg'
+            ) + '" />' +
             '<div class="rtb-top10-profile-inner">' +
-                '<a href="/profile/' + uri + '">' + utf8( profile.name ) + '</a>' +
+                '<a href="/profile/' + uri + '">' + utf8( profile.name.replace( ' & family', '' ) ) + '</a>' +
                 '<span>' + utf8( profile.source.join( ', ' ) ) + '</span>' +
             '</div>';
 
@@ -157,9 +155,12 @@ document.addEventListener( 'DOMContentLoaded', () => {
         /**
          * bind load event to controls
          */
+
         container.querySelectorAll( '.rtb-top10-controls a' ).forEach( ( a ) => {
 
-            a.addEventListener( 'click', () => {
+            a.addEventListener( 'click', ( e ) => {
+
+                e.preventDefault();
 
                 getTop10( a.getAttribute( 'top10-month' ) );
 
