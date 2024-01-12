@@ -263,6 +263,15 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
+                 * top 10 richest billionaires page
+                 */
+                case 'top10':
+
+                    res.locals.top10 = api.getJSONFile( '/stats/top10' );
+
+                    break;
+
+                /**
                  * (general) statistic page
                  */
                 case 'stats':
