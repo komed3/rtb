@@ -4,7 +4,6 @@
  */
 document.addEventListener( 'DOMContentLoaded', () => {
 
-    let width;
     let container;
     let data;
 
@@ -16,7 +15,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         idx = parseInt( idx );
 
-        let month = Object.keys( data.list )[ idx ] || null;
+        let width = container.offsetWidth / 10,
+            month = Object.keys( data.list )[ idx ] || null;
 
         if( month ) {
 
@@ -65,6 +65,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
                 p.querySelector( '.rtb-top10-profile-column .col' ).style.height = pct;
                 p.querySelector( '.rtb-top10-profile-column .col b' ).innerHTML = networth;
 
+                p.style.width = width + 'px';
                 p.style.left = left + 'px';
 
             } );
@@ -117,8 +118,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         container = document.querySelector( '.rtb-top10-container' );
 
-        width = container.offsetWidth / 10;
-
         data = JSON.parse(
             window.atob(
                 container.getAttribute( 'top10-data' )
@@ -134,8 +133,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
             let el = document.createElement( 'div' );
 
             el.classList.add( 'rtb-top10-profile' );
-            el.style.width = width + 'px';
-
             el.setAttribute( 'top10-profile', uri );
 
             el.innerHTML = '<div class="rtb-top10-profile-column">' +

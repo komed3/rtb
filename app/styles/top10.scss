@@ -4,6 +4,7 @@
     position: relative;
     width: 100%;
     height: 480px;
+    margin: 0 -5px;
     overflow: hidden;
 }
 
@@ -11,6 +12,26 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    padding: 0 5px;
     overflow: hidden;
     transition: all 1s ease-out;
+}
+
+.rtb-top10-footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.rtb-top10-month {
+    font-size: 20px;
+    font-weight: 900;
+    color: var( --accent-1 );
+}
+
+.rtb-top10-controls a.disabled {
+    pointer-events: none;
+    filter: grayscale( 1 ) opacity( 0.25 );
 }
