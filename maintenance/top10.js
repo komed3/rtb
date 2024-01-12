@@ -74,10 +74,26 @@ async function run() {
     }
 
     console.log( colors.green( 'DONE' ) );
+    console.log( '' );
 
     /**
      * save top 10 list
      */
+
+    console.log( 'Prepare profiles ...' );
+
+    for( const [ uri, name ] of Object.entries( profiles ) ) {
+
+        let info = api.getJSONFile( '/profile/' + uri + '/info' );
+
+        profiles[ uri ] = {
+            name: name,
+            image: info.image || null
+        };
+
+    }
+
+    console.log( colors.green( 'DONE' ) );
 
     api.saveJSONFile( '/stats/top10', {
         profiles: profiles,
