@@ -1,6 +1,12 @@
 //- top 10 richest billionaires
 extends templates/layout.pug
 
+block scripts
+  script( src= '/js/top10.min.js' )
+
+block styles
+  link( rel= 'stylesheet', href= '/css/top10.css' )/
+
 block title
   title Top 10 — Real-time billionaires
 
