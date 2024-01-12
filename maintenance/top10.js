@@ -36,7 +36,7 @@ async function run() {
          */
 
         let latest = new Date( date.getFullYear(), date.getMonth() + 1, 0 ),
-            month = latest.toISOString().substring( 0, 7 ) + '-01',
+            month = latest.toISOString().substring( 0, 7 ),
             day = api.nearestDate( latest ), list = [];
 
         date = new Date( latest.setDate( latest.getDate() + 1 ) );
