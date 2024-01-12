@@ -16,7 +16,11 @@ document.addEventListener( 'DOMContentLoaded', () => {
             el.classList.add( 'rtb-top10-profile' );
             el.setAttribute( 'top10-profile', uri );
 
-            el.innerHTML = `<div class="rtb-top10-profile-column" style="--h:0%;"></div>
+            el.innerHTML = `<div class="rtb-top10-profile-column">
+                <div class="col">
+                    <b>$0</b>
+                </div>
+            </div>
             <div class="rtb-top10-profile-image">
                 <img src="` + (
                     profile.image || '/res/blank-' + (
@@ -25,8 +29,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
                 ) + `" loading="lazy" />
             </div>
             <div class="rtb-top10-profile-inner">
-                <a href="/profile/` + uri + `">` + profile.name + `</a>
-                <b></b>
+                <a href="/profile/` + uri + `">` + utf8( profile.name ) + `</a>
+                <span>` + utf8( profile.source.join( ', ' ) ) + `</span>
             </div>`;
 
             grid.appendChild( el );

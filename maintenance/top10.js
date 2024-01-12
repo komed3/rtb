@@ -89,7 +89,8 @@ async function run() {
         profiles[ uri ] = {
             name: name,
             image: info.image || null,
-            gender: info.gender || null
+            gender: info.gender || null,
+            source: info.source || []
         };
 
     }
