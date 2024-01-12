@@ -13,3 +13,16 @@ block title
 block content
   div.rtb-page.rtb-box.rtb-top10
     h1 Top 10 richest billionaires
+    div.rtb-top10-container(
+      top10-data= core.chartData( top10 )
+    )
+      div.rtb-top10-grid
+      div.rtb-top10-footer
+        div.rtb-top10-month
+        div.rtb-tags.rtb-top10-controls
+          a.tag.tag-primary( href= '#', top10-action= 'prev' )
+            i.icon arrow_back
+            span Previous
+          a.tag.tag-primary( href= '#', top10-action= 'next' )
+            i.icon arrow_forward
+            span Next
