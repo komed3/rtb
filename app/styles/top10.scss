@@ -1,1 +1,16 @@
 @import 'page';
+
+.rtb-top10-grid {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+}
+
+.rtb-top10-profile {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    transition: all 1s ease-out;
+}

@@ -4,6 +4,7 @@
  */
 document.addEventListener( 'DOMContentLoaded', () => {
 
+    let width;
     let container;
     let data;
 
@@ -31,6 +32,10 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
             } );
 
+            let sort = Object.keys( profiles ).sort(
+                ( a, b ) => profiles[ b ] - profiles[ a ]
+            );
+
             let max = Math.max( ...Object.values( profiles ) ),
                 min = Math.min( ...Object.values( profiles ) ) * 0.9,
                 range = max - min;
@@ -42,7 +47,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
             container.querySelectorAll( '.rtb-top10-profile' ).forEach( ( p ) => {
 
                 let uri = p.getAttribute( 'top10-profile' ),
-                    pct = '0%', networth = '$0';
+                    pct = '0%', networth = '$0',
+                    left = width * 12;
 
                 if( uri in profiles ) {
 
@@ -50,10 +56,14 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
                     networth = '$' + Number( ( profiles[ uri ] / 1000 ).toFixed( 2 ) ) + 'B';
 
+                    left = sort.indexOf( uri ) * width;
+
                 }
 
                 p.querySelector( '.rtb-top10-profile-column .col' ).style.height = pct;
                 p.querySelector( '.rtb-top10-profile-column .col b' ).innerHTML = networth;
+
+                p.style.left = left + 'px';
 
             } );
 
@@ -69,9 +79,14 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
     };
 
-    document.querySelectorAll( '.rtb-top10-container' ).forEach( ( c ) => {
+    /**
+     * start top 10
+     */
+    setTimeout( () => {
 
-        container = c;
+        container = document.querySelector( '.rtb-top10-container' );
+
+        width = container.offsetWidth / 10;
 
         data = JSON.parse(
             window.atob(
@@ -88,6 +103,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
             let el = document.createElement( 'div' );
 
             el.classList.add( 'rtb-top10-profile' );
+            el.style.width = width + 'px';
+
             el.setAttribute( 'top10-profile', uri );
 
             el.innerHTML = '<div class="rtb-top10-profile-column">' +
@@ -115,6 +132,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         getTop10();
 
-    } );
+    }, 250 );
 
 } );
