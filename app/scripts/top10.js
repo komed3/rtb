@@ -14,6 +14,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
      */
     const getTop10 = ( idx = 0 ) => {
 
+        idx = parseInt( idx );
+
         let month = Object.keys( data.list )[ idx ] || null;
 
         if( month ) {
@@ -75,6 +77,35 @@ document.addEventListener( 'DOMContentLoaded', () => {
                 monthNames[ date.getMonth() ] + ' ' +
                 date.getFullYear();
 
+            /**
+             * update buttons
+             */
+
+            let prev = container.querySelector( '.rtb-top10-controls .prev' ),
+                next = container.querySelector( '.rtb-top10-controls .next' );
+
+            if( idx > 0 ) {
+
+                prev.classList.remove( 'disabled' );
+                prev.setAttribute( 'top10-month', idx - 1 );
+
+            } else {
+
+                prev.classList.add( 'disabled' );
+
+            }
+
+            if( idx < Object.keys( data.list ).length - 1 ) {
+
+                next.classList.remove( 'disabled' );
+                next.setAttribute( 'top10-month', idx + 1 );
+
+            } else {
+
+                next.classList.add( 'disabled' );
+
+            }
+
         }
 
     };
@@ -115,7 +146,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
                     profile.image || '/res/blank-' + (
                         profile.gender || 'm'
                     ) + '.jpg'
-                ) + '" loading="lazy" />' +
+                ) + '" />' +
             '</div>' +
             '<div class="rtb-top10-profile-inner">' +
                 '<a href="/profile/' + uri + '">' + utf8( profile.name ) + '</a>' +
@@ -125,6 +156,19 @@ document.addEventListener( 'DOMContentLoaded', () => {
             container.querySelector( '.rtb-top10-grid' ).appendChild( el );
 
         }
+
+        /**
+         * bind load event to controls
+         */
+        container.querySelectorAll( '.rtb-top10-controls a' ).forEach( ( a ) => {
+
+            a.addEventListener( 'click', () => {
+
+                getTop10( a.getAttribute( 'top10-month' ) );
+
+            } );
+
+        } );
 
         /**
          * load first month
