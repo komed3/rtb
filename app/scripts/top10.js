@@ -8,10 +8,74 @@ document.addEventListener( 'DOMContentLoaded', () => {
     let data;
 
     /**
+     * play top 10
+     */
+    const playTop10 = () => {
+
+        /**
+         * disable all controls
+         */
+
+        container.querySelectorAll( '.rtb-top10-controls a' ).forEach( ( a ) => {
+
+            a.classList.add( 'disabled' );
+
+        } );
+
+        /**
+         * loop trougth month
+         */
+
+        let last = Object.keys( data.list ).length - 1;
+
+        const playMonth = ( idx = 0 ) => {
+
+            idx = parseInt( idx );
+
+            /**
+             * get current month
+             */
+
+            getTop10( idx, true );
+
+            if( idx < last ) {
+
+                /**
+                 * get next month after timeout
+                 */
+
+                setTimeout( () => {
+                    playMonth( idx + 1 );
+                }, 2500 );
+
+            } else {
+
+                /**
+                 * activate play button
+                 */
+
+                container.querySelector( '.rtb-top10-controls a.play' ).classList.remove( 'disabled' );
+
+                getTop10( idx );
+
+            }
+
+        };
+
+        /**
+         * start animation
+         */
+
+        playMonth();
+
+    };
+
+    /**
      * get month by index
      * @param {Int} idx list index
+     * @param {Boolean} playState player state
      */
-    const getTop10 = ( idx = 0 ) => {
+    const getTop10 = ( idx = 0, playState = false ) => {
 
         idx = parseInt( idx );
 
@@ -85,7 +149,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
             let prev = container.querySelector( '.rtb-top10-controls .prev' ),
                 next = container.querySelector( '.rtb-top10-controls .next' );
 
-            if( idx > 0 ) {
+            if( !playState && idx > 0 ) {
 
                 prev.classList.remove( 'disabled' );
                 prev.setAttribute( 'top10-month', idx - 1 );
@@ -96,7 +160,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
             }
 
-            if( idx < Object.keys( data.list ).length - 1 ) {
+            if( !playState && idx < Object.keys( data.list ).length - 1 ) {
 
                 next.classList.remove( 'disabled' );
                 next.setAttribute( 'top10-month', idx + 1 );
@@ -153,7 +217,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         }
 
         /**
-         * bind load event to controls
+         * bind events to controls
          */
 
         container.querySelectorAll( '.rtb-top10-controls a' ).forEach( ( a ) => {
@@ -162,7 +226,15 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
                 e.preventDefault();
 
-                getTop10( a.getAttribute( 'top10-month' ) );
+                if( a.classList.contains( 'play' ) ) {
+
+                    playTop10();
+
+                } else {
+
+                    getTop10( a.getAttribute( 'top10-month' ) );
+
+                }
 
             } );
 
