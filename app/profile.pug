@@ -3,6 +3,8 @@ extends templates/layout.pug
 
 block title
   title!= profile.info.name + ' — Profile'
+  if profile.bio && profile.bio.bio.length
+    meta( name= 'description', content!= profile.bio.bio[0] )/
 
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
