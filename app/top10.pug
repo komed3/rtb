@@ -1,14 +1,15 @@
 //- top 10 richest billionaires
 extends templates/layout.pug
 
+block title
+  title Top 10 — Real-time billionaires
+  meta( name= 'description', content= 'Take a look at the ten richest billionaires over the past few months using our animation.' )/
+
 block scripts
   script( src= '/js/top10.min.js' )
 
 block styles
   link( rel= 'stylesheet', href= '/css/top10.css' )/
-
-block title
-  title Top 10 — Real-time billionaires
 
 block content
   div.rtb-page.rtb-box.rtb-top10
