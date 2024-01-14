@@ -10,7 +10,6 @@ require( 'dotenv' ).config();
 const api = require( './../api/endpoint' );
 const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
-const logging = require( './_logging' );
 
 var sitemap = [];
 
@@ -21,8 +20,6 @@ var sitemap = [];
 const add2Sitemap = ( link ) => {
 
     sitemap.push( process.env.baseURL + '/' + link );
-
-    logging.update();
 
 };
 
@@ -35,17 +32,13 @@ async function run() {
     console.log( colors.yellow( 'generate sitemap' ) );
     console.log( '' );
 
-    logging.next(
-        'Add pages to sitemap',
-        5, 'pages'
-    );
-
     /**
      * add global pages
      */
 
     add2Sitemap( '' );
     add2Sitemap( 'list/rtb' );
+    add2Sitemap( 'stats' );
     add2Sitemap( 'movers' );
     add2Sitemap( 'top10' );
 
@@ -53,11 +46,7 @@ async function run() {
      * add profiles
      */
 
-    let profiles = Object.keys( api.index );
-
-    logging.addTotal( profiles.length );
-
-    profiles.forEach( ( uri ) => {
+    Object.keys( api.index ).forEach( ( uri ) => {
 
         add2Sitemap( 'profile/' + uri );
 
@@ -70,6 +59,26 @@ async function run() {
     /**
      * add filter pages
      */
+
+    let filter = api.getJSONFile( '/filter/_index' );
+
+    Object.keys( filter._global ).forEach( ( uri ) => {
+
+        add2Sitemap( 'filter/' + uri );
+
+    } );
+
+    Object.keys( filter.industry.index ).forEach( ( uri ) => {
+
+        add2Sitemap( 'filter/industry/' + uri );
+
+    } );
+
+    Object.keys( filter.country.index ).forEach( ( uri ) => {
+
+        add2Sitemap( 'filter/country/' + uri );
+
+    } );
 
     /**
      * save sitemaps
@@ -85,7 +94,7 @@ async function run() {
         { flag: 'w' }
     );
 
-    logging.finish();
+    console.log( colors.green( 'DONE' ) );
 
 };
 
