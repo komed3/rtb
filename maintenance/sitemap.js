@@ -53,6 +53,16 @@ async function run() {
      * add profiles
      */
 
+    let profiles = Object.keys( api.index );
+
+    logging.addTotal( profiles.length );
+
+    profiles.forEach( ( uri ) => {
+
+        add2Sitemap( 'profile/' + uri );
+
+    } );
+
     /**
      * add statistic pages
      */

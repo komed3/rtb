@@ -6,6 +6,9 @@ node_modules/
 api/*
 !api/endpoint.js
 
+# sitemap
+sitemap.xml
+
 # public + compiled files
 public/scripts
 public/styles
