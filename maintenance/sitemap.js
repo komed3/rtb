@@ -38,7 +38,6 @@ async function run() {
 
     add2Sitemap( '' );
     add2Sitemap( 'list/rtb' );
-    add2Sitemap( 'stats' );
     add2Sitemap( 'movers' );
     add2Sitemap( 'top10' );
 
@@ -55,6 +54,20 @@ async function run() {
     /**
      * add statistic pages
      */
+
+    add2Sitemap( 'stats' );
+
+    Object.keys( api.indexes.country ).forEach( ( uri ) => {
+
+        add2Sitemap( 'country/' + uri );
+
+    } );
+
+    Object.keys( api.indexes.industry ).forEach( ( uri ) => {
+
+        add2Sitemap( 'industry/' + uri );
+
+    } );
 
     /**
      * add filter pages
