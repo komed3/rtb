@@ -33,3 +33,6 @@ block content
     if search.maxPage > 1
       div.rtb-box.rtb-filter-pagination
         div.rtb-pagination!= core.pagination( { q: global.query }, search.count, search.page, 36 )
+
+    //- image source
+    include templates/source.pug

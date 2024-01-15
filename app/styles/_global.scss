@@ -313,3 +313,16 @@ a:hover {
     margin-top: 2px;
     color: var( --accent-1 );
 }
+
+/* image source */
+
+.rtb-source p {
+    text-align: right;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var( --gray-3 );
+}
+
+.rtb-source p a {
+    color: inherit;
+}

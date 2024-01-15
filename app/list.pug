@@ -113,3 +113,6 @@ block content
     if list.count > 25
       div.rtb-box.rtb-list-pagination
         div.rtb-pagination!= core.pagination( global.request, list.count, list.page, list.limit )
+
+    //- image source
+    include templates/source.pug

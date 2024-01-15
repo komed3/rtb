@@ -7,6 +7,7 @@ block title
 block content
   div.rtb-page.rtb-error
 
+    //- 404 message
     div.rtb-box.rtb-error-header
       h1 Error 404: page not found
       p The requested page could not be found. The content may have been deleted, moved to another URL, or the request contains a spelling mistake.
@@ -29,6 +30,7 @@ block content
             href!= core.url( '/top10' )
           ) Top 10 richest billionaires
 
+    //- some random profiles
     div.rtb-box.rtb-error-profiles
       h3.rtb-box-heading Visit some random profiles
       div.rtb-grid.col3.rtb-profile-grid
@@ -42,3 +44,6 @@ block content
               )/
               div.rtb-grid-item-inner
                 span!= item[1].name
+
+    //- image source
+    include templates/source.pug
