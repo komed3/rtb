@@ -123,7 +123,7 @@ block content
           div.rtb-grid-item
             h4 Education
             span!= profile.info.education.map( a => Object.values( a ).reverse().join( ', ' ) ).join( '; ' )
-        if profile.info.selfMade.type
+        if profile.info.selfMade && profile.info.selfMade.type
           div.rtb-grid-item
             h4 Self-made
             span!= profile.info.selfMade.type
