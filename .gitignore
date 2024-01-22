@@ -12,3 +12,7 @@ sitemap.xml
 # public + compiled files
 public/scripts
 public/styles
+
+# scripts + files
+update.js
+todo.txt
