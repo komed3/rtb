@@ -72,3 +72,14 @@
 .rtb-profile-relative b {
     font-size: 24px;
 }
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1240px ) {
+
+    .rtb-profile-tags {
+        gap: 24px;
+        margin-bottom: 20px;
+    }
+
+}
