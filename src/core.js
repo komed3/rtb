@@ -153,7 +153,7 @@ const pagination = ( query, max, page, limit ) => {
 
     if( page > 1 ) {
 
-        pagination += '<a class="rtb-pagination-link" href="' +
+        pagination += '<a class="rtb-pagination-link rtb-pagination-prev" href="' +
             paginationLink( query, page - 1 ) +
         '">« Previous</a>';
 
@@ -193,7 +193,7 @@ const pagination = ( query, max, page, limit ) => {
 
     if( page < maxPage ) {
 
-        pagination += '<a class="rtb-pagination-link" href="' +
+        pagination += '<a class="rtb-pagination-link rtb-pagination-next" href="' +
             paginationLink( query, page + 1 ) +
         '">Next »</a>';
 

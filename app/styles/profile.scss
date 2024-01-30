@@ -78,8 +78,18 @@
 @media all and ( max-width: 1240px ) {
 
     .rtb-profile-tags {
+        display: flex;
+        flex-flow: column-reverse nowrap;
         gap: 24px;
-        margin-bottom: 20px;
+    }
+
+}
+
+@media all and ( max-width: 800px ) {
+
+    .rtb-profile-dyk q,
+    .rtb-profile-relative b {
+        font-size: 20px;
     }
 
 }

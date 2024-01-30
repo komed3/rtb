@@ -36,7 +36,7 @@
 .rtb-footer-credits {
     grid-column: span 2;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: flex-end;
     gap: 12px;
     text-transform: uppercase;
@@ -46,4 +46,20 @@
 .rtb-footer-credits a:hover {
     text-decoration: underline;
     color: inherit;
+}
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-footer-inner {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 48px;
+    }
+
+    .rtb-footer-credits {
+        justify-content: flex-start;
+    }
+
 }

@@ -329,15 +329,10 @@ a:hover {
 
 /* responsive adaptations */
 
-@media all and ( max-width: 1240px ) {
+@media all and ( max-width: 1248px ) {
 
     :root {
-        --content: calc( 100% - 40px );
-    }
-
-    .rtb-box {
-        margin-bottom: 20px;
-        padding: 20px;
+        --content: calc( 100% - 48px );
     }
 
     .rtb-grid.col4 {
@@ -358,6 +353,7 @@ a:hover {
 
     .rtb-box-cols {
         flex-direction: column;
+        gap: 0;
     }
 
     .rtb-grid.col3,
@@ -365,28 +361,55 @@ a:hover {
         grid-template-columns: repeat( 2, 1fr );
     }
 
+    .rtb-tags .tag {
+        gap: 8px;
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .rtb-tags .tag i {
+        font-size: 20px;
+    }
+
 }
 
 @media all and ( max-width: 800px ) {
 
     :root {
-        --content: calc( 100% - 20px );
+        --content: calc( 100% - 24px );
         --padding: 48px;
+    }
+
+    .rtb-box-heading {
+        text-decoration: none;
     }
 
 }
 
 @media all and ( max-width: 600px ) {
 
+    body {
+        font-size: 16px;
+    }
+
     ul.col2,
     ul.col3 {
         column-count: 1;
+    }
+
+    .rtb-box {
+        margin-bottom: 12px;
+        padding: 16px;
     }
 
     .rtb-grid.col2,
     .rtb-grid.col3,
     .rtb-grid.col4 {
         grid-template-columns: 100%;
+    }
+
+    .rtb-profile-grid h4 {
+        font-size: 12px;
     }
 
 }

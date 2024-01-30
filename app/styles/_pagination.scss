@@ -20,3 +20,18 @@
     color: var( --gray-0 );
     background: var( --accent-1 );
 }
+
+/* responsive adaptations */
+
+@media all and ( max-width: 600px ) {
+
+    .rtb-pagination {
+        gap: 4px;
+    }
+
+    .rtb-pagination-prev,
+    .rtb-pagination-next {
+        display: none;
+    }
+
+}
