@@ -8,6 +8,8 @@
 
 'use strict';
 
+require( 'dotenv' ).config();
+
 const cmpstr = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 const core = require( './src/core' );
@@ -445,4 +447,4 @@ app.all( '*', ( req, res ) => {
  * start web server
  */
 
-const server = app.listen( 3000 );
+const server = app.listen( process.env.port || 3000 );
