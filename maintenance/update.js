@@ -736,7 +736,7 @@ async function run() {
 
     logging.next(
         '[6/7] daily movers',
-        4, 'steps'
+        12, 'steps'
     );
 
     for( const [ type, entries ] of Object.entries( movers ) ) {
@@ -770,6 +770,14 @@ async function run() {
 
             logging.update();
 
+            fs.appendFileSync(
+                dir + 'movers/' + type + '/winner/_list',
+                today + ' ' + stream[0].join( ' ' ) + os.EOL,
+                { flag: 'a' }
+            );
+
+            logging.update();
+
             /**
              * losers
              */
@@ -793,6 +801,14 @@ async function run() {
             fs.writeFileSync(
                 dir + 'movers/' + type + '/loser/latest',
                 stream, { flag: 'w' }
+            );
+
+            logging.update();
+
+            fs.appendFileSync(
+                dir + 'movers/' + type + '/loser/_list',
+                today + ' ' + stream[0].join( ' ' ) + os.EOL,
+                { flag: 'a' }
             );
 
             logging.update();
