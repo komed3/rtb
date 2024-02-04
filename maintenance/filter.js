@@ -31,8 +31,9 @@ async function run() {
         young: [],
         old: [],
         woman: [],
-        deceased: [],
-        selfMade: []
+        selfMade: [],
+        dropped: [],
+        deceased: []
     }
 
     let indexes = {};
@@ -45,7 +46,8 @@ async function run() {
 
     profiles.forEach( ( uri ) => {
 
-        let info = api.getJSONFile( '/profile/' + uri + '/info' );
+        let path = '/profile/' + uri + '/',
+            info = api.getJSONFile( path + 'info' );
 
         if( info && Object.keys( info ).length ) {
 
@@ -82,6 +84,18 @@ async function run() {
                 } else if( age != null && age > 80 ) {
 
                     filter.old.push( uri );
+
+                }
+
+                /**
+                 * dropped off
+                 */
+
+                let networth = api.getJSONFile( path + 'latest' ).networth || null;
+
+                if( !isNaN( networth ) && networth < 1000 ) {
+
+                    filter.dropped.push( uri );
 
                 }
 
@@ -208,6 +222,7 @@ async function run() {
                 young: 'Young billionaires',
                 old: 'Old billionaires',
                 selfMade: 'Self-made billionaires',
+                dropped: 'Dropped off billionaires',
                 deceased: 'Deceased billionaires'
             },
             industry: {
