@@ -18,12 +18,44 @@ block content
       include templates/movers.pug
 
     //- daily winners
-    div.rtb-box.rtb-movers-value
+    div.rtb-box.rtb-movers-winner
       h3.rtb-box-heading Daily winners
+      div.rtb-movers-grid.winner
+        each day in charts.winner
+          if day[1] && day[1].length
+            a.rtb-movers-day(
+              href= core.url( 'profile/' + day[1] )
+            )
+              img.rtb-image.rtb-movers-day-image(
+                src!= api.getProfileImage( day[1] ),
+                loading= 'lazy'
+              )/
+              div.rtv-movers-day-inner
+                span!= formatter.date( day[0] )
+                h4!= api.getProfileName( day[1] )
+                b!= formatter.networth( Math.abs( day[2] ), 0 )
+          else
+            div.rtb-movers-emptyDay
 
     //- daily losers
-    div.rtb-box.rtb-movers-percent
+    div.rtb-box.rtb-movers-loser
       h3.rtb-box-heading Daily losers
+      div.rtb-movers-grid.loser
+        each day in charts.loser
+          if day[1] && day[1].length
+            a.rtb-movers-day(
+              href= core.url( 'profile/' + day[1] )
+            )
+              img.rtb-image.rtb-movers-day-image(
+                src!= api.getProfileImage( day[1] ),
+                loading= 'lazy'
+              )/
+              div.rtv-movers-day-inner
+                span!= formatter.date( day[0] )
+                h4!= api.getProfileName( day[1] )
+                b!= formatter.networth( Math.abs( day[2] ), 0 )
+          else
+            div.rtb-movers-emptyDay
 
     //- image source
     include templates/source.pug

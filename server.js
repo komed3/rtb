@@ -204,9 +204,9 @@ routes.forEach( ( route ) => {
 
                     res.locals.wl = api.getMovers( 'latest', 'value', 5, true );
 
-                    res.locals.movers = {
-                        winner: api.getCSVFile( '/movers/value/winner/_list' ),
-                        loser: api.getCSVFile( '/movers/value/winner/_list' )
+                    res.locals.charts = {
+                        winner: api.getCSVFile( '/movers/value/winner/_list' ).reverse().slice( 0, 48 ),
+                        loser: api.getCSVFile( '/movers/value/winner/_list' ).reverse().slice( 0, 48 )
                     };
 
                     break;
