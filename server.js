@@ -204,9 +204,9 @@ routes.forEach( ( route ) => {
 
                     res.locals.wl = api.getMovers( 'latest', 'value', 5, true );
 
-                    res.locals.charts = {
-                        networth: api.getMovers( 'latest', 'value', 10 ),
-                        percent: api.getMovers( 'latest', 'pct', 10 )
+                    res.locals.movers = {
+                        winner: api.getCSVFile( '/movers/value/winner/_list' ),
+                        loser: api.getCSVFile( '/movers/value/winner/_list' )
                     };
 
                     break;
