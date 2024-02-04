@@ -30,9 +30,9 @@ block content
                 src!= api.getProfileImage( day[1] ),
                 loading= 'lazy'
               )/
-              div.rtv-movers-day-inner
+              div.rtb-movers-day-inner
                 span!= formatter.date( day[0] )
-                h4!= api.getProfileName( day[1] )
+                h4!= api.getProfileName( day[1], true )
                 b!= formatter.networth( Math.abs( day[2] ), 0 )
           else
             div.rtb-movers-emptyDay
@@ -50,9 +50,9 @@ block content
                 src!= api.getProfileImage( day[1] ),
                 loading= 'lazy'
               )/
-              div.rtv-movers-day-inner
+              div.rtb-movers-day-inner
                 span!= formatter.date( day[0] )
-                h4!= api.getProfileName( day[1] )
+                h4!= api.getProfileName( day[1], true )
                 b!= formatter.networth( Math.abs( day[2] ), 0 )
           else
             div.rtb-movers-emptyDay
