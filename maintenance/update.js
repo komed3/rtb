@@ -747,14 +747,21 @@ async function run() {
              * winners
              */
 
-            stream = JSON.stringify(
-                Object.entries( entries ).filter(
-                    ( [ ,a ] ) => a > 0
-                ).sort(
-                    ( [ ,a ], [ ,b ] ) => b - a
-                ).slice( 0, 10 ),
-                null, 2
+            let winners = Object.entries( entries ).filter(
+                ( [ ,a ] ) => a > 0
+            ).sort(
+                ( [ ,a ], [ ,b ] ) => b - a
+            ).slice( 0, 10 );
+
+            fs.appendFileSync(
+                dir + 'movers/' + type + '/winner/_list',
+                today + ' ' + winners[0].join( ' ' ) + os.EOL,
+                { flag: 'a' }
             );
+
+            logging.update();
+
+            stream = JSON.stringify( winners, null, 2 );
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/winner/' + today,
@@ -770,26 +777,25 @@ async function run() {
 
             logging.update();
 
+            /**
+             * losers
+             */
+
+            let losers = Object.entries( entries ).filter(
+                ( [ ,a ] ) => a < 0
+            ).sort(
+                ( [ ,a ], [ ,b ] ) => a - b
+            ).slice( 0, 10 );
+
             fs.appendFileSync(
-                dir + 'movers/' + type + '/winner/_list',
-                today + ' ' + stream[0].join( ' ' ) + os.EOL,
+                dir + 'movers/' + type + '/loser/_list',
+                today + ' ' + losers[0].join( ' ' ) + os.EOL,
                 { flag: 'a' }
             );
 
             logging.update();
 
-            /**
-             * losers
-             */
-
-            stream = JSON.stringify(
-                Object.entries( entries ).filter(
-                    ( [ ,a ] ) => a < 0
-                ).sort(
-                    ( [ ,a ], [ ,b ] ) => a - b
-                ).slice( 0, 10 ),
-                null, 2
-            );
+            stream = JSON.stringify( losers, null, 2 );
 
             fs.writeFileSync(
                 dir + 'movers/' + type + '/loser/' + today,
@@ -801,14 +807,6 @@ async function run() {
             fs.writeFileSync(
                 dir + 'movers/' + type + '/loser/latest',
                 stream, { flag: 'w' }
-            );
-
-            logging.update();
-
-            fs.appendFileSync(
-                dir + 'movers/' + type + '/loser/_list',
-                today + ' ' + stream[0].join( ' ' ) + os.EOL,
-                { flag: 'a' }
             );
 
             logging.update();
