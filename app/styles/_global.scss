@@ -388,6 +388,10 @@ a:hover {
 
 @media all and ( max-width: 600px ) {
 
+    :root {
+        --content: calc( 100% - 16px );
+    }
+
     body {
         font-size: 16px;
     }

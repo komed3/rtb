@@ -22,7 +22,7 @@
 
 .rtb-list-image {
     padding-left: 0;
-    width: 100px;
+    width: 86px;
 }
 
 .rtb-list-image .rtb-image {
@@ -87,6 +87,24 @@
 
 @media all and ( max-width: 1000px ) {
 
+    .rtb-list-item {
+        height: 92px;
+    }
+
+    .rtb-list-cell {
+        padding: 6px 10px;
+    }
+
+    .rtb-list-image {
+        padding-left: 0;
+        width: 70px;
+    }
+
+    .rtb-list-image .rtb-image {
+        height: 60px;
+        width: 60px;
+    }
+
     .rtb-list-diff {
         display: none;
     }
@@ -94,6 +112,10 @@
 }
 
 @media all and ( max-width: 800px ) {
+
+    .rtb-list-country {
+        padding-right: 0;
+    }
 
     .rtb-list-source {
         display: none;
@@ -103,6 +125,28 @@
 
 @media all and ( max-width: 600px ) {
 
+    .rtb-list-item {
+        height: 84px;
+    }
+
+    .rtb-list-cell {
+        padding: 0 6px;
+    }
+
+    .rtb-list-image {
+        padding-left: 0;
+        width: 60px;
+    }
+
+    .rtb-list-image .rtb-image {
+        height: 54px;
+        width: 54px;
+    }
+
+    .rtb-list-networth {
+        padding-right: 0;
+    }
+
     .rtb-list-age,
     .rtb-list-country {
         display: none;
@@ -110,52 +154,15 @@
 
 }
 
-@media all and ( max-width: 500px ) {
+@media all and ( max-width: 360px ) {
 
-    .rtb-list-item {
-        display: grid;
-        grid-template-columns: 48px 36px auto auto;
-        align-items: center;
-        gap: 14px;
-        padding: 12px 0;
-    }
-
-    .rtb-list-item:not(:last-of-type) {
-        border-bottom: 2px solid var( --gray-1 );
-    }
-
-    .rtb-list-item:not(:last-of-type) .rtb-list-cell {
-        border-bottom: 0;
-    }
-
-    .rtb-list-cell {
-        vertical-align: unset;
-        padding: 0;
-    }
-
-    .rtb-list-image .rtb-image {
-        height: 48px;
-        width: 48px;
-    }
-
-    .rtb-list-networth span {
+    .rtb-list-image {
         display: none;
     }
 
     .rtb-list-rank {
-        width: unset;
-    }
-
-}
-
-@media all and ( max-width: 360px ) {
-
-    .rtb-list-item {
-        grid-template-columns: 36px auto auto;
-    }
-
-    .rtb-list-image {
-        display: none;
+        padding-left: 0;
+        text-align: left;
     }
 
 }
