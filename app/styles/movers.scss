@@ -5,6 +5,15 @@
     display: grid;
     grid-template-columns: repeat( 8, 1fr );
     gap: 8px;
+
+    &.winner .rtb-movers-day-column {
+        background: var( --color-good );
+    }
+
+    &.loser .rtb-movers-day-column {
+        background: var( --color-bad );
+    }
+
 }
 
 .rtb-movers-day {
@@ -12,6 +21,15 @@
     aspect-ratio: 1/1;
     border-radius: 10px;
     overflow: hidden;
+}
+
+.rtb-movers-day-column {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var( --h, 0% );
+    opacity: 0.4;
 }
 
 .rtb-movers-day-image {
@@ -36,15 +54,9 @@
     color: var( --gray-0 );
     background: linear-gradient(
         to top,
-        rgba( 0, 0, 0, 0.6 ),
-        rgba( 0, 0, 0, 0.1 )
+        rgba( 0, 0, 0, 0.5 ),
+        rgba( 0, 0, 0, 0 )
     );
-    opacity: 0;
-    transition: all 500ms;
-}
-
-.rtb-movers-day:hover .rtb-movers-day-inner {
-    opacity: 1;
 }
 
 .rtb-movers-day-inner span {
@@ -54,4 +66,10 @@
 .rtb-movers-day-inner h4 {
     margin: 0;
     font-size: 12px;
+}
+
+.rtb-movers-emptyDay {
+    aspect-ratio: 1/1;
+    background: var( --gray-1 );
+    border-radius: 10px;
 }

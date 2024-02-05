@@ -209,6 +209,9 @@ routes.forEach( ( route ) => {
                         loser: api.getCSVFile( '/movers/value/loser/_list' ).reverse().slice( 0, 48 )
                     };
 
+                    res.locals.moversMax = Math.max( ...res.locals.charts.winner.map( r => r[2] ) );
+                    res.locals.moversMin = Math.min( ...res.locals.charts.loser.map( r => r[2] ) );
+
                     break;
 
                 /**

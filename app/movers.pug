@@ -26,6 +26,13 @@ block content
             a.rtb-movers-day(
               href= core.url( 'profile/' + day[1] )
             )
+              div.rtb-movers-day-column(
+                style!= '--h: ' + core.barHeight(
+                  day[2],
+                  moversMax,
+                  0, 5, 95
+                ) + '%;'
+              )
               img.rtb-image.rtb-movers-day-image(
                 src!= api.getProfileImage( day[1] ),
                 loading= 'lazy'
@@ -46,6 +53,13 @@ block content
             a.rtb-movers-day(
               href= core.url( 'profile/' + day[1] )
             )
+              div.rtb-movers-day-column(
+                style!= '--h: ' + core.barHeight(
+                  day[2],
+                  moversMin,
+                  0, 5, 95
+                ) + '%;'
+              )
               img.rtb-image.rtb-movers-day-image(
                 src!= api.getProfileImage( day[1] ),
                 loading= 'lazy'

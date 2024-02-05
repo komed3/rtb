@@ -111,11 +111,18 @@ const listlink = ( rank, list = 'rtb' ) => {
  * @param {Float} max maximum value
  * @param {Float} min minimum value
  * @param {Float} threshold minimum height
+ * @param {Float} base base/reference value
  * @returns bar height in percent
  */
-const barHeight = ( value, max, min = 0, threshold = 10 ) => {
+const barHeight = ( value, max, min = 0, threshold = 10, base = 100 ) => {
 
-    return Math.max( threshold, ( value - min ) / ( max - min ) * 100 );
+    return Math.max(
+        threshold,
+        Math.abs(
+            ( parseFloat( value ) - min ) /
+            ( max - min ) * base
+        )
+    );
 
 };
 
