@@ -114,7 +114,7 @@ block content
         if profile.info.birthDate
           div.rtb-grid-item
             h4 Birth date
-            span!= formatter.date( profile.info.birthDate ) + ' (age ' + core.date2age( profile.info.birthDate ) + ')'
+            span!= formatter.date( profile.info.birthDate ) + ( profile.info.deceased ? '' : ' (age ' + core.date2age( profile.info.birthDate ) + ')' )
         if profile.info.children
           div.rtb-grid-item
             h4 Number of children
