@@ -221,6 +221,12 @@ a:hover {
     overflow: hidden;
 }
 
+/* tabel */
+
+.rtb-table-container {
+    overflow-x: scroll;
+}
+
 /* tags */
 
 .rtb-tags {
@@ -389,6 +395,11 @@ a:hover {
         text-decoration: none;
     }
 
+    .rtb-table-container table {
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
 }
 
 @media all and ( max-width: 600px ) {
@@ -402,6 +413,7 @@ a:hover {
     }
 
     h1 {
+        text-align: center;
         font-size: 24px;
     }
 

@@ -68,10 +68,9 @@
     border-right: 2px solid var( --gray-1 );
 }
 
-.rtb-stats-list-table-profile div {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 12px;
+.rtb-stats-list-table-profile b,
+.rtb-stats-list-table-profile a {
+    margin-right: 8px;
 }
 
 .rtb-stats-list-table tbody tr:not(:last-of-type) td {
