@@ -77,19 +77,70 @@
 
 @media all and ( max-width: 1240px ) {
 
-    .rtb-profile-tags {
-        display: flex;
-        flex-flow: column-reverse nowrap;
-        gap: 24px;
+    .rtb-profile-nav {
+        display: none;
+    }
+
+}
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-profile-networth-value {
+        font-size: 32px;
+    }
+
+    .rtb-profile-networth-change {
+        font-size: 16px;
     }
 
 }
 
 @media all and ( max-width: 800px ) {
 
+    .rtb-profile-tags,
+    .rtb-profile-tags .rtb-tags {
+        justify-content: center;
+    }
+
+    .rtb-profile-header {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        text-align: center;
+        margin-top: 120px;
+        overflow: visible !important;
+    }
+
+    .rtb-profile-header-image {
+        margin-top: -120px;
+        width: 180px;
+        height: 180px;
+    }
+
+    .rtb-profile-networth {
+        margin-top: 12px;
+    }
+
     .rtb-profile-dyk q,
     .rtb-profile-relative b {
         font-size: 20px;
+    }
+
+}
+
+@media all and ( max-width: 500px ) {
+
+    .rtb-profile-networth {
+        margin-top: 8px;
+    }
+
+    .rtb-profile-networth-value {
+        font-size: 26px;
+    }
+
+    .rtb-profile-networth-change {
+        margin: 2px 0;
+        font-size: 14px;
     }
 
 }

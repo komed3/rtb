@@ -346,6 +346,10 @@ a:hover {
 }
 
 @media all and ( max-width: 1000px ) {
+
+    h1 {
+        font-size: 28px;
+    }
     
     ul.col3 {
         column-count: 2;
@@ -394,6 +398,10 @@ a:hover {
 
     body {
         font-size: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
     }
 
     ul.col2,
