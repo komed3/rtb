@@ -339,6 +339,7 @@ a:hover {
 
     :root {
         --content: calc( 100% - 48px );
+        --padding: 48px;
     }
 
     .rtb-grid.col4 {
@@ -387,7 +388,7 @@ a:hover {
 
     :root {
         --content: calc( 100% - 24px );
-        --padding: 48px;
+        --padding: 24px;
     }
 
     .rtb-box-heading {

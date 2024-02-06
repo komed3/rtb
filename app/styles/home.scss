@@ -32,3 +32,44 @@
     text-transform: uppercase;
     color: var( --gray-3 );
 }
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-home-grid {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .rtb-home-grid-item {
+        gap: 2px;
+    }
+
+    .rtb-home-grid-item b {
+        font-size: 32px;
+    }
+
+    .rtb-home-grid-item span {
+        font-size: 16px;
+    }
+
+}
+
+@media all and ( max-width: 600px ) {
+
+    .rtb-home-grid {
+        gap: 16px;
+    }
+
+    .rtb-home-grid-item b {
+        font-size: 26px;
+    }
+
+    .rtb-home-grid-item span {
+        font-size: 14px;
+    }
+
+}
