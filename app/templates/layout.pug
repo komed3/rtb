@@ -23,8 +23,10 @@ html( lang= 'en' )
 
     //- header
     header#header.rtb-header( role= 'banner' )
-      div.rtb-header-links
+      div.rtb-header-links.desktop
         include nav.pug
+      div.rtb-header-links.mobile
+        include mobile-nav.pug
       form.rtb-header-search(
         action= '/search/',
         method= 'get'

@@ -1,0 +1,19 @@
+//- templates/nav.pug
+-
+  var links = [
+    [ '/', 'home', 'home' ],
+    [ '/list/rtb', 'list-rtb', 'tag' ],
+    [ '/stats', 'stats', 'stacked_bar_chart' ],
+    [ '/movers', 'movers', 'sync_alt' ]
+  ];
+
+each link in links
+  a(
+    href= link[0],
+    class= (
+      link[1] == global.nav
+        ? 'current'
+        : ''
+    )
+  )
+    i.icon!= link[2]
