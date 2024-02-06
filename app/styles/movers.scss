@@ -73,3 +73,37 @@
     background: var( --gray-1 );
     border-radius: 10px;
 }
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1200px ) {
+
+    .rtb-movers-grid {
+        grid-template-columns: repeat( 6, 1fr );
+    }
+
+}
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-movers-grid {
+        grid-template-columns: repeat( 4, 1fr );
+    }
+
+}
+
+@media all and ( max-width: 600px ) {
+
+    .rtb-movers-grid {
+        grid-template-columns: repeat( 3, 1fr );
+    }
+
+}
+
+@media all and ( max-width: 400px ) {
+
+    .rtb-movers-grid {
+        grid-template-columns: repeat( 2, 1fr );
+    }
+
+}
