@@ -14,11 +14,12 @@
 .rtb-list-filter-grid {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: flex-start;
     min-height: 42px;
 }
 
 .rtb-list-filter-label {
+    align-self: center;
     text-transform: uppercase;
     font-size: 14px;
     color: var( --gray-3 );
@@ -43,6 +44,10 @@
     box-shadow: none;
 }
 
+.rtb-list-filter .tag .icon {
+    display: none;
+}
+
 .rtb-list-filter input:checked + .tag {
     color: var( --gray-0 );
     background: var( --accent-1 );
@@ -52,4 +57,61 @@
 .rtb-list-filter select {
     height: 42px;
     font-size: 18px;
+}
+
+.rtb-list-result {
+    align-self: center;
+    text-align: right;
+}
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-list-filter {
+        gap: 12px;
+    }
+
+    .rtb-list-filter * {
+        font-size: 14px !important;
+    }
+
+    .rtb-list-filter-grid {
+        min-height: 32px;
+    }
+
+    .rtb-list-filter .tag,
+    .rtb-list-filter input[type="date"],
+    .rtb-list-filter select {
+        height: 32px;
+    }
+
+    .rtb-list-filter-label {
+        display: none;
+    }
+
+}
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-list-filter .tag .icon {
+        display: block;
+    }
+
+    .rtb-list-filter .tag span {
+        display: none;
+    }
+
+}
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-list-filter-grid {
+        gap: 12px;
+    }
+
+    .rtb-list-filter-grid:last-of-type {
+        display: none;
+    }
+
 }

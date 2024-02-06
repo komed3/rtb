@@ -60,13 +60,13 @@ block content
               )!= v
       div.rtb-grid.rtb-list-filter-grid
         span.rtb-list-filter-label Sort by
-        select( name= 'sort' )
-          each v, k in { rank: 'Rank', diff: 'Difference', name: 'Name', age: 'Age' }
-            option(
-                value= k,
-                selected= ( global.request.sort || 'rank' ) == k
-            )!= v
         div.rtb-tags
+          select( name= 'sort' )
+            each v, k in { rank: 'Rank', diff: 'Difference', name: 'Name', age: 'Age' }
+              option(
+                  value= k,
+                  selected= ( global.request.sort || 'rank' ) == k
+              )!= v
           input(
             type= 'radio',
             name= 'dir',
@@ -74,7 +74,9 @@ block content
             id= 'sort_dir__asc',
             checked= ( ( global.request.dir || 'asc' ) == 'asc' )
           )/
-          label.tag( for= 'sort_dir__asc' ) Ascending
+          label.tag( for= 'sort_dir__asc' )
+            i.icon arrow_upward
+            span Ascending
           input(
             type= 'radio',
             name= 'dir',
@@ -82,7 +84,9 @@ block content
             id= 'sort_dir__desc',
             checked= ( ( global.request.dir || null ) == 'desc' )
           )/
-          label.tag( for= 'sort_dir__desc' ) Descending
+          label.tag( for= 'sort_dir__desc' )
+            i.icon arrow_downward
+            span Descending
         div.rtb-list-filter-gap
         span.rtb-list-filter-label Data as of
         div.rtb-tags
