@@ -52,3 +52,24 @@
     font-size: 20px;
     font-weight: 700;
 }
+
+/* responsive adaptations */
+
+@media all and ( max-width: 800px ) {
+
+    .rtb-chart.has-controls {
+        margin-top: 50px;
+    }
+
+    .rtb-chart-controls {
+        top: -36px;
+        left: 0;
+        justify-content: center;
+    }
+
+    .rtb-chart-controls button {
+        padding: 3px 8px;
+        font-size: 13px;
+    }
+
+}

@@ -57,6 +57,7 @@ const chart_add = ( container, options, data, ctrl = true, range = 'year' ) => {
         } ).join( '' );
 
         container.insertBefore( controls, chart );
+        container.classList.add( 'has-controls' );
 
     }
 
