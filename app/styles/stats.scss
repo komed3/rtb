@@ -31,6 +31,7 @@
 }
 
 .rtb-stats-grid-value {
+    text-align: right;
     font-size: 38px;
     font-weight: 900;
     color: var( --accent-1 );
@@ -75,4 +76,50 @@
 
 .rtb-stats-list-table tbody tr:not(:last-of-type) td {
     border-bottom: 2px solid var( --gray-1 );
+}
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-stats-grid-line {
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    .rtb-stats-grid-value {
+        font-size: 26px;
+    }
+
+}
+
+@media all and ( max-width: 800px ) {
+
+    .rtb-stats-tags {
+        justify-content: center;
+    }
+
+    .rtb-stats-tags .seperator {
+        display: none;
+    }
+
+    .rtb-stats-grid-line {
+        flex-flow: column-reverse nowrap;
+        align-items: center;
+        gap: 2px;
+        text-align: center;
+    }
+
+    .rtb-stats-grid-value {
+        text-align: center;
+    }
+
+}
+
+@media all and ( max-width: 600px ) {
+
+    .rtb-stats-grid-value {
+        font-size: 20px;
+    }
+
 }
