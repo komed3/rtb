@@ -14,6 +14,7 @@ const cmpstr = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 const core = require( './src/core' );
 const formatter = require( './src/formatter' );
+const fs = require( 'fs' );
 
 /**
  * express framework
@@ -44,6 +45,39 @@ app.use( '/res', express.static( __dirname + '/public/resources' ) );
         res.status( 300 ).send( 'Access Forbidden!' );
 
     } );
+
+} );
+
+/**
+ * run npm command
+ */
+
+app.all( '/run/?*', ( req, res, next ) => {
+
+    let job = req.query.job || '',
+        path = './maintenance/' + job;
+
+    if(
+        process.env.token == req.query.token &&
+        fs.existsSync( path + '.js' ) && [
+            'update', 'info', 'stats', 'filter',
+            'top10', 'annual', 'sitemap'
+        ].includes( job )
+    ) {
+
+        require( path );
+
+        res.status( 200 ).send( 'run ' + job + ' ...' );
+
+    } else {
+
+        /**
+         * deny access without correct token
+         */
+
+        res.status( 300 ).send( 'Access Forbidden!' );
+
+    }
 
 } );
 
