@@ -35,5 +35,5 @@ block content
                 b!= '#' + item[4]
                 a(
                   href!= core.url( '/profile/' + item[3] )
-                )!= api.getProfileName( item[3], true )
+                )!= api.getProfileName( item[3] )
                 span!= '(' + formatter.networth( item[5] ) + ')'

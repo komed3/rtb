@@ -46,7 +46,7 @@ div( class!= 'rtb-movers ' + ( moversDirection || 'column' ) )
             )/
           div.rtb-movers-inner
             b!= formatter[ moversFormat ]( Math.abs( item[1] ), moversDigits )
-            span!= api.getProfileName( item[0], true )
+            span!= api.getProfileName( item[0] )
 
       //- add empty movers item
       else

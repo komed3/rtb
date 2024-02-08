@@ -165,7 +165,7 @@ const resolveURI = ( uri ) => {
  * @param {Boolean} shorten shorten name
  * @returns name
  */
-const getProfileName = ( uri, shorten = false ) => {
+const getProfileName = ( uri, shorten = true ) => {
 
     uri = resolveURI( uri );
 
