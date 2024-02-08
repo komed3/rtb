@@ -25,6 +25,19 @@ const express = require( 'express' );
 const app = express();
 
 /**
+ * request limiting
+ */
+
+const rateLimit = require( 'express-rate-limit' );
+
+app.use( rateLimit( {
+    limit: process.env.limit,
+    windowMs: process.env.wait,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false
+} ) );
+
+/**
  * static resources
  */
 
