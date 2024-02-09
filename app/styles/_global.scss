@@ -330,6 +330,10 @@ a:hover {
     color: var( --gray-3 );
 }
 
+.noimages .rtb-source {
+    display: none;
+}
+
 .rtb-source p a {
     color: inherit;
 }

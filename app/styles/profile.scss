@@ -107,14 +107,23 @@
         flex-flow: column nowrap;
         align-items: center;
         text-align: center;
-        margin-top: 120px;
+        margin-top: 100px;
+        padding: 24px;
         overflow: visible !important;
     }
 
+    .noimages .rtb-profile-header {
+        margin-top: 0;
+    }
+
     .rtb-profile-header-image {
-        margin-top: -120px;
+        margin-top: -100px;
         width: 180px;
         height: 180px;
+    }
+
+    .noimages .rtb-profile-header-image {
+        display: none;
     }
 
     .rtb-profile-networth {

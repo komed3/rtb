@@ -133,7 +133,8 @@ routes.forEach( ( route ) => {
                 request: req.query,
                 query: ( req.query.q || '' ).trim(),
                 file: route[1],
-                nav: route[2] || route[1]
+                nav: route[2] || route[1],
+                showImages: !!+process.env.showImages
             };
 
             /**

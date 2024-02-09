@@ -25,6 +25,10 @@
     width: 86px;
 }
 
+.noimages .rtb-list-image {
+    display: none;
+}
+
 .rtb-list-image .rtb-image {
     display: block;
     height: 72px;
@@ -46,6 +50,10 @@
 .rtb-list-networth b {
     display: block;
     font-weight: 900;
+}
+
+.noimages .rtb-list-rank {
+    padding-left: 0;
 }
 
 .rtb-list-diff img {

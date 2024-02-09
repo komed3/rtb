@@ -19,7 +19,7 @@ html( lang= 'en' )
       link( rel= 'stylesheet', href= '/css/page.css' )/
 
   //- html content
-  body
+  body( class!= global.showImages ? '' : 'noimages' )
 
     //- header
     header#header.rtb-header( role= 'banner' )
