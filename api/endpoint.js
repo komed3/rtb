@@ -50,7 +50,7 @@ const getCSVFile = ( file, flatten = null, delimiter = ' ' ) => {
             .split( os.EOL )
             .filter( r => r )
             .map( ( r ) => {
-                return r.split( delimiter ).map( ( a ) => {
+                return r.trim().split( delimiter ).map( ( a ) => {
                     return a.length
                         ? !isNaN( a ) && !isNaN( parseFloat( a ) )
                             ? parseFloat( a )
