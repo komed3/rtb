@@ -4,6 +4,8 @@
 
 'use strict';
 
+require( 'dotenv' ).config();
+
 const os = require( 'node:os' );
 const fs = require( 'fs' );
 
@@ -195,9 +197,13 @@ const getProfileImage = ( uri ) => {
 
     let info = getJSONFile( '/profile/' + uri + '/info' );
 
-    if( info ) {
+    if( !!+process.env.showImages && info.image ) {
 
-        return info.image || '/res/blank-' + ( info.gender || 'm' ) + '.jpg';
+        return info.image;
+
+    } else if( info.gender ) {
+
+        return '/res/blank-' + ( info.gender || 'm' ) + '.jpg';
 
     } else {
 
@@ -232,6 +238,7 @@ const getFullProfile = ( uri ) => {
         let rank = getJSONFile( path + 'rank' );
 
         return {
+            uri: uri,
             info: getJSONFile( path + 'info' ),
             bio: getJSONFile( path + 'bio' ),
             rank: rank,

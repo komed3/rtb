@@ -61,7 +61,7 @@ block content
     //- header
     div.rtb-box.rtb-profile-header
       img.rtb-image.rtb-profile-header-image(
-        src!= profile.info.image || ( '/res/blank-' + ( profile.info.gender || 'm' ) + '.jpg' ),
+        src!= api.getProfileImage( profile.uri )
         loading= 'lazy'
       )/
       div.rtb-profile-header-info
