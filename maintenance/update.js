@@ -5,10 +5,11 @@
 
 'use strict';
 
+require( 'dotenv' ).config();
+
 const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
 const lastYear = parseInt( today.split( '-' )[0] ) - 1;
-const api = 'https://www.forbes.com/forbesapi/person/rtb/0/position/true.json';
 
 const os = require( 'node:os' );
 const colors = require( 'ansi-colors' );
@@ -173,7 +174,7 @@ async function run() {
         1, 'files'
     );
 
-    const response = await axios.get( api );
+    const response = await axios.get( process.env.api );
 
     logging.update();
 
