@@ -194,6 +194,7 @@ routes.forEach( ( route ) => {
                          * redirect to home
                          */
                         res.redirect( core.url( '/' ) );
+                        return ;
 
                     }
 
