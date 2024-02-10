@@ -1,6 +1,10 @@
 //- api sandbox
 extends templates/layout.pug
 
+block title
+  title API Sandbox — Real-time billionaires
+  meta( name= 'description', content= 'Try our real-time billionaires API in sandbox mode and get to know all its queries.' )/
+
 block styles
   link( rel= 'stylesheet', href= '/css/api.css' )/
 
@@ -40,7 +44,7 @@ block content
         )
           i.icon api
           span Fetch
-      if api.error
+      if api.request && api.error
         div.rtb-api-error
           i.icon warning
           span Your query is wrong and returned an error.

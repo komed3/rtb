@@ -37,6 +37,7 @@ async function run() {
      */
 
     add2Sitemap( '' );
+    add2Sitemap( 'api' );
     add2Sitemap( 'list/rtb' );
     add2Sitemap( 'movers' );
     add2Sitemap( 'top10' );
