@@ -164,6 +164,7 @@ select, button {
 button {
     display: flex;
     align-items: center;
+    gap: 6px;
     color: var( --gray-0 );
     background: var( --accent-1 );
     border: 0;

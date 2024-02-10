@@ -15,6 +15,25 @@ block content
     //- sandbox
     div.rtb-box.rtb-api-sandbox
       h2.rtb-box-heading Sandbox
+      form.rtb-api-request(
+        method= 'get',
+        action= '',
+        autocomplete= 'off'
+      )
+        label.rtb-api-request-label(
+          for= 'rtb-api-request'
+        ) <code>@komed3/rtb-api@main/</code>
+        input#rtb-api-request.rtb-api-request-input(
+          type= 'text',
+          name= 'request',
+          required
+        )/
+        button.rtb-api-request-submit(
+          type= 'submit'
+        )
+          i.icon api
+          span Fetch
+      textarea#rtb-api-result.rtb-api-result
 
     //- help & usage
     div.rtb-box.rtb-api-help
