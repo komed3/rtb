@@ -40,9 +40,13 @@ block content
         )
           i.icon api
           span Fetch
+      if api.error
+        div.rtb-api-error
+          i.icon warning
+          span Your query is wrong and returned an error.
       textarea#rtb-api-result.rtb-api-result(
         readonly
-      )
+      )!= api.result
 
     //- help & usage
     div.rtb-box.rtb-api-help

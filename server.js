@@ -162,8 +162,16 @@ routes.forEach( ( route ) => {
                 case 'api':
 
                     res.locals.api = {
-                        request: req.query.request || ''
+                        request: req.query.request || '',
+                        result: api.get( req.query.request || '' ),
+                        error: false
                     };
+
+                    if( res.locals.api.result == null ) {
+
+                        res.locals.api.error = true;
+
+                    }
 
                     break;
 
