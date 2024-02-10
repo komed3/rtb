@@ -61,132 +61,132 @@ block content
     div.rtb-box.rtb-api-help
       h2.rtb-box-heading Help &amp; Usage
       p Requests can be done by using jsDelivr:
-      p <code>https://cdn.jsdelivr.net/gh/komed3/rtb-api@main{REQUEST}</code>
+      p <code>https://cdn.jsdelivr.net/gh/komed3/rtb-api@main/api/{REQUEST}</code>
       p As <code>{REQUEST}</code> use one of the paths below.
       h3 Global
       dl.rtb-api-list
-        dt /api/availableDays
+        dt availableDays
         dd Get available days for real-time billionaires list in CSV format.
-        dt /api/latest
+        dt latest
         dd Get latest available day for real-time billionaires list.
-        dt /api/updated
+        dt updated
         dd Get timestamp of the last update.
       h3 Profiles
       dl.rtb-api-list
-        dt /api/profile/_index
+        dt profile/_index
         dd Get a list of all profiles sorted by their URI in JSON format.
-        dt /api/profile/_alias
+        dt profile/_alias
         dd Get a list of profile aliases in JSON format.
       h3 Single profile
       p The <code>{URI}</code> argument is described in the profiles index and is unique to each profile.
       dl.rtb-api-list
-        dt /api/profile/{URI}/info
+        dt profile/{URI}/info
         dd Get profile info in JSON format, e.g. name, residence education etc.
-        dt /api/profile/{URI}/bio
+        dt profile/{URI}/bio
         dd Get biographical and additional facts about a profile in JSON format.
-        dt /api/profile/{URI}/assets
+        dt profile/{URI}/assets
         dd Get financial assets of a profile in JSON format.
-        dt /api/profile/{URI}/rank
+        dt profile/{URI}/rank
         dd Get ranking information in JSON format.
-        dt /api/profile/{URI}/latest
+        dt profile/{URI}/latest
         dd Get the latest rank and net worth in JSON format.
-        dt /api/profile/{URI}/history
+        dt profile/{URI}/history
         dd Get historical rank and net worth information in CSV format.
-        dt /api/profile/{URI}/related
+        dt profile/{URI}/related
         dd Get related profiles in JSON format.
-        dt /api/profile/{URI}/annual
+        dt profile/{URI}/annual
         dd Get annual reports for a profile in JSON format.
-        dt /api/profile/{URI}/updated
+        dt profile/{URI}/updated
         dd Get the profile info update timestamp.
       h3 Lists
       p The <code>{LIST}</code> argument is described in the lists index. Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
       dl.rtb-api-list
-        dt /api/list/_index
+        dt list/_index
         dd Get the index for available lists in JSON format.
-        dt /api/list/{LIST}/{DATE}
+        dt list/{LIST}/{DATE}
         dd Get the corresponding list by passed list key and date in JSON format.
-        dt /api/list/{LIST}/latest
+        dt list/{LIST}/latest
         dd Get the newest available list by passed list key in JSON format.
       h3 Stats
       p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
       dl.rtb-api-list
-        dt /api/stats/count
+        dt stats/count
         dd Get daily number of billionaires as CSV list.
-        dt /api/stats/total
+        dt stats/total
         dd Get daily total net worth as CSV list.
-        dt /api/stats/woman
+        dt stats/woman
         dd Get daily number of woman billionaires as CSV list.
-        dt /api/stats/country/_index
+        dt stats/country/_index
         dd Get countries index in JSON format.
-        dt /api/stats/country/_list
+        dt stats/country/_list
         dd Get a CSV list of countries by number, fortune and richest individual.
-        dt /api/stats/country/{KEY}
+        dt stats/country/{KEY}
         dd Get daily number, total net worth and richest individual as CSV list.
-        dt /api/stats/industry/_index
+        dt stats/industry/_index
         dd Get industries index in JSON format.
-        dt /api/stats/industry/_list
+        dt stats/industry/_list
         dd Get a CSV list of industries by number, fortune and richest individual.
-        dt /api/stats/industry/{KEY}
+        dt stats/industry/{KEY}
         dd Get daily number, total net worth and richest individual as CSV list.
-        dt /api/stats/agePyramid
+        dt stats/agePyramid
         dd Get age pyramide (male/female) in JSON format.
-        dt /api/stats/children
+        dt stats/children
         dd Get number of billionaires by their children in JSON format.
-        dt /api/stats/maritalStatus
+        dt stats/maritalStatus
         dd Get number of billionaires by their marital status in JSON format.
-        dt /api/stats/selfMade
+        dt stats/selfMade
         dd Get number of billionaires by their self-made score in JSON format.
-        dt /api/stats/top10
+        dt stats/top10
         dd Get top 10 richest billionaires for each month since January 2020.
       h3 Movers
       p Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
       dl.rtb-api-list
-        dt /api/movers/pct/winner/{DATE}
+        dt movers/pct/winner/{DATE}
         dd Get winner in percent as of date in JSON format.
-        dt /api/movers/pct/winner/latest
+        dt movers/pct/winner/latest
         dd Get latest winner in percent in JSON format.
-        dt /api/movers/pct/winner/_list
+        dt movers/pct/winner/_list
         dd Get a daily CSV list top winner in percent.
-        dt /api/movers/pct/loser/{DATE}
+        dt movers/pct/loser/{DATE}
         dd Get loser in percent as of date in JSON format.
-        dt /api/movers/pct/loser/latest
+        dt movers/pct/loser/latest
         dd Get latest loser in percent in JSON format.
-        dt /api/movers/pct/loser/_list
+        dt movers/pct/loser/_list
         dd Get a daily CSV list of top loser in percent.
-        dt /api/movers/value/winner/{DATE}
+        dt movers/value/winner/{DATE}
         dd Get winner in net worth as of date in JSON format.
-        dt /api/movers/value/winner/latest
+        dt movers/value/winner/latest
         dd Get latest winner in net worth in JSON format.
-        dt /api/movers/value/winner/_list
+        dt movers/value/winner/_list
         dd Get a daily CSV list of top winner in net worth.
-        dt /api/movers/value/loser/{DATE}
+        dt movers/value/loser/{DATE}
         dd Get loser in net worth as of date in JSON format.
-        dt /api/movers/value/loser/latest
+        dt movers/value/loser/latest
         dd Get latest loser in net worth in JSON format.
-        dt /api/movers/value/loser/_list
+        dt movers/value/loser/_list
         dd Get a daily CSV list of top loser in net worth.
       h3 Filter
       p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
       dl.rtb-api-list
-        dt /api/filter/_index
+        dt filter/_index
         dd Get index of all available filter in JSON format.
-        dt /api/filter/country/_index
+        dt filter/country/_index
         dd Get countries index in JSON format.
-        dt /api/filter/country/{KEY}
+        dt filter/country/{KEY}
         dd Get a list of billionaires by country in JSON format.
-        dt /api/filter/industry/_index
+        dt filter/industry/_index
         dd Get industries index in JSON format.
-        dt /api/filter/industry/{KEY}
+        dt filter/industry/{KEY}
         dd Get a list of billionaires by industry in JSON format.
-        dt /api/filter/woman
+        dt filter/woman
         dd Get a list of woman billionaires in JSON format.
-        dt /api/filter/young
+        dt filter/young
         dd Get a list of young billionaires (under 50) in JSON format.
-        dt /api/filter/old
+        dt filter/old
         dd Get a list of old billionaires (over 80) in JSON format.
-        dt /api/filter/selfMade
+        dt filter/selfMade
         dd Get a list of self-made billionaires in JSON format.
-        dt /api/filter/dropped
+        dt filter/dropped
         dd Get a list of dropped off billionaires in JSON format.
-        dt /api/filter/deceased
+        dt filter/deceased
         dd Get a list of deceased billionaires in JSON format.
