@@ -10,6 +10,21 @@ const os = require( 'node:os' );
 const fs = require( 'fs' );
 
 /**
+ * get file by request
+ * @param {String} request API request
+ * @returns plain file content
+ */
+const get = ( request ) => {
+
+    let path = ( __dirname + '/' + request ).replaceAll( '//', '/' ).trim();
+
+    return fs.existsSync( path ) && fs.statSync( path ).isFile()
+      ? fs.readFileSync( path ).toString()
+      : null;
+
+};
+
+/**
  * get JSON content from file
  * @param {String} file path to file
  * @returns JSON content
@@ -538,6 +553,7 @@ module.exports = {
     indexes,
     nearestDate,
     resolveURI,
+    get,
     getJSONFile,
     saveJSONFile,
     getCSVFile,
