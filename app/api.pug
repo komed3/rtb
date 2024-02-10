@@ -47,6 +47,11 @@ block content
       textarea#rtb-api-result.rtb-api-result(
         readonly
       )!= api.result
+      h3 Try some requests:
+      p Get the real-time list for 10/03/22: <a href="?request=list%2Frtb%2F2022-10-03"><code>list/rtb/2022-10-03</code></a>
+      p Get profile information about Bill Gates: <a href="?request=profile%2Fbill-gates%2Finfo"><code>profile/bill-gates/info</code></a>
+      p Get winners in percent for 08/17/23: <a href="?request=movers%2Fpct%2Fwinner%2F2023-08-17"><code>movers/pct/winner/2023-08-17</code></a>
+      p Get billionaires age pyramide: <a href="?request=stats%2FagePyramid"><code>stats/agePyramid</code></a>
 
     //- help & usage
     div.rtb-box.rtb-api-help
