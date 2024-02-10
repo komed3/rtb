@@ -31,7 +31,7 @@ block content
       )
         label.rtb-api-request-label(
           for= 'rtb-api-request'
-        ) <code>@komed3/rtb-api@main/</code>
+        ) <code>@komed3/rtb-api@main/api/</code>
         input#rtb-api-request.rtb-api-request-input(
           type= 'text',
           name= 'request',
@@ -141,6 +141,52 @@ block content
       h3 Movers
       p Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
       dl.rtb-api-list
+        dt /api/movers/pct/winner/{DATE}
+        dd Get winner in percent as of date in JSON format.
+        dt /api/movers/pct/winner/latest
+        dd Get latest winner in percent in JSON format.
+        dt /api/movers/pct/winner/_list
+        dd Get a daily CSV list top winner in percent.
+        dt /api/movers/pct/loser/{DATE}
+        dd Get loser in percent as of date in JSON format.
+        dt /api/movers/pct/loser/latest
+        dd Get latest loser in percent in JSON format.
+        dt /api/movers/pct/loser/_list
+        dd Get a daily CSV list of top loser in percent.
+        dt /api/movers/value/winner/{DATE}
+        dd Get winner in net worth as of date in JSON format.
+        dt /api/movers/value/winner/latest
+        dd Get latest winner in net worth in JSON format.
+        dt /api/movers/value/winner/_list
+        dd Get a daily CSV list of top winner in net worth.
+        dt /api/movers/value/loser/{DATE}
+        dd Get loser in net worth as of date in JSON format.
+        dt /api/movers/value/loser/latest
+        dd Get latest loser in net worth in JSON format.
+        dt /api/movers/value/loser/_list
+        dd Get a daily CSV list of top loser in net worth.
       h3 Filter
       p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
       dl.rtb-api-list
+        dt /api/filter/_index
+        dd Get index of all available filter in JSON format.
+        dt /api/filter/country/_index
+        dd Get countries index in JSON format.
+        dt /api/filter/country/{KEY}
+        dd Get a list of billionaires by country in JSON format.
+        dt /api/filter/industry/_index
+        dd Get industries index in JSON format.
+        dt /api/filter/industry/{KEY}
+        dd Get a list of billionaires by industry in JSON format.
+        dt /api/filter/woman
+        dd Get a list of woman billionaires in JSON format.
+        dt /api/filter/young
+        dd Get a list of young billionaires (under 50) in JSON format.
+        dt /api/filter/old
+        dd Get a list of old billionaires (over 80) in JSON format.
+        dt /api/filter/selfMade
+        dd Get a list of self-made billionaires in JSON format.
+        dt /api/filter/dropped
+        dd Get a list of dropped off billionaires in JSON format.
+        dt /api/filter/deceased
+        dd Get a list of deceased billionaires in JSON format.
