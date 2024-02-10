@@ -48,20 +48,6 @@ app.use( '/js', express.static( __dirname + '/public/scripts' ) );
 app.use( '/res', express.static( __dirname + '/public/resources' ) );
 
 /**
- * deny access to certain directories
- */
-
-[ 'api', 'app', 'config', 'maintenance', 'src' ].forEach( ( dir ) => {
-
-    app.all( '/' + dir + '/*', ( req, res, next ) => {
-
-        res.status( 300 ).send( 'Access Forbidden!' );
-
-    } );
-
-} );
-
-/**
  * run npm command
  */
 

@@ -1,6 +1,7 @@
 module.exports = [
     [ '/?', 'home' ],
     [ '/404/?', '404' ],
+    [ '/api/?', 'api' ],
     [ '/country/:single/?', 'stats-single', 'country' ],
     [ '/country/?', 'stats-list', 'country' ],
     [ '/filter/:filter/:single/?', 'filter' ],
