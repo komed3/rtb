@@ -1,2 +1,24 @@
 //- api sandbox
 extends templates/layout.pug
+
+block content
+  div.rtb-page.rtb-api
+
+    //- header
+    div.rtb-box.rtb-api-header
+      h1 API Sandbox
+      p The website uses data which is available for free and without any limitations under <a href="https://github.com/komed3/rtb-api" target="_blank">@komed3/rtb-api</a>.
+       |  If you are interested in getting a first impression on our data or would like to try out this API, you can use this sandbox.
+       |  Follow through the descriptions and discover all available queries and various information.
+       |  The latest version may not be available. Updates will take place several times a year.
+
+    //- sandbox
+    div.rtb-box.rtb-api-sandbox
+      h2.rtb-box-heading Sandbox
+
+    //- help & usage
+    div.rtb-box.rtb-api-help
+      h2.rtb-box-heading Help &amp; Usage
+      p Requests can be done by using jsDelivr:
+      p <code>https://cdn.jsdelivr.net/gh/komed3/rtb-api@main{REQUEST}</code>
+      p As <code>{REQUEST}</code> use one of the paths below.

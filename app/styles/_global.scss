@@ -1,6 +1,6 @@
 /* import fonts from google api */
 
-@import url( 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap' );
+@import url( 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&family=Roboto+Mono&display=swap' );
 @import url( 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined' );
 
 .icon {
@@ -128,6 +128,20 @@ a {
 
 p a {
     color: var( --accent-1 );
+}
+
+code {
+    padding: 3px 6px;
+    font-family: 'Roboto Mono', monospace;
+    background: var( --gray-1 );
+    border-radius: 4px;
+}
+
+code.block {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 10px;
 }
 
 input, textarea, select, button {
