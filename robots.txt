@@ -1,8 +1,6 @@
 User-agent: *
 
-Disallow: /api
 Disallow: /public
-
 Disallow: /search
 Disallow: /privacy
 Disallow: /404
