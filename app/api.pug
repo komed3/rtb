@@ -101,9 +101,43 @@ block content
       h3 Lists
       p The <code>{LIST}</code> argument is described in the lists index. Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
       dl.rtb-api-list
+        dt /api/list/_index
+        dd Get the index for available lists in JSON format.
+        dt /api/list/{LIST}/{DATE}
+        dd Get the corresponding list by passed list key and date in JSON format.
+        dt /api/list/{LIST}/latest
+        dd Get the newest available list by passed list key in JSON format.
       h3 Stats
       p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
       dl.rtb-api-list
+        dt /api/stats/count
+        dd Get daily number of billionaires as CSV list.
+        dt /api/stats/total
+        dd Get daily total net worth as CSV list.
+        dt /api/stats/woman
+        dd Get daily number of woman billionaires as CSV list.
+        dt /api/stats/country/_index
+        dd Get countries index in JSON format.
+        dt /api/stats/country/_list
+        dd Get a CSV list of countries by number, fortune and richest individual.
+        dt /api/stats/country/{KEY}
+        dd Get daily number, total net worth and richest individual as CSV list.
+        dt /api/stats/industry/_index
+        dd Get industries index in JSON format.
+        dt /api/stats/industry/_list
+        dd Get a CSV list of industries by number, fortune and richest individual.
+        dt /api/stats/industry/{KEY}
+        dd Get daily number, total net worth and richest individual as CSV list.
+        dt /api/stats/agePyramid
+        dd Get age pyramide (male/female) in JSON format.
+        dt /api/stats/children
+        dd Get number of billionaires by their children in JSON format.
+        dt /api/stats/maritalStatus
+        dd Get number of billionaires by their marital status in JSON format.
+        dt /api/stats/selfMade
+        dd Get number of billionaires by their self-made score in JSON format.
+        dt /api/stats/top10
+        dd Get top 10 richest billionaires for each month since January 2020.
       h3 Movers
       p Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
       dl.rtb-api-list
