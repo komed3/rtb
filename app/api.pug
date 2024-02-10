@@ -72,8 +72,41 @@ block content
         dt /api/updated
         dd Get timestamp of the last update.
       h3 Profiles
+      dl.rtb-api-list
+        dt /api/profile/_index
+        dd Get a list of all profiles sorted by their URI in JSON format.
+        dt /api/profile/_alias
+        dd Get a list of profile aliases in JSON format.
       h3 Single profile
+      p The <code>{URI}</code> argument is described in the profiles index and is unique to each profile.
+      dl.rtb-api-list
+        dt /api/profile/{URI}/info
+        dd Get profile info in JSON format, e.g. name, residence education etc.
+        dt /api/profile/{URI}/bio
+        dd Get biographical and additional facts about a profile in JSON format.
+        dt /api/profile/{URI}/assets
+        dd Get financial assets of a profile in JSON format.
+        dt /api/profile/{URI}/rank
+        dd Get ranking information in JSON format.
+        dt /api/profile/{URI}/latest
+        dd Get the latest rank and net worth in JSON format.
+        dt /api/profile/{URI}/history
+        dd Get historical rank and net worth information in CSV format.
+        dt /api/profile/{URI}/related
+        dd Get related profiles in JSON format.
+        dt /api/profile/{URI}/annual
+        dd Get annual reports for a profile in JSON format.
+        dt /api/profile/{URI}/updated
+        dd Get the profile info update timestamp.
       h3 Lists
+      p The <code>{LIST}</code> argument is described in the lists index. Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
+      dl.rtb-api-list
       h3 Stats
+      p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
+      dl.rtb-api-list
       h3 Movers
+      p Use <code>{DATE}</code> format <code>YYYY-MM-DD</code> for available days.
+      dl.rtb-api-list
       h3 Filter
+      p The <code>{KEY}</code> argument is a valid country code (ISO) or industry key. Both are described by their corresponding indices.
+      dl.rtb-api-list
