@@ -43,11 +43,30 @@
 }
 
 .rtb-api-list dt {
+    margin: 16px 0 6px 0;
     font-family: 'Roboto Mono', monospace;
     font-weight: 700;
-    margin: 16px 0 6px 0;
+    color: var( --accent-1 );
 }
 
 .rtb-api-list dd {
     margin: 0;
+}
+
+/* responsive adaptations */
+
+@media all and ( max-width: 1000px ) {
+
+    .rtb-api-request-submit .icon {
+        display: none;
+    }
+
+}
+
+@media all and ( max-width: 800px ) {
+
+    .rtb-api-request-label {
+        display: none;
+    }
+
 }
