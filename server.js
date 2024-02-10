@@ -157,6 +157,17 @@ routes.forEach( ( route ) => {
                     break;
 
                 /**
+                 * API sandbox page
+                 */
+                case 'api':
+
+                    res.locals.api = {
+                        request: req.query.request || ''
+                    };
+
+                    break;
+
+                /**
                  * list page
                  */
                 case 'list':

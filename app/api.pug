@@ -1,6 +1,9 @@
 //- api sandbox
 extends templates/layout.pug
 
+block styles
+  link( rel= 'stylesheet', href= '/css/api.css' )/
+
 block content
   div.rtb-page.rtb-api
 
@@ -15,6 +18,8 @@ block content
     //- sandbox
     div.rtb-box.rtb-api-sandbox
       h2.rtb-box-heading Sandbox
+      p Try an API input and get your answer in the message box below. Tips on how to use this API and any available queries are listed further down this page.
+       |  Otherwise, you can check out the GitHub repository <a href="https://github.com/komed3/rtb-api" target="_blank">@komed3/rtb-api</a>.
       form.rtb-api-request(
         method= 'get',
         action= '',
@@ -26,6 +31,8 @@ block content
         input#rtb-api-request.rtb-api-request-input(
           type= 'text',
           name= 'request',
+          placeholder= 'API request …',
+          value= api.request,
           required
         )/
         button.rtb-api-request-submit(
@@ -33,7 +40,9 @@ block content
         )
           i.icon api
           span Fetch
-      textarea#rtb-api-result.rtb-api-result
+      textarea#rtb-api-result.rtb-api-result(
+        readonly
+      )
 
     //- help & usage
     div.rtb-box.rtb-api-help
