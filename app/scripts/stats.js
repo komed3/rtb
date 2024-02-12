@@ -1,6 +1,6 @@
-import SVGWorld from '/modules/svgworld/index.js';
-import world from '/modules/svgworld/maps/world.json' assert { type: 'json' };
-import colorScale from '/modules/svgworld/plugins/colorScale.js';
+import SVGWorld from '/svgworld/index.js';
+import world from '/svgworld/maps/world.json' assert { type: 'json' };
+import colorScale from '/svgworld/plugins/colorScale.js';
 
 var container = document.getElementById( 'map' );
 
