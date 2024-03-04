@@ -39,7 +39,7 @@
         "express": "^4.18.3",
         "express-rate-limit": "^7.2.0",
         "fs": "^0.0.1-security",
-        "i18n-iso-countries": "^7.10.0",
+        "i18n-iso-countries": "^7.10.1",
         "pug": "^3.0.2",
         "svgworld": "^0.1.0"
     }
