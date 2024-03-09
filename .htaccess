@@ -44,14 +44,14 @@ ExpiresByType application/javascript "access 1 month"
 ExpiresByType application/x-javascript "access 1 month"
 ExpiresByType application/x-shockwave-flash "access 1 month"
 ExpiresByType image/x-icon "access 1 year"
-ExpiresDefault "access 2 days"
+ExpiresDefault "access 12 hours"
 </IfModule>
 
 <IfModule mod_headers.c>
 <FilesMatch "\.(ico|jpg|jpeg|gif|png|pdf|mp3|mp4)$">
 Header set Cache-Control "public, max-age=31536000, no-transform"
 </FilesMatch>
-<FilesMatch "\.(js|css|json)$">
+<FilesMatch "\.(js|css)$">
 Header set Cache-Control "public, max-age=2592000, must-revalidate"
 </FilesMatch>
 <FilesMatch "\.(html|htm|xml|txt|xsl)$">
