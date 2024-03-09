@@ -97,6 +97,7 @@
 .rtb-top10-controls a.disabled {
     pointer-events: none;
     filter: grayscale( 1 ) opacity( 0.25 );
+    cursor: not-allowed;
 }
 
 /* responsive adaptations */

@@ -241,6 +241,36 @@ document.addEventListener( 'DOMContentLoaded', () => {
         } );
 
         /**
+         * key bindings
+         */
+
+        document.onkeyup = function( e ) {
+
+            switch( e.key ) {
+
+                case 'Enter':
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    document.querySelector( '.rtb-top10-controls .play' ).click();
+                    break;
+
+                case 'ArrowLeft':
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    document.querySelector( '.rtb-top10-controls .prev' ).click();
+                    break;
+
+                case 'ArrowRight':
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    document.querySelector( '.rtb-top10-controls .next' ).click();
+                    break;
+
+            }
+
+        };
+
+        /**
          * load first month
          */
 
