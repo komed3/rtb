@@ -79,7 +79,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
         idx = parseInt( idx );
 
-        let width = container.offsetWidth / 10,
+        let height = container.querySelector( '.rtb-top10-grid' ).offsetHeight / 10,
             month = Object.keys( data.list )[ idx ] || null;
 
         if( month ) {
@@ -114,23 +114,23 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
                 let uri = p.getAttribute( 'top10-profile' ),
                     pct = '0%', networth = '$0',
-                    left = width * 12;
+                    top = height * 12;
 
                 if( uri in profiles ) {
 
-                    pct = Math.max( 5, ( profiles[ uri ] - min ) / range * 100 ) + '%';
+                    pct = Math.max( 15, ( profiles[ uri ] - min ) / range * 100 ) + '%';
 
                     networth = '$' + Number( ( profiles[ uri ] / 1000 ).toFixed( 1 ) ) + 'B';
 
-                    left = sort.indexOf( uri ) * width;
+                    top = sort.indexOf( uri ) * height;
 
                 }
 
-                p.querySelector( '.rtb-top10-profile-column .col' ).style.height = pct;
+                p.querySelector( '.rtb-top10-profile-column .col' ).style.width = pct;
                 p.querySelector( '.rtb-top10-profile-column .col b' ).innerHTML = networth;
 
-                p.style.width = width + 'px';
-                p.style.left = left + 'px';
+                p.style.height = height + 'px';
+                p.style.top = top + 'px';
 
             } );
 
