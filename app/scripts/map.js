@@ -10,22 +10,30 @@ document.addEventListener( 'DOMContentLoaded', () => {
             lon = parseFloat( container.getAttribute( 'lon' ) || 0 );
 
         let map = L.map( container, {
-            zoomControl: false
+            zoomControl: false,
+            maxZoom: 18,
+            minZoom: 12
         } );
 
         map.attributionControl.setPrefix( false );
 
-        L.tileLayer( 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '© Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP',
-            maxZoom: 17,
-            minZoom: 12
+        L.tileLayer( 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            subdomains: 'abcd',
+            attribution: '© OpenStreetMap contributors © CARTO'
         } ).addTo( map );
 
-        L.marker( [ lat, lon ] ).addTo( map );
+        L.marker( [ lat, lon ], {
+            icon: L.icon( {
+                iconUrl: '/res/marker.png',
+                iconSize: [ 24, 24 ],
+                iconAnchor: [ 12, 24 ],
+            } )
+        } ).addTo( map );
 
         setTimeout( () => {
+            map.invalidateSize();
             map.setView( [ lat, lon ], 16 );
-        }, 250 );
+        }, 500 );
 
     } );
 
