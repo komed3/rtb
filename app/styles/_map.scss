@@ -1,0 +1,14 @@
+.rtb-map {
+    width: 100%;
+    height: 100%;
+}
+
+.rtb-map .leaflet-container {
+    font-family: 'Poppins', sans-serif;
+}
+
+.rtb-map .leaflet-control-attribution {
+    padding: 4px 8px;
+    text-align: right;
+    font-size: 10px;
+}

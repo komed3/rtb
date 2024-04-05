@@ -8,9 +8,12 @@ block title
 
 block scripts
   script( src= 'https://cdn.jsdelivr.net/npm/chart.js' )
+  script( src= 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js' )
   script( src= '/js/chart.min.js' )
+  script( src= '/js/map.min.js' )
 
 block styles
+  link( rel= 'stylesheet', href= 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css' )/
   link( rel= 'stylesheet', href= '/css/profile.css' )/
 
 block content
@@ -84,49 +87,63 @@ block content
         each statement in profile.bio.bio
           p!= statement
 
-    //- personal stats
-    div.rtb-box.rtb-profile-info
-      h3.rtb-box-heading Personal stats
-      div.rtb-grid.col3.rtb-profile-grid
-        if profile.info.citizenship
-          div.rtb-grid-item
-            h4 Citizenship
-            span!= isoc.getName( profile.info.citizenship, 'en' )
-        if profile.info.source
-          div.rtb-grid-item
-            h4 Source of wealth
-            span!= profile.info.source.join( ', ' )
-        if profile.info.residence
-          - 
-            var residence = [
-              profile.info.residence.city,
-              profile.info.residence.state,
-              isoc.getName( profile.info.residence.country, 'en' )
-            ].filter( a => a ).slice( 0, 2 ).join( ', ' )
-          if residence
+    div.rtb-box-cols
+
+      //- personal stats
+      div.rtb-box.rtb-profile-info
+        h3.rtb-box-heading Personal stats
+        div(
+          class!= 'rtb-grid rtb-profile-grid col' + (
+            location ? '2' : '3'
+          )
+        )
+          if profile.info.citizenship
             div.rtb-grid-item
-              h4 Residence
-              span!= residence
-        if profile.info.maritalStatus
-          div.rtb-grid-item
-            h4 Marital status
-            span!= profile.info.maritalStatus
-        if profile.info.birthDate
-          div.rtb-grid-item
-            h4 Birth date
-            span!= formatter.date( profile.info.birthDate ) + ( profile.info.deceased ? '' : ' (age ' + core.date2age( profile.info.birthDate ) + ')' )
-        if profile.info.children
-          div.rtb-grid-item
-            h4 Number of children
-            span!= profile.info.children
-        if profile.info.education && profile.info.education.length
-          div.rtb-grid-item
-            h4 Education
-            span!= profile.info.education.map( a => Object.values( a ).reverse().join( ', ' ) ).join( '; ' )
-        if profile.info.selfMade && profile.info.selfMade.type
-          div.rtb-grid-item
-            h4 Self-made
-            span!= profile.info.selfMade.type
+              h4 Citizenship
+              span!= isoc.getName( profile.info.citizenship, 'en' )
+          if profile.info.source
+            div.rtb-grid-item
+              h4 Source of wealth
+              span!= profile.info.source.join( ', ' )
+          if profile.info.residence
+            - 
+              var residence = [
+                profile.info.residence.city,
+                profile.info.residence.state,
+                isoc.getName( profile.info.residence.country, 'en' )
+              ].filter( a => a ).slice( 0, 2 ).join( ', ' )
+            if residence
+              div.rtb-grid-item
+                h4 Residence
+                span!= residence
+          if profile.info.maritalStatus
+            div.rtb-grid-item
+              h4 Marital status
+              span!= profile.info.maritalStatus
+          if profile.info.birthDate
+            div.rtb-grid-item
+              h4 Birth date
+              span!= formatter.date( profile.info.birthDate ) + ( profile.info.deceased ? '' : ' (age ' + core.date2age( profile.info.birthDate ) + ')' )
+          if profile.info.children
+            div.rtb-grid-item
+              h4 Number of children
+              span!= profile.info.children
+          if profile.info.education && profile.info.education.length
+            div.rtb-grid-item
+              h4 Education
+              span!= profile.info.education.map( a => Object.values( a ).reverse().join( ', ' ) ).join( '; ' )
+          if profile.info.selfMade && profile.info.selfMade.type
+            div.rtb-grid-item
+              h4 Self-made
+              span!= profile.info.selfMade.type
+
+      //- map
+      if location
+        div.rtb-box.rtb-profile-map
+          div.rtb-map(
+            lat!= location.lat,
+            lon!= location.lon
+          )
 
     //- relative values
     if profile.latest.networth
