@@ -223,10 +223,13 @@ routes.forEach( ( route ) => {
                         let profile = api.getFullProfile( uri );
 
                         res.locals.profile = profile;
+
                         res.locals.charts = {
                             rank: profile.history.map( r => [ r[0], r[1] ] ),
                             networth: profile.history.map( r => [ r[0], r[2] ] )
                         };
+
+                        res.locals.location = api.map[ uri ] || false;
 
                     } else if( uri in api.alias ) {
 

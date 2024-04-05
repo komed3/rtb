@@ -519,7 +519,7 @@ const getMovers = ( date = 'latest', type = 'value', limit = 10, fill = false ) 
  * load profiles index + aliases etc.
  */
 
-var latest, days, index, alias, lists, indexes;
+var latest, days, index, alias, lists, indexes, map;
 
 const updateIndex = () => {
 
@@ -539,6 +539,8 @@ const updateIndex = () => {
         country: getJSONFile( '/stats/country/_index' )
     };
 
+    map = getJSONFile( '/stats/map' );
+
 };
 
 updateIndex();
@@ -551,6 +553,7 @@ module.exports = {
     index, alias,
     lists,
     indexes,
+    map,
     nearestDate,
     resolveURI,
     get,
