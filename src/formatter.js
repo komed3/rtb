@@ -24,8 +24,8 @@ const date = ( ts ) => {
  * @returns formatted net worth string
  */
 const networth = ( value, digits = 1, base = 1e6, trimZero = true ) => {
-
-    value = Math.abs( parseFloat( value ) * base );
+ 
+    value = parseFloat( value ) * base;
 
     if( value == 0 ) {
 
@@ -33,10 +33,14 @@ const networth = ( value, digits = 1, base = 1e6, trimZero = true ) => {
 
     }
 
+    let sign = value < 0 ? '-' : '';
+
+    value = Math.abs( value );
+
     let unit = Math.max( 0, Math.min( 3, Math.floor( Math.log10( value ) / 3 ) ) ),
         number = ( value / Math.pow( 10, unit * 3 ) ).toFixed( digits );
 
-    return '$' + ( trimZero ? parseFloat( number ) : number ) + [ '', 'K', 'M', 'B' ][ unit ];
+    return sign + '$' + ( trimZero ? parseFloat( number ) : number ) + [ '', 'K', 'M', 'B' ][ unit ];
 
 };
 
@@ -75,7 +79,7 @@ const change = ( change, digits = 1, base = 1e6, trimZero = true ) => {
             pct = change.pct.toFixed( digits );
 
         return '<span class="' + ( dir ? 'up' : 'down' ) + '">' +
-            networth( change.value, digits, base, trimZero ) +
+            networth( Math.abs( change.value ), digits, base, trimZero ) +
             ( parseFloat( pct ) != 0
                 ? '<pct> (' + ( trimZero ? parseFloat( pct ) : pct ) + '%)</pct>'
                 : '' ) +

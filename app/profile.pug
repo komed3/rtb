@@ -146,7 +146,7 @@ block content
           )
 
     //- relative values
-    if profile.latest.networth
+    if profile.latest.networth && profile.latest.networth > 0
       div.rtb-profile-relative
         h3.rtb-box-heading!= profile.info.name + '’s fortune is worth'
         div.rtb-grid.col3.rtb-profile-grid
