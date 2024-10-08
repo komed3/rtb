@@ -32,9 +32,7 @@ const rateLimit = require( 'express-rate-limit' );
 
 app.use( rateLimit( {
     limit: process.env.limit,
-    windowMs: process.env.wait,
-    standardHeaders: 'draft-7',
-    legacyHeaders: false
+    windowMs: process.env.wait
 } ) );
 
 /**
