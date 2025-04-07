@@ -10,7 +10,7 @@
 
 require( 'dotenv' ).config();
 
-const cmpstr = require( 'cmpstr' );
+const { CmpStr } = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 const core = require( './src/core' );
 const formatter = require( './src/formatter' );
@@ -39,7 +39,6 @@ app.use( rateLimit( {
  * static resources
  */
 
-app.use( '/cmpstr', express.static( __dirname + '/node_modules/cmpstr' ) );
 app.use( '/svgworld', express.static( __dirname + '/node_modules/svgworld' ) );
 
 app.use( '/css', express.static( __dirname + '/public/styles' ) );
@@ -280,24 +279,19 @@ routes.forEach( ( route ) => {
 
                     if( query.length > 1 ) {
 
-                        let results = [];
+                        const cmp = new CmpStr( 'dice', query );
 
-                        for( const [ uri, p ] of Object.entries( api.index ) ) {
-
-                            if(
-                                uri.includes( query ) ||
-                                p.name.toLowerCase().includes( query ) ||
-                                cmpstr.diceCoefficient( p.name, query, 'si' ) > 0.8
-                            ) {
-
-                                results.push( {
-                                    uri: uri,
-                                    name: p.name
-                                } );
-
-                            }
-
-                        }
+                        let results = [ ...new Set( [
+                            ...Object.entries( api.index ).map(
+                                ( [ uri, p ] ) => p.name.toLowerCase().includes( query ) ? uri : undefined
+                            ).filter( a => a ),
+                            ...cmp.match( Object.keys( api.index ), {
+                                flags: 'ki', threshold: 0.5
+                            } ).map( ( row ) => row.target )
+                        ] ) ].map( ( uri ) => ( {
+                            uri: uri,
+                            name: api.index[ uri ].name
+                        } ) );
 
                         res.locals.search = {
                             count: results.length,
