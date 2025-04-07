@@ -6,10 +6,10 @@
 'use strict';
 
 const dir = __dirname + '/../api/';
-const threshold = 0.85;
+const threshold = 0.9;
 
 const os = require( 'node:os' );
-const cmpstr = require( 'cmpstr' );
+const { CmpStr } = require( 'cmpstr' );
 const colors = require( 'ansi-colors' );
 const fs = require( 'fs' );
 
@@ -28,7 +28,7 @@ if( fs.existsSync( dir + 'profile/_index' ) ) {
 
 } else {
 
-    console.log( colors.red( 'there are no profiles to merge, run "npm update" first' ) );
+    console.log( colors.red( 'there are no profiles to merge, run "npm run update" first' ) );
 
     process.exit(1);
 
@@ -41,10 +41,16 @@ const search = () => {
 
     console.log( 'Search for mergeable profiles using Sørensen-Dice coefficient (this will take some time):' );
 
+    const cmp = new CmpStr( 'dice' );
+
+    cmp.setFlags( 'ik' );
+
     profiles.forEach( ( uri ) => {
 
-        let results = cmpstr.diceMatch( uri, profiles ).filter(
-            p => p.target != uri && p.match > threshold
+        cmp.setStr( uri );
+
+        let results = cmp.match( profiles, { threshold: threshold } ).filter(
+            p => p.target != uri
         );
 
         if( results.length ) {
@@ -148,6 +154,10 @@ const test = ( from, to ) => {
 
     if( files[ to + '/info' ] && fs.existsSync( path + from + '/info' ) ) {
 
+        const cmp = new CmpStr();
+
+        cmp.setFlags( 'itw' );
+
         let info_from = JSON.parse( fs.readFileSync( path + from + '/info' ) ),
             info_to = JSON.parse( fs.readFileSync( path + to + '/info' ) );
 
@@ -155,7 +165,8 @@ const test = ( from, to ) => {
 
         test.forEach( ( key ) => {
 
-            let similarity = cmpstr.diceCoefficient(
+            let similarity = cmp.compare(
+                'dice',
                 JSON.stringify( key in info_from ? info_from[ key ] : '' ),
                 JSON.stringify( key in info_to ? info_to[ key ] : '' )
             );
