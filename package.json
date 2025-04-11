@@ -35,7 +35,7 @@
         "axios": "^1.8.4",
         "cli-progress": "^3.12.0",
         "cmpstr": "^2.0.3",
-        "dotenv": "^16.4.7",
+        "dotenv": "^16.5.0",
         "express": "^4.21.2",
         "express-rate-limit": "^7.5.0",
         "fs": "^0.0.1-security",
