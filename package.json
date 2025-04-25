@@ -32,7 +32,7 @@
     },
     "dependencies": {
         "ansi-colors": "^4.1.3",
-        "axios": "^1.8.4",
+        "axios": "^1.9.0",
         "cli-progress": "^3.12.0",
         "cmpstr": "^2.0.3",
         "dotenv": "^16.5.0",
