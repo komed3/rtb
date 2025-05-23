@@ -519,7 +519,7 @@ const getMovers = ( date = 'latest', type = 'value', limit = 10, fill = false ) 
  * load profiles index + aliases etc.
  */
 
-var latest, days, index, alias, lists, indexes, map;
+var latest, days, index, alias, blacklist, lists, indexes, map;
 
 const updateIndex = () => {
 
@@ -531,6 +531,12 @@ const updateIndex = () => {
 
     index = getJSONFile( '/profile/_index' );
     alias = getJSONFile( '/profile/_alias' );
+    blacklist = getJSONFile( '/profile/_blacklist' );
+
+    blacklist.forEach( ( uri ) => {
+        delete index[ uri ];
+        delete alias[ uri ];
+    } );
 
     lists = getJSONFile( '/list/_index' );
 
@@ -550,7 +556,7 @@ updateIndex();
  */
 module.exports = {
     latest, days,
-    index, alias,
+    index, alias, blacklist,
     lists,
     indexes,
     map,

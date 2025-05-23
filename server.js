@@ -437,6 +437,10 @@ routes.forEach( ( route ) => {
 
                     }
 
+                    res.locals.profiles = res.locals.profiles.filter(
+                        ( uri ) => ! api.blacklist.includes( uri )
+                    );
+
                     res.locals.count = res.locals.profiles.length;
                     res.locals.maxPage = Math.ceil( res.locals.count / 36 );
                     res.locals.page = req.query.page || 1;
