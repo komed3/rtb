@@ -10,7 +10,6 @@
 
 require( 'dotenv' ).config();
 
-const { CmpStr } = require( 'cmpstr' );
 const isoCountries = require( 'i18n-iso-countries' );
 const core = require( './src/core' );
 const formatter = require( './src/formatter' );
@@ -279,15 +278,10 @@ routes.forEach( ( route ) => {
 
                     if( query.length > 1 ) {
 
-                        const cmp = new CmpStr( 'dice', query );
-
                         let results = [ ...new Set( [
                             ...Object.entries( api.index ).map(
                                 ( [ uri, p ] ) => p.name.toLowerCase().includes( query ) ? uri : undefined
-                            ).filter( a => a ),
-                            ...cmp.match( Object.keys( api.index ), {
-                                flags: 'ki', threshold: 0.5
-                            } ).map( ( row ) => row.target )
+                            ).filter( a => a )
                         ] ) ].map( ( uri ) => ( {
                             uri: uri,
                             name: api.index[ uri ].name
