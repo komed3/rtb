@@ -258,7 +258,9 @@ const getFullProfile = ( uri ) => {
             bio: getJSONFile( path + 'bio' ),
             rank: rank,
             hasRank: ( rank?.rtb?.date || null ) == latest,
-            related: getJSONFile( path + 'related' ),
+            related: getJSONFile( path + 'related' ).filter(
+              ( r ) => ! blacklist.includes( r.uri )
+            ),
             history: getCSVFile( path + 'history' ),
             assets: getJSONFile( path + 'assets' ),
             latest: getJSONFile( path + 'latest' ),
