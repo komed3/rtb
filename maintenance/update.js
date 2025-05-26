@@ -104,7 +104,7 @@ async function run() {
 
     logging.next(
         '[1/7] getting ready',
-        4, 'steps'
+        5, 'steps'
     );
 
     [
@@ -166,6 +166,16 @@ async function run() {
     logging.update();
 
     /**
+     * get blacklist
+     */
+
+    var blacklist = fs.existsSync( dir + '/profile/_blacklist' )
+        ? JSON.parse( fs.readFileSync( dir + '/profile/_blacklist' ) || '[]' )
+        : {};
+
+    logging.update();
+
+    /**
      * fetch data
      */
 
@@ -217,6 +227,16 @@ async function run() {
         rtb.forEach( ( profile, _i ) => {
 
             let uri = profile.uri.trim();
+
+            /**
+             * skip blacklisted profiles
+             */
+
+            if( blacklist.includes( uri ) ) {
+
+                return ;
+
+            }
 
             /**
              * check if profile uri exists in aliases list
