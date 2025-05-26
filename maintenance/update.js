@@ -229,22 +229,22 @@ async function run() {
             let uri = profile.uri.trim();
 
             /**
-             * skip blacklisted profiles
-             */
-
-            if( blacklist.includes( uri ) ) {
-
-                return ;
-
-            }
-
-            /**
              * check if profile uri exists in aliases list
              */
 
             if( uri in alias ) {
 
                 uri = alias[ uri ];
+
+            }
+
+            /**
+             * skip blacklisted profiles
+             */
+
+            if( blacklist.includes( uri ) ) {
+
+                return ;
 
             }
 
