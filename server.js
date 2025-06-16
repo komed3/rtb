@@ -38,8 +38,6 @@ app.use( rateLimit( {
  * static resources
  */
 
-app.use( '/svgworld', express.static( __dirname + '/node_modules/svgworld' ) );
-
 app.use( '/css', express.static( __dirname + '/public/styles' ) );
 app.use( '/js', express.static( __dirname + '/public/scripts' ) );
 app.use( '/res', express.static( __dirname + '/public/resources' ) );
