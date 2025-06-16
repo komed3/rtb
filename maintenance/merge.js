@@ -41,15 +41,11 @@ const search = () => {
 
     console.log( 'Search for mergeable profiles using Sørensen-Dice coefficient (this will take some time):' );
 
-    const cmp = new CmpStr( 'dice' );
-
-    cmp.setFlags( 'ik' );
+    const cmp = CmpStr.create().setMetric( 'dice' ).setFlags( 'ik' );
 
     profiles.forEach( ( uri ) => {
 
-        cmp.setStr( uri );
-
-        let results = cmp.match( profiles, { threshold: threshold } ).filter(
+        let results = cmp.match( profiles, uri, threshold ).filter(
             p => p.target != uri
         );
 
@@ -154,9 +150,7 @@ const test = ( from, to ) => {
 
     if( files[ to + '/info' ] && fs.existsSync( path + from + '/info' ) ) {
 
-        const cmp = new CmpStr();
-
-        cmp.setFlags( 'itw' );
+        const cmp = CmpStr.create().setMetric( 'dice' ).setFlags( 'itw' );
 
         let info_from = JSON.parse( fs.readFileSync( path + from + '/info' ) ),
             info_to = JSON.parse( fs.readFileSync( path + to + '/info' ) );
@@ -166,7 +160,6 @@ const test = ( from, to ) => {
         test.forEach( ( key ) => {
 
             let similarity = cmp.compare(
-                'dice',
                 JSON.stringify( key in info_from ? info_from[ key ] : '' ),
                 JSON.stringify( key in info_to ? info_to[ key ] : '' )
             );
