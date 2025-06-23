@@ -46,7 +46,7 @@ app.use( '/res', express.static( __dirname + '/public/resources' ) );
  * run npm command
  */
 
-app.all( '/run/?*', ( req, res, next ) => {
+app.all( '/run', ( req, res, next ) => {
 
     let job = req.query.job || '',
         path = './maintenance/' + job;
@@ -486,7 +486,7 @@ routes.forEach( ( route ) => {
  * 404 redirect
  */
 
-app.all( '*', ( req, res ) => {
+app.all( '/{*splat}', ( req, res ) => {
 
     res.redirect( core.url( '/404' ) );
 
