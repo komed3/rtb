@@ -533,7 +533,7 @@ const updateIndex = () => {
 
     index = getJSONFile( '/profile/_index' );
     alias = getJSONFile( '/profile/_alias' );
-    blacklist = getJSONFile( '/profile/_blacklist' );
+    blacklist = Array.from( getJSONFile( '/profile/_blacklist' ) );
 
     blacklist.forEach( ( uri ) => {
         delete index[ uri ];
