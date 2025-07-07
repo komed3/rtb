@@ -7,12 +7,12 @@
 
 const dir = __dirname + '/../api/profile/';
 const api = 'https://www.forbes.com/forbesapi/person/';
-const threshold = ( new Date() ).getTime() - 31557600000;
+const threshold = ( new Date() ).getTime() - ( 30 * 24 * 3600 * 1000 );
 const today = ( new Date() ).toISOString();
 
 var requestLimit = process.argv.includes( '--limit' )
-    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 50 )
-    : 50;
+    ? parseInt( process.argv[ process.argv.indexOf( '--limit' ) + 1 ] || 100 )
+    : 100;
 
 const colors = require( 'ansi-colors' );
 const axios = require( 'axios' );
