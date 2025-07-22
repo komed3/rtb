@@ -34,7 +34,7 @@
         "ansi-colors": "^4.1.3",
         "axios": "^1.10.0",
         "cli-progress": "^3.12.0",
-        "cmpstr": "^3.0.1",
+        "cmpstr": "^3.0.2",
         "dotenv": "^17.2.0",
         "express": "^5.1.0",
         "express-rate-limit": "^8.0.1",
