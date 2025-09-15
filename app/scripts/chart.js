@@ -443,7 +443,6 @@ const chart_type__networth = ( container, data ) => {
             datasets: [ {
                 data: [],
                 lineTension: 0.05,
-                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( chart_colors.green ),
                 backgroundColor: chart_gradient( container, [
@@ -463,6 +462,10 @@ const chart_type__networth = ( container, data ) => {
             maintainAspectRatio: false,
             offset: true,
             clip: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             layout: {
                 padding: 12
             },
@@ -548,7 +551,6 @@ const chart_type__rank = ( container, data ) => {
             datasets: [ {
                 data: [],
                 lineTension: 0.05,
-                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( chart_colors.red ),
                 pointRadius: 0,
@@ -563,6 +565,10 @@ const chart_type__rank = ( container, data ) => {
             maintainAspectRatio: false,
             offset: true,
             clip: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             layout: {
                 padding: 12
             },
@@ -649,7 +655,6 @@ const chart_type__percent = ( container, data ) => {
             datasets: [ {
                 data: [],
                 lineTension: 0.05,
-                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( chart_colors.color ),
                 pointRadius: 0,
@@ -664,6 +669,10 @@ const chart_type__percent = ( container, data ) => {
             maintainAspectRatio: false,
             offset: true,
             clip: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             layout: {
                 padding: 12
             },
@@ -747,7 +756,6 @@ const chart_type__line = ( container, data ) => {
             datasets: [ {
                 data: [],
                 lineTension: 0.05,
-                pointHitRadius: 100,
                 borderWidth: 3,
                 borderColor: chart_color( chart_colors.red ),
                 backgroundColor: chart_gradient( container, [
@@ -767,6 +775,10 @@ const chart_type__line = ( container, data ) => {
             maintainAspectRatio: false,
             offset: true,
             clip: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             layout: {
                 padding: 12
             },
@@ -1132,7 +1144,6 @@ const chart_type__report = ( container, data ) => {
             datasets: [ {
                 data: [],
                 lineTension: 0.05,
-                pointHitRadius: 100,
                 borderWidth: 4,
                 borderColor: chart_color( chart_colors.color ),
                 pointBackgroundColor: chart_color( chart_colors.background ),
@@ -1150,6 +1161,10 @@ const chart_type__report = ( container, data ) => {
             maintainAspectRatio: false,
             offset: true,
             clip: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             layout: {
                 padding: {
                     top: 12,
