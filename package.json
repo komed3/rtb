@@ -37,7 +37,7 @@
         "cmpstr": "^3.0.4",
         "dotenv": "^17.2.3",
         "express": "^5.1.0",
-        "express-rate-limit": "^8.1.0",
+        "express-rate-limit": "^8.2.0",
         "fs": "^0.0.1-security",
         "i18n-iso-countries": "^7.14.0",
         "pug": "^3.0.3",
