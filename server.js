@@ -8,7 +8,7 @@
 
 'use strict';
 
-require( 'dotenv' ).config();
+require( 'dotenv' ).config( { quiet: true } );
 
 const isoCountries = require( 'i18n-iso-countries' );
 const core = require( './src/core' );

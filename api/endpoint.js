@@ -4,7 +4,7 @@
 
 'use strict';
 
-require( 'dotenv' ).config();
+require( 'dotenv' ).config( { quiet: true } );
 
 const os = require( 'node:os' );
 const fs = require( 'fs' );

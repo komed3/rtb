@@ -5,7 +5,7 @@
 
 'use strict';
 
-require( 'dotenv' ).config();
+require( 'dotenv' ).config( { quiet: true } );
 
 const api = require( './../api/endpoint' );
 const colors = require( 'ansi-colors' );
