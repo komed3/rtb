@@ -184,7 +184,17 @@ async function run() {
         1, 'files'
     );
 
-    const response = await axios.get( process.env.api );
+    const config = {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+            'Accept': 'application/json, text/plain, */*',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Connection': 'keep-alive'
+        }
+    };
+
+    const res1 = await axios.get( process.env.api + '?limit=2000', config );
+    const res2 = await axios.get( process.env.api + '?limit=2000&start=2000', config );
 
     logging.update();
 
@@ -208,11 +218,14 @@ async function run() {
     };
 
     if(
-        response.data && response.data.personList &&
-        response.data.personList.personsLists
+        res1.data && res1.data.personList && res1.data.personList.personsLists &&
+        res2.data && res2.data.personList && res2.data.personList.personsLists
     ) {
 
-        let rtb = response.data.personList.personsLists;
+        let rtb = [
+            ...res1.data.personList.personsLists,
+            ...res2.data.personList.personsLists
+        ];
 
         /**
          * process profiles in list
