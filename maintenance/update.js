@@ -5,7 +5,7 @@
 
 'use strict';
 
-require( 'dotenv' ).config();
+require( 'dotenv' ).config( { quiet: true } );
 
 const dir = __dirname + '/../api/';
 const today = ( new Date() ).toISOString().split( 'T' )[0];
