@@ -193,8 +193,11 @@ async function run() {
         }
     };
 
-    const res1 = await axios.get( process.env.api + '?limit=2000', config );
-    const res2 = await axios.get( process.env.api + '?limit=2000&start=2000', config );
+    const res1 = await axios.get( process.env.api + '?limit=800', config );
+    const res2 = await axios.get( process.env.api + '?limit=800&start=800', config );
+    const res3 = await axios.get( process.env.api + '?limit=800&start=1600', config );
+    const res4 = await axios.get( process.env.api + '?limit=800&start=2400', config );
+    const res5 = await axios.get( process.env.api + '?limit=800&start=3200', config );
 
     logging.update();
 
@@ -219,12 +222,18 @@ async function run() {
 
     if(
         res1.data && res1.data.personList && res1.data.personList.personsLists &&
-        res2.data && res2.data.personList && res2.data.personList.personsLists
+        res2.data && res2.data.personList && res2.data.personList.personsLists &&
+        res3.data && res3.data.personList && res3.data.personList.personsLists &&
+        res4.data && res4.data.personList && res4.data.personList.personsLists &&
+        res5.data && res5.data.personList && res5.data.personList.personsLists
     ) {
 
         let rtb = [
             ...res1.data.personList.personsLists,
-            ...res2.data.personList.personsLists
+            ...res2.data.personList.personsLists,
+            ...res3.data.personList.personsLists,
+            ...res4.data.personList.personsLists,
+            ...res5.data.personList.personsLists
         ];
 
         /**
