@@ -62,6 +62,22 @@ const sanitize = ( str ) => {
 };
 
 /**
+ * escape html
+ * @param {String} str input
+ * @returns escaped string
+ */
+const escape = ( str ) => {
+
+    return str
+        .replace( /&/g, '&amp;' )
+        .replace( /</g, '&lt;' )
+        .replace( />/g, '&gt;' )
+        .replace( /"/g, '&quot;' )
+        .replace( /'/g, '&#039;' );
+
+};
+
+/**
  * calculate age from date
  * @param {String|Null} date date or null
  * @returns age or null
@@ -240,6 +256,7 @@ module.exports = {
     getCanonical,
     url,
     sanitize,
+    escape,
     date2age,
     countryName,
     listlink,
