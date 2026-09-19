@@ -2,7 +2,7 @@
 extends templates/layout.pug
 
 block title
-  title!= 'Search results for ' + global.query
+  title!= 'Search results for ' + core.escape( global.query )
 
 block styles
   link( rel= 'stylesheet', href= '/css/search.css' )/
@@ -14,8 +14,8 @@ block content
     div.rtb-box.rtb-search-results
       h1
         span Search results for 
-        q!= global.query
-      p!= 'Page <b>' + search.page + '</b> of ' + search.maxPage + ' / <b>' + search.count + '</b> search results for <q>' + global.query + '</q> were found.'
+        q!= core.escape( global.query )
+      p!= 'Page <b>' + search.page + '</b> of ' + search.maxPage + ' / <b>' + search.count + '</b> search results for <q>' + core.escape( global.query ) + '</q> were found.'
       div.rtb-divider
       div.rtb-grid.col3.rtb-profile-grid
         each item in search.results

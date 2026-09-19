@@ -35,7 +35,7 @@ html( lang= 'en' )
           type= 'text',
           name= 'q',
           placeholder= 'Search …',
-          value!= global.query
+          value!= core.escape( global.query )
         )/
         button( type= 'submit' )
           i.icon search
