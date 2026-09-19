@@ -112,7 +112,7 @@ routes.forEach( ( route ) => {
 
             res.locals.global = {
                 request: req.query,
-                query: ( req.query.q || '' ).trim(),
+                query: core.escape( req.query.q || '' ).trim(),
                 file: route[1],
                 nav: route[2] || route[1],
                 showImages: !!+process.env.showImages
